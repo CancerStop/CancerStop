@@ -1,0 +1,327 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: "Roboto", sans-serif;
+  overflow-x: hidden;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header_desktopDisplay {
+  margin: 0px;
+  align-items: center;
+  padding: 25px;
+  color: white;
+  justify-content: space-between;
+  display: flex;
+  background-color: #001c57;
+}
+
+.header_importantLink {
+  color: black;
+  text-decoration: none;
+}
+
+.header_brandName {
+  font-size: 2.2em;
+  font-weight: bold;
+  display: flex;
+}
+
+.brandNameText {
+    color: white;
+    text-decoration: none;
+}
+
+.brandNameText :hover{
+    color: #4384e6;
+}
+
+.header_links {
+  width: 20%;
+}
+
+.header_links > ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header_quickLink {
+  list-style: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.5s;
+  font-size: 1.1em;
+}
+
+.header_desktopDisplayLink {
+  color: white;
+  text-decoration: none;
+}
+
+.faq_accordionBody {
+  margin-top: 50px;
+  margin: auto;
+  width: 50%;
+}
+
+.faq_accordion {
+  margin: auto;
+}
+
+.faq_mainAccordionSection {
+  padding: 10px;
+}
+
+.faq_accordionContent {
+  margin-top: 3px;
+  border: 1px solid rgb(194, 194, 194);
+  padding: 10px;
+}
+
+.faq_subAccordion {
+  padding-bottom: 5px;
+}
+
+.faq_note {
+  margin-top: 5px;
+}
+
+.selectCancerMenu_chooseACancerDropdown {
+  margin-top: 90px;
+  margin: auto;
+  width: 700px;
+  overflow: hidden;
+}
+
+.selectCancerMenu_cancerItem {
+  color: #4384e6;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+.homePage_introSentence {
+  text-align: center;
+  padding: 30px;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+.homePage_mobileAppAdd {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.cancerHubPage_cancerHeading {
+  text-align: center;
+  padding: 30px;
+  color: black;
+  text-decoration: none;
+}
+
+.cancerHubPage_actionButtons {
+  align-self: center;
+  align-items: center;
+  display: grid;
+  grid-row-gap: 10px;
+  grid-column-gap: 50px;
+  grid-template-columns: 220px;
+  grid-auto-rows: 220px;
+  margin: auto;
+  justify-content: center;
+}
+
+.cancerHubPage_actionButton-route {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.cancerHubPage_actionButton-link {
+  text-decoration: none;
+}
+
+.survivalCurvePage_graph {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.sliderComponent {
+  padding: 10px;
+}
+
+.sliderComponent_ageSlider {
+  width: 100%;
+}
+
+.donateIFrame {
+    width: 100%;
+    height: 100vh;
+}
+
+.genesAndMorePage {
+    align-self: center;
+    align-items: center;
+    text-align: center;
+}
+
+.genesAndMorePage_geneInfoForm {
+    padding: 20;
+}
+
+.genesAndMorePage_termInput {
+    width: 30%;
+    height: 30px;
+    text-align: center;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.genesAndMorePage_searchButton {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.genesAndMorePage_searchButtonContainer {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.footer {
+    margin-top: auto;
+    border-top: 1px solid black;
+    bottom: 0;
+    padding: 10px;
+}
+
+.footer_text {
+    padding: 10px;
+    font-size: 0.8em;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media screen and (max-width: 1255px) {
+  .header_links {
+    width: 35%;
+  }
+}
+
+@media screen and (max-width: 1025px) {
+  .faq_accordionBody {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 975px) {
+  .header_links {
+    width: 45%;
+  }
+
+  .home_introSentence {
+    font-size: 1.8em;
+  }
+
+  .faq_accordionBody {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .selectCancerMenu_chooseACancerDropdown {
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 770px) {
+    .genesAndMorePage_termInput {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 760px) {
+  .selectCancerMenu_chooseACancerDropdown {
+    width: 550px;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .selectCancerMenu_chooseACancerDropdown {
+    width: 450px;
+  }
+}
+
+@media screen and (max-width: 615px) {
+  .header_desktopDisplay {
+    justify-content: space-around;
+  }
+
+  .header_links {
+    display: none;
+  }
+
+  .faq_accordionBody {
+    width: 100%;
+  }
+
+  .faq_mainAccordionSection {
+    padding: 2px;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .selectCancerMenu_chooseACancerDropdown {
+    width: 400px;
+  }
+
+  .genesAndMorePage_termInput {
+      width: 50%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .selectCancerMenu_chooseACancerDropdown {
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .selectCancerMenu_chooseACancerDropdown {
+    width: 250px;
+  }
+
+  .genesAndMorePage_termInput {
+      width: 90%;
+  }
+}
+
+@media screen and (min-width: 550px) {
+  .cancerHubPage_actionButtons {
+    grid-template-columns: 220px 220px;
+  }
+}
+
+@media screen and (min-width: 1060px) {
+  .cancerHubPage_actionButtons {
+    grid-template-columns: 220px 220px 220px;
+  }
+}
