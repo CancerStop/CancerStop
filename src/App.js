@@ -14,7 +14,7 @@ import GenesAndMoreForm from "./pages/generalPages/genesAndMoreForm";
 
 import AcuteLymphocyticLeukemia from "./pages/cancerPages/acuteLymphocyticLeukemia";
 import AcuteMonocyticLeukemia from "./pages/cancerPages/acuteMonocyticLeukemia";
-import AcuteMyeloidLeukemia from "./pages/cancerPages/acuteMyloidLeukemia";
+import AcuteMyeloidLeukemia from "./pages/cancerPages/acuteMyeloidLeukemia";
 import ChronicLymphocyticLeukemia from "./pages/cancerPages/chronicLymphocyticLeukemia";
 import ChronicMyeloidLeukemia from "./pages/cancerPages/chronicMyeoidLeukemia";
 import LiverLymphaticBileandDuct from "./pages/cancerPages/liverLymphaticBileandDuct";
