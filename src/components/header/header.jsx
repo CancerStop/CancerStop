@@ -14,7 +14,7 @@ export default function Header() {
                 </div>
 
                 <div className="header_brandName">
-                    <img src={require('./cancerstop_logo.jpeg')} />
+                    <img src="./android-icon-48x48.png" />
                     <BrandName className="brandText" />
                 </div>
 
