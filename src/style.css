@@ -84,7 +84,13 @@ body {
 
 .faq_accordionButton {
     overflow: hidden;
-    background-color: rgb(219, 219, 219) !important;
+    background-color: #dbdbdb !important;
+    color: black !important;
+}
+
+.faq_accordionButton:hover {
+    overflow: hidden;
+    background-color: #c6c6c6 !important;
     color: black !important;
 }
 
