@@ -43,7 +43,7 @@ body {
     margin-left: 5px;
 }
 
-.header_title :hover {
+.header_title:hover {
     color: #4384e6;
 }
 
@@ -69,6 +69,8 @@ body {
     padding-right: 10px;
     padding-left: 10px;
 }
+
+
 
 .faq_accordionBody {
     margin-top: 150px;
@@ -120,6 +122,11 @@ body {
     }
 }
 
+/* .accordion__heading:hover {
+    background-color: #DDD;
+} */
+
+
 .contactUsPage > iframe {
     margin-top: 20px;
 }
@@ -162,6 +169,10 @@ body {
 
 .cancerPageCard {
     text-align: center;
+}
+
+.cancerPageCard:hover {
+    background-color: #4384e6;
 }
 
 .genesAndMore {
