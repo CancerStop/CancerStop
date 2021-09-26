@@ -20,13 +20,7 @@ export default function FaqPage() {
                     <AccordionItem className="faq_mainAccordionSection">
                         <div>
                             <AccordionItemHeading>
-                                <AccordionItemButton
-                                    style={{
-                                        overflow: "hidden",
-                                        backgroundColor: "rgb(219, 219, 219)",
-                                        color: "black",
-                                    }}
-                                >
+                                <AccordionItemButton className="accordion__button faq_accordionButton">
                                     Survival curves
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -150,13 +144,7 @@ export default function FaqPage() {
                     <AccordionItem className="faq_mainAccordionSection">
                         <div>
                             <AccordionItemHeading>
-                                <AccordionItemButton
-                                    style={{
-                                        overflow: "hidden",
-                                        backgroundColor: "rgb(219, 219, 219)",
-                                        color: "black",
-                                    }}
-                                >
+                                <AccordionItemButton className="accordion__button faq_accordionButton">
                                     Search
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -217,13 +205,7 @@ export default function FaqPage() {
                     <AccordionItem className="faq_mainAccordionSection">
                         <div>
                             <AccordionItemHeading>
-                                <AccordionItemButton
-                                    style={{
-                                        overflow: "hidden",
-                                        backgroundColor: "rgb(219, 219, 219)",
-                                        color: "black",
-                                    }}
-                                >
+                                <AccordionItemButton className="accordion__button faq_accordionButton">
                                     Clinical Trials
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -282,13 +264,7 @@ export default function FaqPage() {
                     <AccordionItem className="faq_mainAccordionSection">
                         <div>
                             <AccordionItemHeading>
-                                <AccordionItemButton
-                                    style={{
-                                        overflow: "hidden",
-                                        backgroundColor: "rgb(219, 219, 219)",
-                                        color: "black",
-                                    }}
-                                >
+                                <AccordionItemButton className="accordion__button faq_accordionButton">
                                     Approved Drugs(NCI)
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -330,13 +306,7 @@ export default function FaqPage() {
                     <AccordionItem className="faq_mainAccordionSection">
                         <div>
                             <AccordionItemHeading>
-                                <AccordionItemButton
-                                    style={{
-                                        overflow: "hidden",
-                                        backgroundColor: "rgb(219, 219, 219)",
-                                        color: "black",
-                                    }}
-                                >
+                                <AccordionItemButton className="accordion__button faq_accordionButton">
                                     Genes & More
                                 </AccordionItemButton>
                             </AccordionItemHeading>
@@ -417,13 +387,7 @@ export default function FaqPage() {
                     <AccordionItem className="faq_mainAccordionSection">
                         <div>
                             <AccordionItemHeading>
-                                <AccordionItemButton
-                                    style={{
-                                        overflow: "hidden",
-                                        backgroundColor: "rgb(219, 219, 219)",
-                                        color: "black",
-                                    }}
-                                >
+                                <AccordionItemButton className="accordion__button faq_accordionButton">
                                     General
                                 </AccordionItemButton>
                             </AccordionItemHeading>

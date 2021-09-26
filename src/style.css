@@ -82,6 +82,12 @@ body {
     margin: auto;
 }
 
+.faq_accordionButton {
+    overflow: hidden;
+    background-color: rgb(219, 219, 219) !important;
+    color: black !important;
+}
+
 .faq_mainAccordionSection {
     padding: 10px;
 }
@@ -125,6 +131,8 @@ body {
 /* .accordion__heading:hover {
     background-color: #DDD;
 } */
+
+
 
 
 .contactUsPage > iframe {
