@@ -37,6 +37,8 @@ MAIN LIST:
             - Fonts are not uniform, this needs to be changed [done]
             - The cards in the cancer pages should not have text [done]
             - Making the cards themselves a link [done]
+            - The FAQ page glitches when one of the subcontainers is opened
+            - Add some support for mobile
 
         Platform Conversions:
             - *Use ionic to package the web app into a mobile app for ios and android*
