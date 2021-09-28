@@ -40,6 +40,9 @@ MAIN LIST:
             - The FAQ page glitches when one of the subcontainers is opened
             - Add some support for mobile
 
+        Bug fixes:
+            - Special characters not escaped in genes and more search
+        
         Platform Conversions:
             - *Use ionic to package the web app into a mobile app for ios and android*
 

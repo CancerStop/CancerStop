@@ -12,7 +12,7 @@ import '../../style.css';
 
 export default function FaqPage() {
     return (
-        <div className='faqPage'>
+        <div className='faqPage page'>
             <SubHeader text='FAQ' />
 
             <div style={{marginTop: 20, padding: 5}}>

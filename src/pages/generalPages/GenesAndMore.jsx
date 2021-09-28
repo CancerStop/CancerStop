@@ -8,7 +8,7 @@ export default function GenesAndMore() {
     const [variantInfoTerm, setVariantInfoTerm] = useState("");
 
     return (
-        <div className='genesAndMore'>
+        <div className='genesAndMore page'>
             <SubHeader text='Genes & More' />
 
             <div className='genesAndMore_formArea'>
