@@ -103,6 +103,11 @@ body {
 
 .faq_mainAccordionSection {
     padding: 10px;
+    overflow: hidden;
+}
+
+.faq_mainAccordionSection div {
+    overflow: hidden;
 }
 
 .faq_accordionContent {
