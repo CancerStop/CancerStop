@@ -1,13 +1,16 @@
 Week 1:
+
     Task 1: Add more cancers, and make choosing cancers easier by adding a search bar to the search [in progress]
     Task 2: Clean up the git repos so that there is only one place to put the code [in progress]
     Task 3: Sticky header needs to be created [in progress]
 
 Week 2:
+
     Task 1: The genes and more buttons need to be conditionally linked [in progress]
     Task 2: Internalize the features using iframes, or through JSON (if possible and when required)
 
 Week 3:
+
     Task 1: Use ionic to package the web app into a mobile app for ios and android
     Task 2: Genes and more add buttons for to choose the database they want
     Task 3: Start a react native app for CancerStop
@@ -15,6 +18,7 @@ Week 3:
 -------------------------------------------------------------------------------------------------
 
 MAIN LIST:
+
     Group Organization:
         - Getting a Jira and Confluence set-up
 
