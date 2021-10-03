@@ -5,7 +5,7 @@ import SubHeader from '../../components/SubHeader.jsx';
 
 export default function ContactUsPage() {
     return (
-        <div className='contactUsPage'>
+        <div className='contactUsPage page'>
             <SubHeader text='Contact Us' />
             <iframe
                 width='100%'

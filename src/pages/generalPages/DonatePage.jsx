@@ -4,7 +4,7 @@ import '../../style.css';
 
 export default function DonatePage() {
     return (
-        <div className='donatePage'>
+        <div className='donatePage page'>
             <SubHeader text='Donate' />
 
             <iframe
