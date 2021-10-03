@@ -5,7 +5,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-html, body, #root {
+html, body {
     height: 100%;
 }
 
@@ -14,7 +14,6 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
 
 .app {
     display: flex;
@@ -32,14 +31,15 @@ body {
     padding: 10px;
 }
 
-.page {
+/* .page {
     flex: 5;
     overflow: unset;
-}
+} */
 
 .footer {
-    flex-shrink: 0;
+    margin-top: auto;
     border-top: 0.5px solid black;
+    bottom: 0;
     padding-bottom: 10px;
 }
 
@@ -61,7 +61,6 @@ body {
     color: #4384e6;
 }
 
-
 .footer_text {
     padding-top: 20px;
     padding-right: 20px;
@@ -77,8 +76,6 @@ body {
     padding-right: 10px;
     padding-left: 10px;
 }
-
-
 
 .faq_accordionBody {
     margin-top: 150px;
@@ -123,6 +120,7 @@ body {
 .faq_note {
     margin-top: 5px;
 }
+
 @media screen and (max-width: 1025px) {
     .faq_accordionBody {
         width: 60%;
@@ -149,9 +147,6 @@ body {
     background-color: #DDD;
 } */
 
-
-
-
 .contactUsPage > iframe {
     margin-top: 20px;
 }
@@ -165,8 +160,8 @@ body {
 
 .cancerMenu_itemPanel {
     text-align: left;
-    margin-left: 10px;
-    padding: 10px;
+    /* margin-left: 10px;
+    padding: 10px; */
 }
 
 .cancerMenu_itemLink {
@@ -197,7 +192,7 @@ body {
 }
 
 .cancerPageCard:hover {
-    background-color: #4384e6;
+    background-color: #5ec9ff;
 }
 
 .genesAndMore {
