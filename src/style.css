@@ -192,7 +192,8 @@ body {
 }
 
 .cancerPageCard:hover {
-    background-color: #5ec9ff;
+    background-color: #0051ff;
+    color: white;
 }
 
 .genesAndMore {
