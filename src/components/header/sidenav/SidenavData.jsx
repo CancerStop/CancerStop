@@ -1,4 +1,3 @@
-import React from 'react';
 import { GiMedicines } from 'react-icons/gi';
 import { MdLocalHospital } from 'react-icons/md';
 import { BiLineChart } from 'react-icons/bi';

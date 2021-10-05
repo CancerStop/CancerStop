@@ -5,7 +5,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-html, body {
+html {
     height: 100%;
 }
 
@@ -19,23 +19,14 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    height: 100%;
 }
 
 .header {
     display: flex;
-    flex-shrink: 0;
     justify-content: space-between;
     align-items: center;
     border-bottom: 0.5px solid black;
     padding: 10px;
-}
-
-.footer {
-    margin-top: auto;
-    border-top: 0.5px solid black;
-    bottom: 0;
-    padding-bottom: 10px;
 }
 
 .header_title {
@@ -52,8 +43,15 @@ body {
     margin-left: 5px;
 }
 
-.header_title:hover {
+.header_title :hover {
     color: #4384e6;
+}
+
+.footer {
+    margin-top: auto;
+    border-top: 0.5px solid black;
+    bottom: 0;
+    padding-bottom: 10px;
 }
 
 .footer_text {
@@ -82,24 +80,8 @@ body {
     margin: auto;
 }
 
-.faq_accordionButton {
-    overflow: hidden;
-    background-color: #dbdbdb !important;
-    color: black !important;
-}
-
-.faq_accordionButton:hover {
-    background-color: #c6c6c6 !important;
-    color: black !important;
-}
-
 .faq_mainAccordionSection {
     padding: 10px;
-    overflow: hidden;
-}
-
-.faq_mainAccordionSection div {
-    overflow: hidden;
 }
 
 .faq_accordionContent {
@@ -138,10 +120,6 @@ body {
     }
 }
 
-/* .accordion__heading:hover {
-    background-color: #DDD;
-} */
-
 .contactUsPage > iframe {
     margin-top: 20px;
 }
@@ -174,21 +152,20 @@ body {
     align-items: center;
     display: grid;
     grid-column-gap: 50px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    row-gap: 50px;
-    grid-template-rows: repeat(auto-fit, 150px);
+    grid-template-columns: 220px;
+    grid-auto-rows: 150px;
     margin: auto;
     justify-content: center;
-    width: max(400px, 60%);
+}
+
+@media screen and (min-width: 550px) {
+    .cancerPageTemplate_actionButtons {
+        grid-template-columns: 220px 220px;
+    }
 }
 
 .cancerPageCard {
     text-align: center;
-}
-
-.cancerPageCard:hover {
-    background-color: #0051ff;
-    color: white;
 }
 
 .genesAndMore {
@@ -228,5 +205,11 @@ body {
 @media screen and (min-width: 1090px) {
     .genesAndMore_termInput {
         width: 60%;
+    }
+}
+
+@media screen and (min-width: 1060px) {
+    .cancerPageTemplate_actionButtons {
+        grid-template-columns: 220px 220px 220px;
     }
 }

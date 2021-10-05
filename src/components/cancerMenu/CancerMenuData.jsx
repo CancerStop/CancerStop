@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const CancerMenuData = [
     {
         name: 'Acute Myeloid Leukemia',

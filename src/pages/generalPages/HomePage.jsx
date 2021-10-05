@@ -1,4 +1,3 @@
-import React from 'react';
 import SubHeader from '../../components/SubHeader';
 import CancerMenu from '../../components/cancerMenu/CancerMenu.jsx';
 import '../../style.css';

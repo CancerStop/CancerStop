@@ -1,6 +1,4 @@
-import React from 'react';
 import '../../style.css';
-
 import SubHeader from '../../components/SubHeader.jsx';
 
 export default function ContactUsPage() {

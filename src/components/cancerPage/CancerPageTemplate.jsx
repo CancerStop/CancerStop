@@ -1,29 +1,22 @@
-import React from 'react';
 import '../../style.css';
 import CancerPageCard from './CancerPageCard.jsx';
 import SubHeader from '../SubHeader.jsx';
 
-export default function CancerPageTemplate({
-    name,
-    approvedDrugsLink,
-    clinicalTrialsLink,
-    survivalCurvesLink,
-    searchLink
-}) {
+export default function CancerPageTemplate({data}) {
     return (
         <div className='cancerPageTemplate'>
-            <SubHeader text={name} />
+            <SubHeader text={data.name} />
 
             <div className='cancerPageTemplate_actionButtons'>
                 <CancerPageCard
                     title='Approved Drugs'
-                    link={approvedDrugsLink}
+                    link={data.approved_drugs_link}
                     isInternal={false}
                 />
 
                 <CancerPageCard
                     title='Clinical Trials'
-                    link={clinicalTrialsLink}
+                    link={data.clinical_trials_link}
                     isInternal={false}
                 />
 
@@ -35,13 +28,13 @@ export default function CancerPageTemplate({
 
                 <CancerPageCard
                     title='Search'
-                    link={searchLink}
+                    link={data.search_link}
                     isInternal={false}
                 />
 
                 <CancerPageCard
                     title='Survival Curves'
-                    link={survivalCurvesLink}
+                    link={data.survival_curves_link}
                     isInternal={false}
                 />
             </div>
