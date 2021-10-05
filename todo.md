@@ -1,8 +1,7 @@
 Week 1:
 
     Task 1: Add more cancers, and make choosing cancers easier by adding a search bar to the search [in progress]
-    Task 2: Clean up the git repos so that there is only one place to put the code [in progress]
-    Task 3: Sticky header needs to be created [in progress]
+    Task 2: Clean up the git repos so that there is only one place to put the code [done]
 
 Week 2:
 
