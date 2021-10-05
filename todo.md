@@ -60,6 +60,3 @@ MAIN LIST:
 
         Platform Conversions:
             - Create a react native app for ios and android
-
-
-repository test
