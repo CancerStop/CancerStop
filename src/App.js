@@ -15,14 +15,24 @@ import ContactUsPage from './pages/generalPages/ContactUsPage';
 import DonatePage from './pages/generalPages/DonatePage';
 import GenesAndMore from './pages/generalPages/GenesAndMore.jsx';
 
-import AcuteLymphocyticLeukemia from './pages/cancerPages/AcuteLymphocyticLeukemia.jsx';
-import AcuteMonocyticLeukemia from './pages/cancerPages/AcuteMonocyticLeukemia.jsx';
-import AcuteMyeloidLeukemia from './pages/cancerPages/AcuteMyeloidLeukemia.jsx';
-import ChronicLymphocyticLeukemia from './pages/cancerPages/ChronicLymphocyticLeukemia.jsx';
-import LiverLymphaticBileAndDuct from './pages/cancerPages/LiverLymphaticBileAndDuct.jsx';
-import Lungs from './pages/cancerPages/Lungs.jsx';
+import AcuteLymphocyticLeukemia from './pages/cancerPages/leukemia/AcuteLymphocyticLeukemia.jsx';
+import AcuteMonocyticLeukemia from './pages/cancerPages/leukemia/AcuteMonocyticLeukemia.jsx';
+import AcuteMyeloidLeukemia from './pages/cancerPages/leukemia/AcuteMyeloidLeukemia.jsx';
+import ChronicLymphocyticLeukemia from './pages/cancerPages/leukemia/ChronicLymphocyticLeukemia.jsx';
+import ChronicMyeloidLeukemia from './pages/cancerPages/leukemia/ChronicMyeloidLeukemia.jsx';
+
+import BreastCancerAndLuminalA from './pages/cancerPages/breast/BreastCancerAndLuminalA';
+import BreastCancerAndTripleNegativeOrLuminalA from './pages/cancerPages/breast/BreastCancerAndTripleNegativeOrLuminalA';
+import BreastCancerAndLuminalB from './pages/cancerPages/breast/BreastCancerAndLuminalB.jsx';
+import BreastCancerAndHER2Enriched from './pages/cancerPages/breast/BreastCancerAndHER2Enriched';
+
+import Lungs from './pages/cancerPages/lungAndBronchus/Lungs.jsx';
+
 import Pancreas from './pages/cancerPages/Pancreas.jsx';
-import ChronicMyeloidLeukemia from './pages/cancerPages/ChronicMyeloidLeukemia.jsx';
+
+import LiverLymphaticBileAndDuct from './pages/cancerPages/LiverLymphaticBileAndDuct.jsx';
+
+import Glioblastoma from './pages/cancerPages/Glioblastoma.jsx';
 
 export default function App() {
     return (
@@ -44,6 +54,11 @@ export default function App() {
                     <Route path='/pancreas' component={Pancreas} />
                     <Route path='/chronic-myeloid-leukemia' component={ChronicMyeloidLeukemia} />
                     <Route path='/genes-and-more' component={GenesAndMore} />
+                    <Route path='/glioblastoma' component={Glioblastoma} />
+                    <Route path='/breast-cancer-and-luminal-a' component={BreastCancerAndLuminalA} />
+                    <Route path='/breast-cancer-and-triple-negative-or-luminal-a' component={BreastCancerAndTripleNegativeOrLuminalA} />
+                    <Route path='/breast-cancer-and-luminal-b' component={BreastCancerAndLuminalB} />
+                    <Route path='/breast-cancer-and-HER2-enriched' component={BreastCancerAndHER2Enriched} />
                 </Switch>
             </Router>
 

@@ -38,5 +38,30 @@ export const CancerMenuData = [
         name: 'Lungs',
         path: '/lungs',
         id: 8
+    },
+    {
+        name: 'Glioblastoma',
+        path: '/glioblastoma',
+        id: 9
+    },
+    {
+        name: 'Breast Cancer and Luminal A',
+        path: '/breast-cancer-and-luminal-a',
+        id: 10
+    },
+    {
+        name: 'Breast Cancer and Triple Negative or Luminal A',
+        path: '/breast-cancer-and-triple-negative-or-luminal-a',
+        id: 11
+    },
+    {
+        name: 'Breast Cancer and Luminal B',
+        path: '/breast-cancer-and-luminal-b',
+        id: 12
+    },
+    {
+        name: 'Breast Cancer and HER2 Enriched',
+        path: '/breast-cancer-and-HER2-enriched',
+        id: 13
     }
 ]
