@@ -1,8 +1,8 @@
 import CancerPageTemplate from '../../../components/cancerPage/CancerPageTemplate';
 import { CancerPageData } from '../../../components/cancerPage/CancerPageData';
 
-export default function AcuteMonocyticLeukemia() {
+export default function Colon() {
     return (
-        <CancerPageTemplate data={CancerPageData.acute_monocytic_leukemia} />
+        <CancerPageTemplate data={CancerPageData.colon} />
     )
 }

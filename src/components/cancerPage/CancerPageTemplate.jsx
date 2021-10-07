@@ -1,6 +1,6 @@
 import '../../style.css';
-import CancerPageCard from './CancerPageCard.jsx';
-import SubHeader from '../SubHeader.jsx';
+import CancerPageCard from './CancerPageCard';
+import SubHeader from '../SubHeader';
 
 export default function CancerPageTemplate({data}) {
     return (

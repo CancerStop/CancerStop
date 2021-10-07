@@ -89,5 +89,89 @@ export const CancerPageData = {
         clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Breast+Cancer&term=%22HER2+Enriched%22&cntry=&state=&city=&dist=',
         survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=621&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&hdn_sex=3&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
         search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Breast%20Cancer%20and%20HER2%20Enriched'
+    },
+    colon: {
+        name: 'Colon',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/colorectal',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=%22Colon+Cancer%22&term=&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=21&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&hdn_sex=3&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Color%20Cancer'
+    },
+    rectum: {
+        name: 'Rectum',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/colorectal',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Rectal+Cancer&term=&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=31&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&sex=1&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Rectal%20Cancer'
+    },
+    adenocarcinoma_in_esophagus: {
+        name: 'Adenocarcinoma (Esophagus)',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/esophageal',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Esophageal+Cancer&term=Adenosarcoma&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=600&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&sex=1&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Esophagal%20Cancer%20Adenocarcinoma'
+    },
+    squamous_cell_carcinoma: {
+        name: 'Squamous Cell Carcinoma',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/esophageal',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Esophageal+Cancer&term=%22Squamous+Cell+Carcinoma%22&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=601&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&sex=1&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Esophagal%20Cancer%20Squamous%20Cell%20Carcinoma'
+    },
+    // chronic_myelomocytic_leukemia: {
+    //     name: 'Chronic Myelomocytic Leuekmia',
+    //     approved_drugs_link: '',
+    //     clinical_trials_link: '',
+    //     survival_curves_link: '',
+    //     search_link: ''
+    // },
+    skin_melanoma: {
+        name: 'Melanoma of the Skin',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/melanoma',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Skin+Melanoma&term=&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=53&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&sex=1&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Skin%20Melanoma'
+    },
+    myeloma: {
+        name: 'Myeloma',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/multiple-myeloma',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Myeloma&term=&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=89&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&sex=1&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Myeloma'
+    },
+    ovaries: {
+        name: 'Ovaries',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/ovarian',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Ovarian+Cancer&term=&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=61&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&sex=1&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Ovarian%20Cancer'
+    },
+    prostate: {
+        name: 'Prostate',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/prostate',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Prostate+Cancer&term=&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=66&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&hdn_sex=2&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Prostate%20Cancer'
+    },
+    small_intestine: {
+        name: 'Small Intestine',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/gist',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Small+Intestine+Cancer&term=&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=19&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&hdn_sex=2&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Small%20Intestine%20Cancer'
+    },
+    stomach: {
+        name: 'Stomach',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/stomach',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Stomach+Cancer&term=&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=18&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&sex=1&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Stomach%20Cancer'
+    },
+    testis: {
+        name: 'Testis',
+        approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/testicular',
+        clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Testicular+Cancer&term=&cntry=&state=&city=&dist=',
+        survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=67&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&hdn_sex=2&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
+        search_link: 'https://cse.google.com/cse?cx=005505425243181267405:xmmlkfi5txg&q=Testicular%20Cancer'
     }
 }

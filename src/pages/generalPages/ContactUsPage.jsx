@@ -1,5 +1,5 @@
 import '../../style.css';
-import SubHeader from '../../components/SubHeader.jsx';
+import SubHeader from '../../components/SubHeader';
 
 export default function ContactUsPage() {
     return (

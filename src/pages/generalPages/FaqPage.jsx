@@ -1,4 +1,4 @@
-import SubHeader from '../../components/SubHeader.jsx';
+import SubHeader from '../../components/SubHeader';
 import {
     Accordion,
     AccordionItem,
