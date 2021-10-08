@@ -6,7 +6,6 @@ import {
     AccordionItemButton,
     AccordionItemPanel,
 } from 'react-accessible-accordion';
-// import '../../Accordion.css';
 import { CancerMenuData } from './CancerMenuData';
 import { Link } from 'react-router-dom';
 import '../../style.css';
@@ -20,10 +19,22 @@ export default function CancerMenu() {
                     <AccordionItemHeading>
                         <AccordionItemButton>
                             Choose a Cancer
+                            <input
+                                name="search"
+                                id="CancerMenuSearchBox"
+                                type="text"
+                                placeholder="Search here..."
+                                value={window.location.search?.split("?search=")?.[1] ?? ""}
+                                style={{"margin-left": "15%"}}
+                                onChange={() => {
+                                    window.location.search = "?search=" + document.getElementById("CancerMenuSearchBox")?.value;
+                                }}
+                            />
                         </AccordionItemButton>
                     </AccordionItemHeading>
-
-                    {CancerMenuData.map((item) => (
+                    {CancerMenuData.filter((item) => {
+                        return item.name.toLowerCase().includes(window.location.search?.split("?search=")?.[1]?.toLowerCase() ?? "");
+                    }).map((item) => (
                         <AccordionItemPanel
                             className='cancerMenu_itemPanel'
                             key={item.id}
