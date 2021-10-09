@@ -26,7 +26,7 @@ import BreastCancerAndTripleNegativeOrLuminalA from './pages/cancerPages/breast/
 import BreastCancerAndLuminalB from './pages/cancerPages/breast/BreastCancerAndLuminalB';
 import BreastCancerAndHER2Enriched from './pages/cancerPages/breast/BreastCancerAndHER2Enriched';
 
-import Lungs from './pages/cancerPages/lungAndBronchus/Lungs';
+import AdenocarcinomaInLungs from './pages/cancerPages/lungAndBronchus/AdenocarcinomaInLungs';
 
 import Pancreas from './pages/cancerPages/Pancreas';
 import LiverLymphaticBileAndDuct from './pages/cancerPages/LiverLymphaticBileAndDuct';
@@ -56,24 +56,17 @@ export default function App() {
                     <Route path='/faq' component={FaqPage} />
                     <Route path='/contact-us' component={ContactUsPage} />
                     <Route path='/donate' component={DonatePage} />
+                    <Route path='/genes-and-more' component={GenesAndMore} />
+
                     <Route path='/acute-lymphocytic-leukemia' component={AcuteLymphocyticLeukemia} />
                     <Route path='/acute-monocytic-leukemia' component={AcuteMonocyticLeukemia} />
                     <Route path='/acute-myeloid-leukemia' component={AcuteMyeloidLeukemia} />
                     <Route path='/chronic-lymphocytic-leukemia' component={ChronicLymphocyticLeukemia} />
-                    <Route path='/liver-lymphatic-bile-and-duct' component={LiverLymphaticBileAndDuct} />
-                    <Route path='/lungs' component={Lungs} />
-                    <Route path='/pancreas' component={Pancreas} />
                     <Route path='/chronic-myeloid-leukemia' component={ChronicMyeloidLeukemia} />
-                    <Route path='/genes-and-more' component={GenesAndMore} />
+
+                    <Route path='/liver-lymphatic-bile-and-duct' component={LiverLymphaticBileAndDuct} />
+                    <Route path='/pancreas' component={Pancreas} />
                     <Route path='/glioblastoma' component={Glioblastoma} />
-                    <Route path='/breast-cancer-and-luminal-a' component={BreastCancerAndLuminalA} />
-                    <Route path='/breast-cancer-and-triple-negative-or-luminal-a' component={BreastCancerAndTripleNegativeOrLuminalA} />
-                    <Route path='/breast-cancer-and-luminal-b' component={BreastCancerAndLuminalB} />
-                    <Route path='/breast-cancer-and-HER2-enriched' component={BreastCancerAndHER2Enriched} />
-                    <Route path='/colon' component={Colon} />
-                    <Route path='/rectum' component={Rectum} />
-                    <Route path='/adenocarcinoma-in-esophagus' component={AdenocarcinomaInEsophagus} />
-                    <Route path='/squamous-cell-carcinoma' component={SquamousCellCarcinoma} />
                     <Route path='/melanoma-of-the-skin' component={SkinMelanoma} />
                     <Route path='/myeloma' component={Myeloma} />
                     <Route path='/ovaries' component={Ovaries} />
@@ -81,6 +74,19 @@ export default function App() {
                     <Route path='/small-intestine' component={SmallIntestine} />
                     <Route path='/stomach' component={Stomach} />
                     <Route path='/testis' component={Testis} />
+
+                    <Route path='/breast-cancer-and-luminal-a' component={BreastCancerAndLuminalA} />
+                    <Route path='/breast-cancer-and-triple-negative-or-luminal-a' component={BreastCancerAndTripleNegativeOrLuminalA} />
+                    <Route path='/breast-cancer-and-luminal-b' component={BreastCancerAndLuminalB} />
+                    <Route path='/breast-cancer-and-HER2-enriched' component={BreastCancerAndHER2Enriched} />
+
+                    <Route path='/colon' component={Colon} />
+                    <Route path='/rectum' component={Rectum} />
+
+                    <Route path='/adenocarcinoma-in-esophagus' component={AdenocarcinomaInEsophagus} />
+                    <Route path='/squamous-cell-carcinoma' component={SquamousCellCarcinoma} />
+
+                    <Route path='/adenocarcinoma-in-lungs' component={AdenocarcinomaInLungs} />
                 </Switch>
             </Router>
 

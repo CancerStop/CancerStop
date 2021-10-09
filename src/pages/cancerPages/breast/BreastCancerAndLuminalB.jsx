@@ -1,8 +1,8 @@
 import CancerPageTemplate from '../../../components/cancerPage/CancerPageTemplate';
-import { CancerPageData } from '../../../components/cancerPage/CancerPageData';
+import { CancerData } from '../../../components/cancerPage/CancerData';
 
 export default function BreastCancerAndLuminalB() {
     return (
-        <CancerPageTemplate data={CancerPageData.breast_cancer_and_luminal_b} />
+        <CancerPageTemplate data={CancerData.breast_cancer_and_luminal_b} />
     )
 }

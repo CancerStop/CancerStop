@@ -34,89 +34,94 @@ export const CancerMenuData = [
         path: '/pancreas',
         id: 7
     },
-    {
-        name: 'Lungs',
-        path: '/lungs',
-        id: 8
-    },
+    // {
+    //     name: 'Lungs',
+    //     path: '/lungs',
+    //     id: 8
+    // },
     {
         name: 'Glioblastoma',
         path: '/glioblastoma',
-        id: 9
+        id: 8
     },
     {
         name: 'Breast Cancer and Luminal A',
         path: '/breast-cancer-and-luminal-a',
-        id: 10
+        id: 9
     },
     {
         name: 'Breast Cancer and Triple Negative or Luminal A',
         path: '/breast-cancer-and-triple-negative-or-luminal-a',
-        id: 11
+        id: 10
     },
     {
         name: 'Breast Cancer and Luminal B',
         path: '/breast-cancer-and-luminal-b',
-        id: 12
+        id: 11
     },
     {
         name: 'Breast Cancer and HER2 Enriched',
         path: '/breast-cancer-and-HER2-enriched',
-        id: 13
+        id: 12
     },
     {
         name: 'Colon',
         path: '/colon',
-        id: 14
+        id: 13
     },
     {
         name: 'Rectum',
         path: '/rectum',
-        id: 15
+        id: 14
     },
     {
         name: 'Adenocarcinoma (Esophagus)',
         path: '/adenocarcinoma-in-esophagus',
-        id: 16
+        id: 15
     },
     {
         name: 'Squamous Cell Carcinoma',
         path: '/squamous-cell-carcinoma',
-        id: 17
+        id: 16
     },
     {
         name: 'Melanoma of the Skin',
         path: '/melanoma-of-the-skin',
-        id: 18
+        id: 17
     },
     {
         name: 'Myeloma',
         path: '/myeloma',
-        id: 19
+        id: 18
     },
     {
         name: 'Ovaries',
         path: '/ovaries',
-        id: 20
+        id: 29
     },
     {
         name: 'Prostate',
         path: '/prostate',
-        id: 21
+        id: 20
     },
     {
         name: 'Small Intestine',
         path: '/small-intestine',
-        id: 22
+        id: 21
     },
     {
         name: 'Stomach',
         path: '/stomach',
-        id: 23
+        id: 22
     },
     {
         name: 'Testis',
         path: '/testis',
+        id: 23
+    },
+    {
+        name: 'Adenocarcinoma In Lungs',
+        path: 'adenocarcinoma-in-lungs',
         id: 24
     }
 ];

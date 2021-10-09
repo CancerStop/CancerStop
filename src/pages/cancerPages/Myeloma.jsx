@@ -1,8 +1,8 @@
-import { CancerPageData } from '../../components/cancerPage/CancerPageData';
+import { CancerData } from '../../components/cancerPage/CancerData';
 import CancerPageTemplate from '../../components/cancerPage/CancerPageTemplate';
 
 export default function Myeloma() {
     return (
-        <CancerPageTemplate data={CancerPageData.myeloma} />
+        <CancerPageTemplate data={CancerData.myeloma} />
     );
 }

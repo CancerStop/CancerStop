@@ -1,8 +1,8 @@
-import { CancerPageData } from '../../components/cancerPage/CancerPageData';
+import { CancerData } from '../../components/cancerPage/CancerData';
 import CancerPageTemplate from '../../components/cancerPage/CancerPageTemplate';
 
 export default function Glioblastoma() {
     return (
-        <CancerPageTemplate data={CancerPageData.glioblastoma} />
+        <CancerPageTemplate data={CancerData.glioblastoma} />
     );
 }

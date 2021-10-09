@@ -1,8 +1,8 @@
-import { CancerPageData } from '../../components/cancerPage/CancerPageData';
+import { CancerData } from '../../components/cancerPage/CancerData';
 import CancerPageTemplate from '../../components/cancerPage/CancerPageTemplate';
 
 export default function Ovaries() {
     return (
-        <CancerPageTemplate data={CancerPageData.ovaries} />
+        <CancerPageTemplate data={CancerData.ovaries} />
     );
 }
