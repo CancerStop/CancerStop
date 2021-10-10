@@ -42,8 +42,8 @@ MAIN LIST:
             - Fonts are not uniform, this needs to be changed [done]
             - The cards in the cancer pages should not have text [done]
             - Making the cards themselves a link [done]
-            - The FAQ page glitches when one of the subcontainers is opened
-            - Add some support for mobile
+            - The FAQ page glitches when one of the subcontainers is opened [done]
+            - Add some support for mobile [done]
 
         Bug fixes:
             - Special characters not escaped in genes and more search
