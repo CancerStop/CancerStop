@@ -1,8 +1,8 @@
 import CancerPageTemplate from '../../components/cancerPage/CancerPageTemplate';
-import { CancerPageData } from '../../components/cancerPage/CancerPageData';
+import { CancerData } from '../../components/cancerPage/CancerData';
 
 export default function SmallIntestine() {
     return (
-        <CancerPageTemplate data={CancerPageData.small_intestine} />
+        <CancerPageTemplate data={CancerData.small_intestine} />
     );
 }

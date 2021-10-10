@@ -1,8 +1,8 @@
 import CancerPageTemplate from '../../../components/cancerPage/CancerPageTemplate';
-import { CancerPageData } from '../../../components/cancerPage/CancerPageData';
+import { CancerData } from '../../../components/cancerPage/CancerData';
 
 export default function AcuteMyeloidLeukemia() {
     return (
-        <CancerPageTemplate data={CancerPageData.acute_myeloid_leukemia} />
+        <CancerPageTemplate data={CancerData.acute_myeloid_leukemia} />
     )
 }

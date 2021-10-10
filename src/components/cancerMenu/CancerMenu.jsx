@@ -19,7 +19,7 @@ export default function CancerMenu() {
                     <AccordionItemHeading>
                         <AccordionItemButton>
                             Choose a Cancer
-                            <input
+                            {/* <input
                                 name="search"
                                 id="CancerMenuSearchBox"
                                 type="text"
@@ -29,12 +29,10 @@ export default function CancerMenu() {
                                 onChange={() => {
                                     window.location.search = "?search=" + document.getElementById("CancerMenuSearchBox")?.value;
                                 }}
-                            />
+                            /> */}
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    {CancerMenuData.filter((item) => {
-                        return item.name.toLowerCase().includes(window.location.search?.split("?search=")?.[1]?.toLowerCase() ?? "");
-                    }).map((item) => (
+                    {CancerMenuData.map((item) => (
                         <AccordionItemPanel
                             className='cancerMenu_itemPanel'
                             key={item.id}

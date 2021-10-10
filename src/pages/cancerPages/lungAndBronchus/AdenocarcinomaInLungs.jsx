@@ -1,8 +1,8 @@
 import CancerPageTemplate from '../../../components/cancerPage/CancerPageTemplate';
 import { CancerData } from '../../../components/cancerPage/CancerData';
 
-export default function Colon() {
+export default function AdenocarcinomaInLungs() {
     return (
-        <CancerPageTemplate data={CancerData.colon} />
+        <CancerPageTemplate data={CancerData.adenocarcinoma_in_lungs} />
     )
 }

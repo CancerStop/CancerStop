@@ -14,4 +14,4 @@ The app is not affiliated to any of the external sources presented herein. Sites
 
 
 © 2021 Queromatics. All Rights Reserved.
-Developed by Vedanth Ramji, Ganesh Ram, Dr. Natarajan Ganesan, and BalaM314.
+Developed by Vedanth Ramji, Balaadithya Muralitharan, Ganesh Ram and Dr. Natarajan Ganesan.

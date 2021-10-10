@@ -1,8 +1,8 @@
 import CancerPageTemplate from '../../../components/cancerPage/CancerPageTemplate';
-import { CancerPageData } from '../../../components/cancerPage/CancerPageData';
+import { CancerData } from '../../../components/cancerPage/CancerData';
 
 export default function AdenocarcinomaInEsophagus() {
     return (
-        <CancerPageTemplate data={CancerPageData.adenocarcinoma_in_esophagus} />
+        <CancerPageTemplate data={CancerData.adenocarcinoma_in_esophagus} />
     )
 }

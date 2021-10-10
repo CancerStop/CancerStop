@@ -1,8 +1,8 @@
 import CancerPageTemplate from '../../../components/cancerPage/CancerPageTemplate';
-import { CancerPageData } from '../../../components/cancerPage/CancerPageData';
+import { CancerData } from '../../../components/cancerPage/CancerData';
 
 export default function ChronicLymphocyticLeukemia() {
     return (
-        <CancerPageTemplate data={CancerPageData.chronic_lyphocytic_leukemia} />
+        <CancerPageTemplate data={CancerData.chronic_lyphocytic_leukemia} />
     );
 }

@@ -10,7 +10,7 @@ export default function Footer() {
             </p>
 
             <p className="footer_text">
-                © 2021 Queromatics. All Rights Reserved | Developed by Vedanth Ramji, Ganesh Ram and Dr. Natarajan Ganesan
+                © 2021 Queromatics. All Rights Reserved | Developed by Balaadithya Muralitharan, Vedanth Ramji, Ganesh Ram and Dr. Natarajan Ganesan
             </p>
         </div>
     )
