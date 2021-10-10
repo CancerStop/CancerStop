@@ -120,7 +120,7 @@ export const CancerMenuData = [
         id: 23
     },
     {
-        name: 'Adenocarcinoma In Lungs',
+        name: 'Adenocarcinoma (Lungs)',
         path: 'adenocarcinoma-in-lungs',
         id: 24
     }
