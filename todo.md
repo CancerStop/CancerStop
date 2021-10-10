@@ -1,12 +1,13 @@
 Week 1:
 
-    Task 1: Add more cancers, and make choosing cancers easier by adding a search bar to the search [in progress]
+    Task 1: Add more cancers [done]
     Task 2: Clean up the git repos so that there is only one place to put the code [done]
 
 Week 2:
 
     Task 1: The genes and more buttons need to be conditionally linked [in progress]
-    Task 2: Internalize the features using iframes, or through JSON (if possible and when required)
+    Task 2: Internalize the features using iframes, or through JSON (if possible and when required) [in progress]
+    Task 3: Add search bar in choose cancer menu [in progress]
 
 Week 3:
 
