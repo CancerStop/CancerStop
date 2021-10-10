@@ -2,6 +2,7 @@ Week 1:
 
     Task 1: Add more cancers [done]
     Task 2: Clean up the git repos so that there is only one place to put the code [done]
+    Task 3: Add CMML cancer [in progress]
 
 Week 2:
 
@@ -46,7 +47,7 @@ MAIN LIST:
 
         Bug fixes:
             - Special characters not escaped in genes and more search
-        
+
         Platform Conversions:
             - *Use ionic to package the web app into a mobile app for ios and android*
 
