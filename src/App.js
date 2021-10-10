@@ -14,6 +14,7 @@ import FaqPage from './pages/generalPages/FaqPage';
 import ContactUsPage from './pages/generalPages/ContactUsPage';
 import DonatePage from './pages/generalPages/DonatePage';
 import GenesAndMore from './pages/generalPages/GenesAndMore';
+import NotFoundPage from './pages/generalPages/NotFound.jsx';
 
 import AcuteLymphocyticLeukemia from './pages/cancerPages/leukemia/AcuteLymphocyticLeukemia';
 import AcuteMonocyticLeukemia from './pages/cancerPages/leukemia/AcuteMonocyticLeukemia';
@@ -81,6 +82,7 @@ export default function App() {
                     <Route path='/small-intestine' component={SmallIntestine} />
                     <Route path='/stomach' component={Stomach} />
                     <Route path='/testis' component={Testis} />
+                    <Route component={NotFoundPage} />
                 </Switch>
             </Router>
 
