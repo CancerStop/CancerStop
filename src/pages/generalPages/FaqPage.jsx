@@ -6,7 +6,6 @@ import {
     AccordionItemButton,
     AccordionItemPanel,
 } from "react-accessible-accordion";
-// import "../../Accordion.css";
 import '../../style.css';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
