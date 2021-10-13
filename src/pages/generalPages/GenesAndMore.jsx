@@ -4,8 +4,11 @@ import '../../style.css';
 import SubHeader from '../../components/SubHeader';
 
 export default function GenesAndMore() {
-    const [geneInfoTerm, setGeneInfoTerm] = useState("");
-    const [variantInfoTerm, setVariantInfoTerm] = useState("");
+    const geneInfoLinkTemplate = 'https://www.ncbi.nlm.nih.gov/gene/?term=';
+    const variantInfoLinkTemplate = 'https://www.ncbi.nlm.nih.gov/clinvar/?term=';
+
+    const [geneInfoTerm, setGeneInfoTerm] = useState('');
+    const [variantInfoTerm, setVariantInfoTerm] = useState('');
 
     return (
         <div className='genesAndMore page'>
@@ -28,7 +31,7 @@ export default function GenesAndMore() {
                             variant="contained"
                         >
                             <a
-                                href={`https://www.ncbi.nlm.nih.gov/gene/?term=${geneInfoTerm}%20AND%20HOMO%20SAPIENS[porgn:__txid9606]`}
+                                href={`https://www.ncbi.nlm.nih.gov/gene/?term=${geneInfoTerm}`}
                                 target="_blank"
                                 className="genesAndMore_searchButton"
                             >

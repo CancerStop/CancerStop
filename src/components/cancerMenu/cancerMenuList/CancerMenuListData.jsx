@@ -1,49 +1,17 @@
 export const CancerMenuListData = [
     {
         group: true,
-        name: 'Leukemia',
-        id: 1,
-        items: [
-            {
-                name: 'Acute Myeloid Leukemia',
-                path: '/acute-myeloid-leukemia',
-                id: 1
-            },
-            {
-                name: 'Chronic Myeloid Leukemia',
-                path: '/chronic-myeloid-leukemia',
-                id: 2
-            },
-            {
-                name: 'Acute Monocytic Leukemia',
-                path: '/acute-monocytic-leukemia',
-                id: 3
-            },
-            {
-                name: 'Acute Lymphocytic Leukemia',
-                path: '/acute-lymphocytic-leukemia',
-                id: 4
-            },
-            {
-                name: 'Chronic Lymphocytic Leukemia',
-                path: '/chronic-lymphocytic-leukemia',
-                id: 5
-            }
-        ]
-    },
-    {
-        group: true,
         name: 'Breast',
         id: 2,
         items: [
             {
-                name: 'Breast Cancer and Luminal A',
-                path: '/breast-cancer-and-luminal-a',
+                name: 'Breast Cancer and HER2 Enriched',
+                path: 'breast-cancer-and-HER2-enriched',
                 id: 1
             },
             {
-                name: 'Breast Cancer and Triple Negative or Luminal A',
-                path: '/breast-cancer-and-triple-negative-or-luminal-a',
+                name: 'Breast Cancer and Luminal A',
+                path: '/breast-cancer-and-luminal-a',
                 id: 2
             },
             {
@@ -52,8 +20,8 @@ export const CancerMenuListData = [
                 id: 3
             },
             {
-                name: 'Breast Cancer and HER2 Enriched',
-                path: '/breast-cancer-and-HER2-enriched',
+                name: 'Breast Cancer and Triple Negative or Luminal A',
+                path: '/breast-cancer-and-triple-negative-or-luminal-a',
                 id: 4
             },
         ]
@@ -94,6 +62,38 @@ export const CancerMenuListData = [
     },
     {
         group: true,
+        name: 'Leukemia',
+        id: 1,
+        items: [
+            {
+                name: 'Acute Lymphocytic Leukemia',
+                path: '/acute-lymphocytic-leukemia',
+                id: 1
+            },
+            {
+                name: 'Acute Monocytic Leukemia',
+                path: '/acute-monocytic-leukemia',
+                id: 2
+            },
+            {
+                name: 'Acute Myeloid Leukemia',
+                path: '/acute-myeloid-leukemia',
+                id: 3
+            },
+            {
+                name: 'Chronic Lymphocytic Leukemia',
+                path: '/chronic-lymphocytic-leukemia',
+                id: 4
+            },
+            {
+                name: 'Chronic Myeloid Leukemia',
+                path: '/chronic-myeloid-leukemia',
+                id: 5
+            },
+        ]
+    },
+    {
+        group: true,
         name: 'Lung and Bronchus',
         items: [
             {
@@ -105,39 +105,39 @@ export const CancerMenuListData = [
     },
     {
         group: false,
+        name: 'Glioblastoma',
+        path: '/glioblastoma',
+        id: 5
+    },
+    {
+        group: false,
         name: 'Liver Lymphatic Bile and Duct',
         path: '/liver-lymphatic-bile-and-duct',
         id: 5
     },
     {
         group: false,
-        name: 'Pancreas',
-        path: '/pancreas',
-        id: 6
-    },
-    {
-        group: false,
-        name: 'Glioblastoma',
-        path: '/glioblastoma',
-        id: 7
-    },
-    {
-        group: false,
         name: 'Melanoma of the Skin',
         path: '/melanoma-of-the-skin',
-        id: 8
+        id: 6
     },
     {
         group: false,
         name: 'Myeloma',
         path: '/myeloma',
-        id: 9
+        id: 7
     },
     {
         group: false,
         name: 'Ovaries',
         path: '/ovaries',
-        id: 10
+        id: 8
+    },
+    {
+        group: false,
+        name: 'Pancreas',
+        path: '/pancreas',
+        id: 6
     },
     {
         group: false,
