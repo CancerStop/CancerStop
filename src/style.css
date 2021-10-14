@@ -175,6 +175,11 @@ body {
 
 .cancerPageCard {
     text-align: center;
+    background-color: white;
+}
+
+.cancerPageCard :hover {
+    background-color: #7DEDFF;
 }
 
 .genesAndMore {
