@@ -64,30 +64,6 @@ export default function CancerMenuList() {
                             )
                         }
                     })}
-
-                    {/* <AccordionItemPanel>
-                        <AccordionItem>
-                            <AccordionItemHeading>
-                                <AccordionItemButton>
-                                    Cancer List
-                                </AccordionItemButton>
-                            </AccordionItemHeading>
-
-                            {CancerMenuListData.map((item) => (
-                                <AccordionItemPanel
-                                    className='cancerMenuList_itemPanel'
-                                    key={item.id}
-                                >
-                                    <Link
-                                        className='cancerMenuList_itemLink'
-                                        to={item.path}
-                                    >
-                                        {item.name}
-                                    </Link>
-                                </AccordionItemPanel>
-                            ))}
-                        </AccordionItem>
-                    </AccordionItemPanel> */}
                 </AccordionItem>
             </Accordion>
         </div>

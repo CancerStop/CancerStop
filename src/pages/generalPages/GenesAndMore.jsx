@@ -10,6 +10,16 @@ export default function GenesAndMore() {
     const [geneInfoTerm, setGeneInfoTerm] = useState('');
     const [variantInfoTerm, setVariantInfoTerm] = useState('');
 
+    const [variantInfoLink, setVariantInfoLink] = useState('');
+
+    const handleVariantInfoSubmit = () => {
+        if (geneInfoTerm != '') {
+            setVariantInfoLink(variantInfoLinkTemplate.concat(variantInfoTerm, '%20', geneInfoTerm));
+        } else {
+            setVariantInfoLink(variantInfoLinkTemplate.concat(variantInfoTerm));
+        }
+    }
+
     return (
         <div className='genesAndMore page'>
             <SubHeader text='Genes & More' />
@@ -31,7 +41,7 @@ export default function GenesAndMore() {
                             variant="contained"
                         >
                             <a
-                                href={`https://www.ncbi.nlm.nih.gov/gene/?term=${geneInfoTerm}`}
+                                href={geneInfoLinkTemplate.concat(geneInfoTerm)}
                                 target="_blank"
                                 className="genesAndMore_searchButton"
                             >
@@ -55,10 +65,11 @@ export default function GenesAndMore() {
                         <Button
                             className="genesAndMore_searchButton"
                             variant="contained"
+                            onClick={handleVariantInfoSubmit}
                         >
                             <a
                                 target="_blank"
-                                href={`https://www.ncbi.nlm.nih.gov/clinvar/?term=${variantInfoTerm}`}
+                                href={variantInfoLink}
                                 className="genesAndMore_searchButton"
                             >
                                 Search Variant Info
