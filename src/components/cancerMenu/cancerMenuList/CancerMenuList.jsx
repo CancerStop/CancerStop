@@ -7,7 +7,7 @@ import {
     AccordionItemButton,
     AccordionItemPanel,
 } from 'react-accessible-accordion';
-import 'react-accessible-accordion/dist/fancy-example.css';
+import '../../../Accordion.css';
 import { CancerMenuListData } from './CancerMenuListData';
 
 export default function CancerMenuList() {
