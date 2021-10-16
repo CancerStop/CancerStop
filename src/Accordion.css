@@ -27,7 +27,7 @@
 	background-color: #ddd;
 }
 
-.accordion__button:before {
+.accordion__button::before {
 	display: inline-block;
 	content: '';
 	height: 10px;
@@ -35,13 +35,16 @@
 	margin-right: 12px;
 	border-bottom: 2px solid currentColor;
 	border-right: 2px solid currentColor;
-	transform: rotate(-45deg);
+	animation-name: turn;
+	animation-duration: 200ms;
+	animation-fill-mode: both;
 }
 
-.accordion__button[aria-expanded='true']::before,
-.accordion__button[aria-selected='true']::before {
-	transform: rotate(45deg);
+
+.accordion__button[aria-expanded='true']::before {
+	animation-name: turnback;
 }
+
 
 [hidden] {
 	display: none;
@@ -50,19 +53,29 @@
 .accordion__panel {
 	padding: 20px;
 	padding-bottom: 0px;
-	animation: fadein 0.35s ease-in;
 }
 
-/* -------------------------------------------------- */
-/* ---------------- Animation part ------------------ */
-/* -------------------------------------------------- */
+.accordion__panel div {
+	animation: fadein 0.35s;
+}
+
+@keyframes turn {
+	from {transform: rotate(45deg);}
+	to {transform: rotate(-45deg);}
+}
+@keyframes turnback {
+	from {transform: rotate(-45deg);}
+	to {transform: rotate(45deg);}
+}
+
+
 
 @keyframes fadein {
 	0% {
-			opacity: 0;
+		opacity: 0;
 	}
 
 	100% {
-			opacity: 1;
+		opacity: 1;
 	}
 }
