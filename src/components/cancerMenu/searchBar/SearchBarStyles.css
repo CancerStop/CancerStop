@@ -35,12 +35,11 @@ input:focus {
 }
 
 .dataResult {
-    margin-top: 5px;
-    width: 280px;
+    margin-top: 1px;
+    width: 255px;
     height: 150px;
     background-color: #f3f3f3;
     overflow-y: auto;
-    border-radius: 10px;
     z-index: 10000;
 }
 
@@ -51,6 +50,7 @@ input:focus {
     align-items: center;
     color: black;
     border-bottom: 1px solid #d8d8d8;
+    border-top: 1px solid #d8d8d8;
 }
 
 .dataItem p {
