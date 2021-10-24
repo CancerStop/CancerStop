@@ -35,11 +35,13 @@
 	margin-right: 12px;
 	border-bottom: 2px solid currentColor;
 	border-right: 2px solid currentColor;
-	animation-name: turn;
 	animation-duration: 200ms;
 	animation-fill-mode: both;
 }
 
+.accordion__button[aria-expanded='false']::before {
+	animation-name: turn;
+}
 
 .accordion__button[aria-expanded='true']::before {
 	animation-name: turnback;
