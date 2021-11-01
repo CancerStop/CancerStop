@@ -94,7 +94,7 @@ export default function App() {
                     <Route path='/small-intestine' component={SmallIntestine} />
                     <Route path='/stomach' component={Stomach} />
                     <Route path='/testis' component={Testis} />
-                    
+
                     <Route component={NotFoundPage} />
 
                 </Switch>
