@@ -4,7 +4,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { SidenavData } from './SidenavData';
+import { SidenavData } from '../../../data/SidenavData';
 
 export default function Sidenav() {
     const [sidebar, setSidebar] = useState(false);
@@ -48,26 +48,6 @@ export default function Sidenav() {
                                 )
                             }
                         })}
-
-                        {/* {BurgernavInternalLinks.map((item, index) => (
-                            <li key={index} className={item.cName}>
-                                <Link to={item.path}>
-                                    {item.icon}
-                                    <span>{item.title}</span>
-                                </Link>
-                            </li>
-                            )
-                            )}
-
-                            {BurgerNavExternalLinks.map((item, index) => (
-                            <li key={index} className={item.cName}>
-                                <a href={item.path}>
-                                    {item.icon}
-                                    <span>{item.title}</span>
-                                </a>
-                            </li>
-                            )
-                        )} */}
                     </ul>
                 </nav>
             </IconContext.Provider>

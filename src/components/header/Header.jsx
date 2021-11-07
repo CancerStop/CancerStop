@@ -1,5 +1,5 @@
 import '../../style.css';
-import logo from './logo.png';
+import logo from '../../images/logo.png';
 
 import { Link } from "react-router-dom";
 import Sidenav from './sidenav/Sidenav';
