@@ -1,5 +1,5 @@
 import { CancerData } from '../../../components/cancerPage/CancerData';
-import CancerPageTemplate from '../../../components/cancerPage/CancerPageTemplate';
+import CancerPageTemplate from '../../../templates/CancerPageTemplate';
 
 export default function ChronicMyeloidLeukemia() {
     return (

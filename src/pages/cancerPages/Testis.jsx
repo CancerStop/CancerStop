@@ -1,4 +1,4 @@
-import CancerPageTemplate from '../../components/cancerPage/CancerPageTemplate';
+import CancerPageTemplate from '../../templates/CancerPageTemplate';
 import { CancerData } from '../../components/cancerPage/CancerData';
 
 export default function Testis() {
