@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './SearchBarStyles.css';
-import { SearchBarData } from './SearchBarData';
+import { SearchBarData } from '../../../data/SearchBarData';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import { Link } from 'react-router-dom';

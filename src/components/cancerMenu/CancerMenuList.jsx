@@ -1,4 +1,4 @@
-import '../../../style.css';
+import '../../style.css';
 import { Link } from "react-router-dom";
 import {
     Accordion,
@@ -7,8 +7,8 @@ import {
     AccordionItemButton,
     AccordionItemPanel,
 } from 'react-accessible-accordion';
-import '../../../Accordion.css';
-import { CancerMenuListData } from './CancerMenuListData';
+import '../../Accordion.css';
+import { CancerMenuListData } from '../../data/CancerMenuListData';
 
 export default function CancerMenuList() {
     return (

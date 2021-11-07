@@ -1,5 +1,5 @@
 import CancerPageTemplate from '../../templates/CancerPageTemplate';
-import { CancerData } from '../../components/cancerPage/CancerData';
+import { CancerData } from '../../data/CancerData';
 
 export default function Glioblastoma() {
     return (
