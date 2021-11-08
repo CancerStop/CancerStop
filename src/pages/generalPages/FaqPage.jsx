@@ -7,7 +7,7 @@ import {
     AccordionItemPanel,
 } from "react-accessible-accordion";
 import '../../style.css';
-import '../../Accordion.css';
+import '../../styles/AccordionStyles.css';
 
 export default function FaqPage() {
     return (

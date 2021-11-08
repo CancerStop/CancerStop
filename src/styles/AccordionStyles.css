@@ -1,9 +1,3 @@
-/**
-* ----------------------------------------------
-* Copied from react-accessible-accordion with changes
-* ----------------------------------------------
-**/
-
 .accordion {
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 2px;
@@ -69,8 +63,6 @@
 	from {transform: rotate(-45deg);}
 	to {transform: rotate(45deg);}
 }
-
-
 
 @keyframes fadein {
 	0% {
