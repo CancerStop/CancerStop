@@ -1,4 +1,4 @@
-import SearchBar from './searchBar/SearchBar';
+import SearchBar from './SearchBar';
 import CancerMenuList from './CancerMenuList';
 
 export default function CancerMenu() {

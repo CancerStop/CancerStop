@@ -1,5 +1,5 @@
 import '../style.css';
-import CancerPageCard from '../components/cancerPage/CancerPageCard';
+import CancerPageCard from '../components/CancerPageCard';
 import SubHeader from '../components/SubHeader';
 import approvedDrugsImage from '../images/cancerPageCardImages/approvedDrugsImage.jpg';
 import clinicalTrialsImage from '../images/cancerPageCardImages//clinicalTrialsImage.jpg';
