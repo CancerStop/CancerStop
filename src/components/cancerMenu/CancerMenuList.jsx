@@ -1,4 +1,3 @@
-import '../../style.css';
 import { Link } from "react-router-dom";
 import {
     Accordion,
@@ -8,6 +7,7 @@ import {
     AccordionItemPanel,
 } from 'react-accessible-accordion';
 import '../../styles/componentStyles/AccordionStyles.css';
+import '../../styles/componentStyles/cancerMenuStyles/CancerMenuListStyles.css';
 import { CancerMenuListData } from '../../data/CancerMenuListData';
 
 export default function CancerMenuList() {
@@ -24,7 +24,7 @@ export default function CancerMenuList() {
                     {CancerMenuListData.map((item) => {
                         if (item.group) {
                             return (
-                                <AccordionItemPanel>
+                                <AccordionItemPanel key={item.id}>
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
@@ -33,8 +33,8 @@ export default function CancerMenuList() {
                                         </AccordionItemHeading>
 
                                         {item.items.map((sub_item) => (
-                                            <AccordionItemPanel 
-                                                className='cancerMenuList_itemPanel' 
+                                            <AccordionItemPanel
+                                                className='cancerMenuList_itemPanel'
                                                 key={sub_item.id}
                                             >
                                                 <Link 

@@ -13,7 +13,7 @@ export default function GenesAndMore() {
     const [variantInfoLink, setVariantInfoLink] = useState('');
 
     const handleVariantInfoSubmit = () => {
-        if (geneInfoTerm != '') {
+        if (geneInfoTerm !== '') {
             setVariantInfoLink(variantInfoLinkTemplate.concat(variantInfoTerm, '%20', geneInfoTerm));
         } else {
             setVariantInfoLink(variantInfoLinkTemplate.concat(variantInfoTerm));

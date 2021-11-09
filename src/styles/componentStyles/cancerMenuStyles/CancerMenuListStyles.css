@@ -1,0 +1,24 @@
+.cancerMenuList {
+    width: 60%;
+    margin: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    position: relative;
+    padding-right: 10px;
+}
+
+.cancerMenuList_itemPanel {
+    text-align: left;
+    margin-left: 10px;
+    padding: 10px;
+}
+
+.cancerMenuList_itemLink {
+    text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+    .cancerMenuList {
+        width: 90%;
+    }
+}

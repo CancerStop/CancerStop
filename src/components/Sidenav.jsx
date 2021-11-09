@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import './SidenavStyles.css';
+import '../styles/componentStyles/SidenavStyles.css';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { SidenavData } from '../../../data/SidenavData';
+import { SidenavData } from '../data/SidenavData';
 
 export default function Sidenav() {
     const [sidebar, setSidebar] = useState(false);
