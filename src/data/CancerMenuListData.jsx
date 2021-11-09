@@ -2,7 +2,7 @@ export const CancerMenuListData = [
     {
         group: true,
         name: 'Breast',
-        id: 2,
+        id: 1,
         items: [
             {
                 name: 'Breast Cancer and HER2 Enriched',
@@ -29,7 +29,7 @@ export const CancerMenuListData = [
     {
         group: true,
         name: 'Colon and Rectum',
-        id: 3,
+        id: 2,
         items: [
             {
                 name: 'Colon',
@@ -46,7 +46,7 @@ export const CancerMenuListData = [
     {
         group: true,
         name: 'Esophagus',
-        id: 4,
+        id: 3,
         items: [
             {
                 name: 'Adenocarcinoma (Esophagus)',
@@ -63,7 +63,7 @@ export const CancerMenuListData = [
     {
         group: true,
         name: 'Leukemia',
-        id: 1,
+        id: 4,
         items: [
             {
                 name: 'Acute Lymphocytic Leukemia',
@@ -95,6 +95,7 @@ export const CancerMenuListData = [
     {
         group: true,
         name: 'Lung and Bronchus',
+        id: 5,
         items: [
             {
                 name: 'Adenocarcinoma (Lungs)',
@@ -107,60 +108,60 @@ export const CancerMenuListData = [
         group: false,
         name: 'Glioblastoma',
         path: '/glioblastoma',
-        id: 5
+        id: 6
     },
     {
         group: false,
         name: 'Liver Lymphatic Bile and Duct',
         path: '/liver-lymphatic-bile-and-duct',
-        id: 5
+        id: 7
     },
     {
         group: false,
         name: 'Melanoma of the Skin',
         path: '/melanoma-of-the-skin',
-        id: 6
+        id: 8
     },
     {
         group: false,
         name: 'Myeloma',
         path: '/myeloma',
-        id: 7
+        id: 9
     },
     {
         group: false,
         name: 'Ovaries',
         path: '/ovaries',
-        id: 8
+        id: 10
     },
     {
         group: false,
         name: 'Pancreas',
         path: '/pancreas',
-        id: 6
+        id: 11
     },
     {
         group: false,
         name: 'Prostate',
         path: '/prostate',
-        id: 11
+        id: 12
     },
     {
         group: false,
         name: 'Small Intestine',
         path: '/small-intestine',
-        id: 12
+        id: 13
     },
     {
         group: false,
         name: 'Stomach',
         path: '/stomach',
-        id: 13
+        id: 14
     },
     {
         group: false,
         name: 'Testis',
         path: '/testis',
-        id: 14
+        id: 15
     },
 ];

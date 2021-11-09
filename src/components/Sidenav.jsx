@@ -40,7 +40,7 @@ export default function Sidenav() {
                             } else {
                                 return (
                                     <li key={index} className='nav-text'>
-                                        <a target="_blank" href={item.path}>
+                                        <a rel="noreferrer" target="_blank" href={item.path}>
                                             {item.icon}
                                             <span>{item.title}</span>
                                         </a>

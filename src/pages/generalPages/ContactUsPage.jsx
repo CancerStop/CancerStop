@@ -6,6 +6,7 @@ export default function ContactUsPage() {
         <div className='contactUsPage page'>
             <SubHeader text='Contact Us' />
             <iframe
+                title='Contact Us Form'
                 width='100%'
                 height='2000'
                 frameBorder='0'

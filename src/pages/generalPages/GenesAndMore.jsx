@@ -43,6 +43,7 @@ export default function GenesAndMore() {
                             <a
                                 href={geneInfoLinkTemplate.concat(geneInfoTerm)}
                                 target="_blank"
+                                rel="noreferrer"
                                 className="genesAndMore_searchButton"
                             >
                                 Search Gene Info
@@ -70,6 +71,7 @@ export default function GenesAndMore() {
                             <a
                                 target="_blank"
                                 href={variantInfoLink}
+                                rel="noreferrer"
                                 className="genesAndMore_searchButton"
                             >
                                 Search Variant Info

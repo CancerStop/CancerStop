@@ -11,7 +11,7 @@ export default function Header() {
 
             <div className='header_title'>
                 <Link className='header_title' to='/'>
-                    <img className='header_title-logo' src={logo} />
+                    <img alt='logo' className='header_title-logo' src={logo} />
                     <h1 className='header_title-brandName'>CancerStop</h1>
                 </Link>
             </div>

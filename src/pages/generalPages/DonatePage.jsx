@@ -7,6 +7,7 @@ export default function DonatePage() {
             <SubHeader text='Donate' />
 
             <iframe
+                title='Donate Form'
                 width='100%'
                 height='2800'
                 frameBorder='0'

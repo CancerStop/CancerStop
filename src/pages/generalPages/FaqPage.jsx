@@ -114,7 +114,7 @@ export default function FaqPage() {
                                         <p>
                                             The survival curve presented here are termed as 'Relative
                                             Survival by Survival Time'. The link to NCI SEER's
-                                            explaination of this term can be found <a target="_blank" href="https://seer.cancer.gov/explorer/help.html#survival">here</a>
+                                            explaination of this term can be found <a rel="noreferrer" target="_blank" href="https://seer.cancer.gov/explorer/help.html#survival">here</a>
                                         </p>
                                     </AccordionItemPanel>
                                 </AccordionItem>
