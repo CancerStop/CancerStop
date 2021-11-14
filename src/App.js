@@ -1,4 +1,4 @@
-import './style.css';
+import './styles/GlobalStyles.css';
 
 import {
     BrowserRouter as Router,

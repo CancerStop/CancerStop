@@ -1,4 +1,3 @@
-import '../../style.css';
 import SubHeader from '../../components/SubHeader';
 
 export default function NotFoundPage() {

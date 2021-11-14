@@ -1,0 +1,35 @@
+.genesAndMore {
+    text-align: center;
+}
+
+.genesAndMore_geneInfoForm {
+    padding: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.genesAndMore_termInput {
+    background-color: #f3f3f3;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 15px;
+    height: 20px;
+    width: 300px;
+}
+
+.genesAndMore_searchButton {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.genesAndMore_searchButtonContainer {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.genesAndMore_formArea {
+    margin-top: 20px;
+}
