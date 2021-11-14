@@ -1,0 +1,25 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.5px solid black;
+    padding: 10px;
+}
+
+.header_title {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    align-items: center;
+    color: black;
+    padding: 5px;
+}
+
+.header_title-brandName {
+    font-size: 1.9em;
+    margin-left: 5px;
+}
+
+.header_title :hover {
+    color: #4384e6;
+}
