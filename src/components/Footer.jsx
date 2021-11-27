@@ -12,8 +12,8 @@ export default function Footer() {
             <p className="footer_text">
                 © 2021 Queromatics. All Rights Reserved | 
                 Developed by
-                Balaadithya Muralitharan,
                 <a target='_blank' rel="noreferrer" href='https://www.linkedin.com/in/vedanth-ramji-191530215/'> Vedanth Ramji</a>,
+                <a target="_blank" rel="noreferrer" href="https://github.com/BalaM314">Balaadithya Muralitharan</a>,
                 <a target="_blank" rel="noreferrer" href='https://www.linkedin.com/in/ganeshramjanakiraman/'> Ganesh Ram</a> and
                 <a target="_blank" rel="noreferrer" href='https://www.linkedin.com/in/natarajanganesan/'> Dr. Natarajan Ganesan</a>
             </p>
