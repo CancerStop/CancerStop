@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Button from "@material-ui/core/Button";
-import '../../style.css';
+import '../../styles/pageStyles/GenesAndMorePageStyles.css';
 import SubHeader from '../../components/SubHeader';
 
 export default function GenesAndMore() {

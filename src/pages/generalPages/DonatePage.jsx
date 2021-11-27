@@ -1,9 +1,8 @@
 import SubHeader from '../../components/SubHeader';
-import '../../style.css';
 
 export default function DonatePage() {
     return (
-        <div className='donatePage page'>
+        <div className='donatePage'>
             <SubHeader text='Donate' />
 
             <iframe

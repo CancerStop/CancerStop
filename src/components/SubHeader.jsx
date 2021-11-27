@@ -1,4 +1,4 @@
-import '../style.css';
+import '../styles/componentStyles/SubHeaderStyles.css';
 
 export default function SubHeader({text}) {
     return (

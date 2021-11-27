@@ -1,9 +1,9 @@
-import '../../style.css';
+import '../../styles/pageStyles/ContactUsPageStyles.css';
 import SubHeader from '../../components/SubHeader';
 
 export default function ContactUsPage() {
     return (
-        <div className='contactUsPage page'>
+        <div className='contactUsPage'>
             <SubHeader text='Contact Us' />
             <iframe
                 title='Contact Us Form'

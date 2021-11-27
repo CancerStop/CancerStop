@@ -1,4 +1,4 @@
-import '../style.css';
+import '../styles/templateStyles/CancerPageTemplateStyles.css';
 import CancerPageCard from '../components/CancerPageCard';
 import SubHeader from '../components/SubHeader';
 import approvedDrugsImage from '../images/cancerPageCardImages/approvedDrugsImage.jpg';

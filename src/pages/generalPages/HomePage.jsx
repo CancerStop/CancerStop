@@ -1,6 +1,5 @@
 import CancerMenu from '../../components/cancerMenu/CancerMenu';
 import SubHeader from '../../components/SubHeader';
-import '../../style.css';
 
 export default function HomePage() {
     return (

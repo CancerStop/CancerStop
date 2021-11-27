@@ -1,0 +1,10 @@
+.cancerPageTemplate_actionButtons {
+    align-self: center;
+    align-items: center;
+    display: grid;
+    grid-column-gap: 50px;
+    grid-template-columns: repeat(auto-fit, 220px);
+    grid-auto-rows: 290px;
+    margin: auto;
+    justify-content: center;
+}
