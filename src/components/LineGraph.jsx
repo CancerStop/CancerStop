@@ -4,8 +4,8 @@ export default function LineGraph(xAxisLabels, dataSets, cancerName) {
     return (
         <Line
             data={{
-                labels: xAxisLabels
-                datasets: dataSets,
+                labels: {xAxisLabels}
+                datasets: {dataSets},
             }}
             options={{
                 scales: {
