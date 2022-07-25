@@ -38,23 +38,23 @@
 }
 
 .nav-overlay {
-    display: none;
-    z-index: 9999;
-    width: 100vw;
-    height: 100vh;
+    width: 0vw;
+    height: 0vh;
     position: absolute;
-    background-color: #00000000;
-    transition-duration: 3s;
+    transition-duration: 200ms;
     transition-property: background-color;
     left: 0px;
     top: 0px;
-    /*TODO add animation*/
+    z-index: 9999;
+    background-color: #00000000;
 }
 
 .nav-overlay.active {
-    display: block;
-    transition-duration: 1.5s;
+    width: 100vw;
+    height: 100vh;
     background-color: #00000055;
+    transition-duration: 350ms;
+    transition-property: background-color;
 }
 
 .nav-text {
