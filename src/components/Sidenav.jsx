@@ -50,6 +50,7 @@ export default function Sidenav() {
                         })}
                     </ul>
                 </nav>
+                <div onClick={() => setSidebar(false)} className={sidebar ? 'nav-overlay active' : 'nav-overlay'}></div>
             </IconContext.Provider>
         </div>
     )
