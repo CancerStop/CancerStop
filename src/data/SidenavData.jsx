@@ -29,8 +29,8 @@ export const SidenavData = [
     },
     {
         title: 'Clinical Trials',
-        isInternal: true,
-        path: '/clinical-trials',
+        isInternal: false,
+        path: 'https://www.clinicaltrials.gov/ct2/home',
         icon: <MdLocalHospital />,
         cName: 'nav-text'
     },

@@ -15,7 +15,6 @@ import ContactUsPage from './pages/generalPages/ContactUsPage';
 import DonatePage from './pages/generalPages/DonatePage';
 import GenesAndMore from './pages/generalPages/GenesAndMore';
 import NotFoundPage from './pages/generalPages/NotFound.jsx';
-import ClinicalTrialsPage from './pages/generalPages/ClinicalTrialsPage';
 
 import AcuteLymphocyticLeukemia from './pages/cancerPages/leukemia/AcuteLymphocyticLeukemia';
 import AcuteMonocyticLeukemia from './pages/cancerPages/leukemia/AcuteMonocyticLeukemia';
@@ -59,7 +58,6 @@ export default function App() {
                     <Route path='/contact-us' component={ContactUsPage} />
                     <Route path='/donate' component={DonatePage} />
                     <Route path='/genes-and-more' component={GenesAndMore} />
-                    <Route path='/clinical-trials' component={ClinicalTrialsPage} />
 
                     <Route path='/acute-lymphocytic-leukemia' component={AcuteLymphocyticLeukemia} />
                     <Route path='/acute-monocytic-leukemia' component={AcuteMonocyticLeukemia} />
