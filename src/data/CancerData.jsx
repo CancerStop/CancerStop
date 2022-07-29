@@ -102,14 +102,14 @@ export const CancerData = {
         approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/esophageal',
         clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Esophageal+Cancer&term=Adenosarcoma&cntry=&state=&city=&dist=',
         survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=600&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&sex=1&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
-        search_link: '/search#gsc.q=Esophagal%20Cancer%20Adenocarcinoma'
+        search_link: '/search#gsc.q=Esophageal%20Cancer%20Adenocarcinoma'
     },
     squamous_cell_carcinoma: {
         name: 'Squamous Cell Carcinoma',
         approved_drugs_link: 'https://www.cancer.gov/about-cancer/treatment/drugs/esophageal',
         clinical_trials_link: 'https://clinicaltrials.gov/ct2/results?cond=Esophageal+Cancer&term=%22Squamous+Cell+Carcinoma%22&cntry=&state=&city=&dist=',
         survival_curves_link: 'https://seer.cancer.gov/explorer/application.html?site=601&data_type=4&graph_type=2&compareBy=age_range&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&relative_survival_interval=5&sex=1&race=1&stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
-        search_link: '/search#gsc.q=Esophagal%20Cancer%20Squamous%20Cell%20Carcinoma'
+        search_link: '/search#gsc.q=Esophageal%20Cancer%20Squamous%20Cell%20Carcinoma'
     },
     skin_melanoma: {
         name: 'Melanoma of the Skin',
