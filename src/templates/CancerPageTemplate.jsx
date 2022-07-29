@@ -37,7 +37,7 @@ export default function CancerPageTemplate({data}) {
                 <CancerPageCard
                     title='Search'
                     link={data.search_link}
-                    isInternal={false}
+                    isInternal={true}
                     imagePath={searchImage}
                 />
 

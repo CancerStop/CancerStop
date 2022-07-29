@@ -17,8 +17,8 @@ export const SidenavData = [
     },
     {
         title: 'Search',
-        isInternal: false,
-        path:'https://cse.google.com/cse?cx=004715292727045167679:c87ei5ji6we',
+        isInternal: true,
+        path:'/search',
         icon: <GiArchiveResearch />,
     },
     {
