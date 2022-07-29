@@ -97,6 +97,6 @@
     align-items: center;
 }
 
-span {
+.nav-text span {
     margin-left: 16px;
 }
