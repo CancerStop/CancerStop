@@ -13,8 +13,10 @@ export default function SearchPage() {
             
                 document.body.appendChild(script);
             })()}
-            <div className='gcse-search'>
-                Loading...
+            <div className="searchPageContent">
+                <div className='gcse-search'>
+                    Loading...
+                </div>
             </div>
         </div>
     )
