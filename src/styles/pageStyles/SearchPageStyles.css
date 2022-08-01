@@ -2,18 +2,3 @@
 	margin-left: 10%;
 	margin-right: 10%;
 }
-.gsc-results.gsc-webResult, .gsc-webResult.gsc-result, .gsc-control-cse {
-	overflow-y: hidden !important;
-}
-.gsc-result.gsc-webResult {
-	border: none !important;
-}
-.gsc-cursor-page {
-	background-color: #0000 !important;
-}
-.gsc-control-wrapper-cse {
-	border: 1px solid black;
-}
-.gsc-table-cell-thumbnail {
-	display: none;
-}

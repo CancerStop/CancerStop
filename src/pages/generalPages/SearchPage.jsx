@@ -10,13 +10,11 @@ export default function SearchPage() {
                 const script = document.createElement("script");
                 script.src = "https://cse.google.com/cse.js?cx=004715292727045167679:c87ei5ji6we";
                 script.async = true;
-
+            
                 document.body.appendChild(script);
             })()}
-            <div className="searchPageContent">
-                <div className='gcse-search'>
-                    Loading...
-                </div>
+            <div className='gcse-search'>
+                Loading...
             </div>
         </div>
     )

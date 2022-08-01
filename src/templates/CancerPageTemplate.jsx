@@ -7,9 +7,9 @@ import genesAndMoreImage from '../images/cancerPageCardImages/genesAndMoreImage.
 import searchImage from '../images/cancerPageCardImages/searchImage.jpg';
 import survivalCurvesImage from '../images/cancerPageCardImages/survivalCurvesImage.jpg';
 
-export default function CancerPageTemplate(data) {
-	return () =>
-		<div className='cancerPageTemplate'>
+export default function CancerPageTemplate({ data }) {
+	return (
+		<div className="cancerPageTemplate">
 			<SubHeader text={data.name} />
 
 			<div className="cancerPageTemplate_actionButtons">
@@ -34,12 +34,12 @@ export default function CancerPageTemplate(data) {
 					imagePath={genesAndMoreImage}
 				/>
 
-								<CancerPageCard
-										title='Search'
-										link={data.search_link}
-										isInternal={true}
-										imagePath={searchImage}
-								/>
+				<CancerPageCard
+					title="Search"
+					link={data.search_link}
+					isInternal={false}
+					imagePath={searchImage}
+				/>
 
 				<CancerPageCard
 					title="Survival Curves"
@@ -49,5 +49,5 @@ export default function CancerPageTemplate(data) {
 				/>
 			</div>
 		</div>
-	;
+	);
 }
