@@ -1,10 +1,10 @@
 import './styles/GlobalStyles.css';
 
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
+	BrowserRouter as Router,
+	Switch,
+	Route,
+} from 'react-router-dom';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -16,6 +16,7 @@ import DonatePage from './pages/generalPages/DonatePage';
 import GenesAndMore from './pages/generalPages/GenesAndMore';
 import SearchPage from './pages/generalPages/SearchPage';
 import NotFoundPage from './pages/generalPages/NotFound';
+import ClinicalTrialsPage from './pages/generalPages/ClinicalTrialsPage.jsx';
 
 import AcuteLymphocyticLeukemia from './pages/cancerPages/leukemia/AcuteLymphocyticLeukemia';
 import AcuteMonocyticLeukemia from './pages/cancerPages/leukemia/AcuteMonocyticLeukemia';
@@ -48,63 +49,124 @@ import AdenocarcinomaInEsophagus from './pages/cancerPages/esophagus/Adenocarcin
 import SquamousCellCarcinoma from './pages/cancerPages/esophagus/SquamousCellCarcinoma';
 
 export default function App() {
-    return (
-        <div className='app'>
-            <Router>
-                <Header />
+	return (
+		<div className="app">
+			<Router>
+				<Header />
 
-                <Switch>
-                    <Route exact path='/' component={HomePage} />
-                    <Route path='/faq' component={FaqPage} />
-                    <Route path='/contact-us' component={ContactUsPage} />
-                    <Route path='/donate' component={DonatePage} />
-                    <Route path='/genes-and-more' component={GenesAndMore} />
-                    <Route path='/search' component={SearchPage} />
+				<Switch>
+					<Route exact path="/" component={HomePage} />
+					<Route path="/faq" component={FaqPage} />
+					<Route
+						path="/contact-us"
+						component={ContactUsPage}
+					/>
+					<Route path="/donate" component={DonatePage} />
+					<Route
+						path="/genes-and-more"
+						component={GenesAndMore}
+					/>
+					<Route path="/search" component={SearchPage} />
 
-                    <Route path='/acute-lymphocytic-leukemia' component={AcuteLymphocyticLeukemia} />
-                    <Route path='/acute-monocytic-leukemia' component={AcuteMonocyticLeukemia} />
-                    <Route path='/acute-myeloid-leukemia' component={AcuteMyeloidLeukemia} />
-                    <Route path='/chronic-lymphocytic-leukemia' component={ChronicLymphocyticLeukemia} />
-                    <Route path='/chronic-myeloid-leukemia' component={ChronicMyeloidLeukemia} />
+					<Route
+						path="/acute-lymphocytic-leukemia"
+						component={AcuteLymphocyticLeukemia}
+					/>
+					<Route
+						path="/acute-monocytic-leukemia"
+						component={AcuteMonocyticLeukemia}
+					/>
+					<Route
+						path="/acute-myeloid-leukemia"
+						component={AcuteMyeloidLeukemia}
+					/>
+					<Route
+						path="/chronic-lymphocytic-leukemia"
+						component={ChronicLymphocyticLeukemia}
+					/>
+					<Route
+						path="/chronic-myeloid-leukemia"
+						component={ChronicMyeloidLeukemia}
+					/>
 
-                    <Route path='/liver-lymphatic-bile-and-duct' component={LiverLymphaticBileAndDuct} />
-                    <Route path='/pancreas' component={Pancreas} />
-                    <Route path='/glioblastoma' component={Glioblastoma} />
-                    <Route path='/melanoma-of-the-skin' component={SkinMelanoma} />
-                    <Route path='/myeloma' component={Myeloma} />
-                    <Route path='/ovaries' component={Ovaries} />
-                    <Route path='/prostate' component={Prostate} />
-                    <Route path='/small-intestine' component={SmallIntestine} />
-                    <Route path='/stomach' component={Stomach} />
-                    <Route path='/testis' component={Testis} />
+					<Route
+						path="/liver-lymphatic-bile-and-duct"
+						component={LiverLymphaticBileAndDuct}
+					/>
+					<Route path="/pancreas" component={Pancreas} />
+					<Route
+						path="/glioblastoma"
+						component={Glioblastoma}
+					/>
+					<Route
+						path="/melanoma-of-the-skin"
+						component={SkinMelanoma}
+					/>
+					<Route path="/myeloma" component={Myeloma} />
+					<Route path="/ovaries" component={Ovaries} />
+					<Route path="/prostate" component={Prostate} />
+					<Route
+						path="/small-intestine"
+						component={SmallIntestine}
+					/>
+					<Route path="/stomach" component={Stomach} />
+					<Route path="/testis" component={Testis} />
 
-                    <Route path='/breast-cancer-and-luminal-a' component={BreastCancerAndLuminalA} />
-                    <Route path='/breast-cancer-and-triple-negative-or-luminal-a' component={BreastCancerAndTripleNegativeOrLuminalA} />
-                    <Route path='/breast-cancer-and-luminal-b' component={BreastCancerAndLuminalB} />
-                    <Route path='/breast-cancer-and-HER2-enriched' component={BreastCancerAndHER2Enriched} />
+					<Route
+						path="/breast-cancer-and-luminal-a"
+						component={BreastCancerAndLuminalA}
+					/>
+					<Route
+						path="/breast-cancer-and-triple-negative-or-luminal-a"
+						component={
+							BreastCancerAndTripleNegativeOrLuminalA
+						}
+					/>
+					<Route
+						path="/breast-cancer-and-luminal-b"
+						component={BreastCancerAndLuminalB}
+					/>
+					<Route
+						path="/breast-cancer-and-HER2-enriched"
+						component={BreastCancerAndHER2Enriched}
+					/>
 
-                    <Route path='/colon' component={Colon} />
-                    <Route path='/rectum' component={Rectum} />
+					<Route path="/colon" component={Colon} />
+					<Route path="/rectum" component={Rectum} />
 
-                    <Route path='/adenocarcinoma-in-esophagus' component={AdenocarcinomaInEsophagus} />
-                    <Route path='/adenocarcinoma-in-lungs' component={AdenocarcinomaInLungs} />
-                    <Route path='/squamous-cell-carcinoma' component={SquamousCellCarcinoma} />
-                    <Route path='/melanoma-of-the-skin' component={SkinMelanoma} />
-                    <Route path='/myeloma' component={Myeloma} />
-                    <Route path='/ovaries' component={Ovaries} />
-                    <Route path='/prostate' component={Prostate} />
-                    <Route path='/small-intestine' component={SmallIntestine} />
-                    <Route path='/stomach' component={Stomach} />
-                    <Route path='/testis' component={Testis} />
+					<Route
+						path="/adenocarcinoma-in-esophagus"
+						component={AdenocarcinomaInEsophagus}
+					/>
+					<Route
+						path="/adenocarcinoma-in-lungs"
+						component={AdenocarcinomaInLungs}
+					/>
+					<Route
+						path="/squamous-cell-carcinoma"
+						component={SquamousCellCarcinoma}
+					/>
+					<Route
+						path="/melanoma-of-the-skin"
+						component={SkinMelanoma}
+					/>
+					<Route path="/myeloma" component={Myeloma} />
+					<Route path="/ovaries" component={Ovaries} />
+					<Route path="/prostate" component={Prostate} />
+					<Route
+						path="/small-intestine"
+						component={SmallIntestine}
+					/>
+					<Route path="/stomach" component={Stomach} />
+					<Route path="/testis" component={Testis} />
 
-                    <Route component={NotFoundPage} />
+					<Route component={NotFoundPage} />
+				</Switch>
+			</Router>
 
-                </Switch>
-            </Router>
-
-            <Router>
-                <Footer />
-            </Router>
-        </div>
-    )
+			<Router>
+				<Footer />
+			</Router>
+		</div>
+	);
 }

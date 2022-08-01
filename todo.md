@@ -23,7 +23,7 @@ Week 3:
     Task 2: Genes and more add buttons for to choose the database they want
     Task 3: Start a react native app for CancerStop
 
--------------------------------------------------------------------------------------------------
+---
 
 MAIN LIST:
 
@@ -69,3 +69,8 @@ MAIN LIST:
 
         Platform Conversions:
             - Create a react native app for ios and android
+
+BUG: Squamous Cell Carcinoma
+
+BACKBURNER:
+Change colors/styles when an iframe is created
