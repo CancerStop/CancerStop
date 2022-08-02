@@ -1,0 +1,32 @@
+.searchPageContent {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.gsc-results.gsc-webResult,
+.gsc-webResult.gsc-result,
+.gsc-control-cse {
+	overflow-y: hidden !important;
+}
+
+.gsc-result.gsc-webResult {
+	border: none !important;
+}
+
+.gsc-cursor-page {
+	background-color: #0000 !important;
+}
+
+.gsc-table-cell-thumbnail {
+	display: none;
+}
+
+.gsc-tabHeader,
+.gsc-inline-block {
+	margin: 5px;
+	border-radius: 10px;
+}
+
+.gsc-input-box {
+	border-radius: 10px;
+}
