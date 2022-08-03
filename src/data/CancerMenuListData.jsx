@@ -36,7 +36,7 @@ export const CancerMenuListData = [
 	'glioblastoma',
 	'liver_lymphatic_bile_and_duct',
 	'skin_melanoma',
-	'myeloma',
+	'multiple_myeloma',
 	'ovarian_cancer',
 	'pancreatic_cancer',
 	'prostate_cancer',

@@ -12,7 +12,7 @@ export default function HomePage() {
 					marginTop: '5px',
 				}}
 			>
-				From therapies to genomics - See what the public
+				From genomics to therapies - See what the public
 				databases and resources say
 			</div>
 			<CancerMenu />

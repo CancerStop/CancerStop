@@ -119,7 +119,7 @@ export const CancerData = ((data) =>
 		approved_drugs_name: 'melanoma',
 		survival_curves_id: '53',
 	},
-	myeloma: {
+	multiple_myeloma: {
 		approved_drugs_name: 'multiple-myeloma',
 		survival_curves_id: '89',
 	},
