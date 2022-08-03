@@ -12,25 +12,6 @@ function capitalizeText(text, delimiter, joinCharacter) {
 }
 
 export const CancerData = ((data) =>
-	// Object.fromEntries(
-	// 	Object.entries(data).map(([id, cancer]) => [
-	// 		id,
-	// 		{
-	// 			url: '/' + (cancer.url ?? id.replaceAll('_', '-')),
-	// 			name: cancer.name ?? capitalizeText(id, '_', ' '),
-	// 			approved_drugs_link: `https://www.cancer.gov/about-cancer/treatment/drugs/${cancer.approved_drugs_name}`,
-	// 			clinical_trials_link: `https://www.clinicaltrials.gov/ct2/results?cond=${
-	// 				cancer.clinical_trials_name ??
-	// 				capitalizeText(id, '_', '+')
-	// 			}&recrs=e`,
-	// 			survival_curves_link: `https://seer.cancer.gov/explorer/application.html?site=${cancer.survival_curves_id}&data_type=4&graph_type=6&compareBy=age_range&chk_age_range_16=16&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&sex=1&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2#label_graphArea`,
-	// 			search_link: `/search#gsc.q=${
-	// 				cancer.search_name ??
-	// 				capitalizeText(id, '_', '%20')
-	// 			}`,
-	// 		},
-	// 	])
-	// ))
 	Object.fromEntries(
 		Object.entries(data).map(([id, cancer]) => [
 			id,
