@@ -8,13 +8,13 @@ function CancerSpecificClinicalTrialsTemplate(data) {
 
 			<iframe
 				title="Clinical Trials"
-				width="100%"
-				height="1500"
 				src={data.clinical_trials_link_ref}
 				alt="Loading..."
 				style={{
 					marginTop: '20px',
+					marginLeft: '5%',
 					border: '2px solid black',
+					width: '90%'
 				}}
 			/>
 		</div>
