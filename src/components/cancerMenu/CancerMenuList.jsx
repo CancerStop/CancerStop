@@ -28,7 +28,7 @@ function panel(cancer, index){
 export default function CancerMenuList() {
     return (
         <div className='cancerMenuList'>
-            <Accordion style={{borderRadius: '10px'}} allowZeroExpanded  allowMultipleExpanded>
+            <Accordion style={{borderRadius: '10px'}} allowZeroExpanded allowMultipleExpanded>
                 <AccordionItem>
                     <AccordionItemHeading>
                         <AccordionItemButton>

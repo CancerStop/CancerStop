@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import '../../styles/componentStyles/cancerMenuStyles/SearchBarStyles.css';
-import { SearchBarData } from '../../data/SearchBarData';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import { Link } from 'react-router-dom';
+import { CancerData } from '../../data/CancerData';
 
 export default function SearchBar() {
 	const [filteredData, setFilteredData] = useState([]);
@@ -12,8 +12,7 @@ export default function SearchBar() {
 	const handleFilter = (event) => {
 		const searchWord = event.target.value;
 		setWordEntered(searchWord);
-
-		const newFilter = SearchBarData.filter((value) => {
+		const newFilter = Object.values(CancerData).filter((value) => {
 			return value.name
 				.toLowerCase()
 				.includes(searchWord.toLowerCase());
@@ -56,11 +55,11 @@ export default function SearchBar() {
 				<div className="dataResult">
 					{filteredData
 						.slice(0, 15)
-						.map((value, key) => {
+						.map((value, index) => {
 							return (
 								<Link
 									className="dataItem"
-									to={value.path}
+									to={value.url}
 								>
 									<p>{value.name} </p>
 								</Link>
