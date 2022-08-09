@@ -11,56 +11,47 @@ import { FaHome } from 'react-icons/fa';
 export const SidenavData = [
 	{
 		title: 'Home',
-		isInternal: true,
 		path: '/',
 		icon: <FaHome />,
 	},
 	{
 		title: 'Search',
-		isInternal: true,
 		path: '/search',
 		icon: <GiArchiveResearch />,
 	},
 	{
 		title: 'Approved Drugs',
-		isInternal: false,
 		path: 'https://www.cancer.gov/about-cancer/treatment/drugs/cancer-type',
 		icon: <GiMedicines />,
 	},
 	{
 		title: 'Clinical Trials',
-		isInternal: true,
 		path: '/clinical-trials',
 		icon: <MdLocalHospital />,
 		cName: 'nav-text',
 	},
 	{
 		title: 'Genes & More',
-		isInternal: true,
 		path: '/genes-and-more',
 		icon: <GiDna2 />,
 	},
 	{
 		title: 'Survival Curves',
-		isInternal: false,
 		path: 'https://seer.cancer.gov/explorer/application.html?site=1&data_type=4&graph_type=6&compareBy=age_range&chk_age_range_16=16&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&sex=1&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2',
 		icon: <BiLineChart />,
 	},
 	{
 		title: 'Contact Us',
-		isInternal: true,
 		path: '/contact-us',
 		icon: <GrContact />,
 	},
 	{
 		title: 'Donate',
-		isInternal: true,
 		path: '/donate',
 		icon: <FaDonate />,
 	},
 	{
 		title: 'FAQ',
-		isInternal: true,
 		path: '/faq',
 		icon: <BiQuestionMark />,
 	},

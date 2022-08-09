@@ -27,27 +27,22 @@ export default function Sidenav() {
                             </Link>
                         </li>
 
-                        {SidenavData.map((item, index) => {
-                            if (item.isInternal) {
-                                return (
-                                    <li key={index} className='nav-text'>
-                                        <Link to={item.path}>
-                                            {item.icon}
-                                            <span>{item.title}</span>
-                                        </Link>
-                                    </li>
-                                )
-                            } else {
-                                return (
-                                    <li key={index} className='nav-text'>
-                                        <a rel="noreferrer" target="_blank" href={item.path}>
-                                            {item.icon}
-                                            <span>{item.title}</span>
-                                        </a>
-                                    </li>
-                                )
-                            }
-                        })}
+                        {SidenavData.map((item, index) => 
+                            item.path.startsWith("/") ?
+                                <li key={index} className='nav-text'>
+                                    <Link to={item.path}>
+                                        {item.icon}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                </li>
+                            :
+                                <li key={index} className='nav-text'>
+                                    <a rel="noreferrer" target="_blank" href={item.path}>
+                                        {item.icon}
+                                        <span>{item.title}</span>
+                                    </a>
+                                </li>
+                        )}
                     </ul>
                 </nav>
                 <div onClick={() => setSidebar(false)} className={sidebar ? 'nav-overlay active' : 'nav-overlay'}></div>
