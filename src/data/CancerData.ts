@@ -1,8 +1,8 @@
-function capitalizeText(text, delimiter, joinCharacter) {
+function capitalizeText(text:string, delimiter:string, joinCharacter:string):string {
 	return text
 		.split(delimiter)
 		.map((word, index) =>
-			['a', 'an', 'the', 'in', 'and', 'of', 'b'].includes(
+			['a', 'an', 'the', 'in', 'and', 'of'].includes(
 				word
 			) && index !== 0
 				? word
@@ -11,29 +11,27 @@ function capitalizeText(text, delimiter, joinCharacter) {
 		.join(joinCharacter);
 }
 
-export const CancerData = ((data) =>
-	Object.fromEntries(
-		Object.entries(data).map(([id, cancer]) => [
-			id,
-			{
-				url: '/' + (cancer.url ?? id.replaceAll('_', '-')),
-				name: cancer.name ?? capitalizeText(id, '_', ' '),
-				approved_drugs_link: `https://www.cancer.gov/about-cancer/treatment/drugs/${cancer.approved_drugs_name}`,
-				clinical_trials_link: `/${
-					cancer.url ?? id.replaceAll('_', '-')
-				}/clinical-trials`,
-				clinical_trials_link_ref: `https://www.clinicaltrials.gov/ct2/results?cond=${
-					cancer.clinical_trials_name ??
-					capitalizeText(id, '_', '+')
-				}&recrs=b&recrs=a&recrs=f&recrs=d`,
-				survival_curves_link: `https://seer.cancer.gov/explorer/application.html?site=${cancer.survival_curves_id}&data_type=4&graph_type=6&compareBy=age_range&chk_age_range_16=16&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&sex=1&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2#label_graphArea`,
-				search_link: `/search#gsc.q=${
-					cancer.search_name ??
-					capitalizeText(id, '_', '%20')
-				}`,
-			},
-		])
-	))({
+export interface CancerData {
+	[cancerID:string]: {
+		approved_drugs_link: string;
+		survival_curves_link: string;
+		search_link: string;
+		clinical_trials_link: string;
+		name: string;
+		url: string;
+	}
+}
+
+const preprocessedCancerData: {
+	[cancerID:string]: {
+		approved_drugs_name: string;
+		survival_curves_id: string;
+		search_name?: string;
+		clinical_trials_name?: string;
+		name?: string;
+		url?: string;
+	}
+} = {
 	acute_lymphocytic_leukemia: {
 		approved_drugs_name: 'leukemia#1',
 		survival_curves_id: '92',
@@ -151,4 +149,28 @@ export const CancerData = ((data) =>
 		survival_curves_id: '612',
 		search_name: 'Lung%20Cancer%20and%20Adenosarcoma',
 	},
-});
+};
+
+export const cancerData =
+	Object.fromEntries(
+		Object.entries(preprocessedCancerData).map(([id, cancer]) => [
+			id,
+			{
+				url: '/' + (cancer.url ?? id.replaceAll('_', '-')),
+				name: cancer.name ?? capitalizeText(id, '_', ' '),
+				approved_drugs_link: `https://www.cancer.gov/about-cancer/treatment/drugs/${cancer.approved_drugs_name}`,
+				clinical_trials_link: `/${
+					cancer.url ?? id.replaceAll('_', '-')
+				}/clinical-trials`,
+				clinical_trials_link_ref: `https://www.clinicaltrials.gov/ct2/results?cond=${
+					cancer.clinical_trials_name ??
+					capitalizeText(id, '_', '+')
+				}&recrs=b&recrs=a&recrs=f&recrs=d`,
+				survival_curves_link: `https://seer.cancer.gov/explorer/application.html?site=${cancer.survival_curves_id}&data_type=4&graph_type=6&compareBy=age_range&chk_age_range_16=16&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&sex=1&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2#label_graphArea`,
+				search_link: `/search#gsc.q=${
+					cancer.search_name ??
+					capitalizeText(id, '_', '%20')
+				}`,
+			},
+		])
+	);

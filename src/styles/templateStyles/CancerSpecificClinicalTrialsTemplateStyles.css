@@ -1,7 +1,7 @@
 .cancerSpecificClinicalTrialsTemplate > iframe {
 	height: 75vh;
-	margin-top: '20px';
-	margin-left: '2%';
-	border: '2px solid black';
-	width: '96%';
+	margin-top: 20px;
+	margin-left: 2%;
+	border: 2px solid black;
+	width: 96%;
 }

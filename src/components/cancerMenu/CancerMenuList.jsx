@@ -9,7 +9,7 @@ import {
 import '../../styles/componentStyles/AccordionStyles.css';
 import '../../styles/componentStyles/cancerMenuStyles/CancerMenuListStyles.css';
 import { CancerMenuListData } from '../../data/CancerMenuListData';
-import { CancerData } from "../../data/CancerData";
+import { cancerData } from "../../data/CancerData.ts";
 
 function panel(cancer, index){
     return <AccordionItemPanel
@@ -46,11 +46,11 @@ export default function CancerMenuList() {
                                         </AccordionItemButton>
                                     </AccordionItemHeading>
 
-                                    {item.items.map((cancer_id, index) => panel(CancerData[cancer_id], index))}
+                                    {item.items.map((cancer_id, index) => panel(cancerData[cancer_id], index))}
                                 </AccordionItem>
                             </AccordionItemPanel>
                         :
-                            panel(CancerData[item], index)
+                            panel(cancerData[item], index)
                     )}
                 </AccordionItem>
             </Accordion>

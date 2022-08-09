@@ -7,6 +7,8 @@
 		"browser": true
 	},
 	"rules": {
-		"no-unused-vars": "warn"
+		"no-unused-vars": "warn",
+		"no-redeclare": "off",
+		"@typescript-eslint/no-redeclare": "off"
 	}
 }

@@ -21,7 +21,7 @@ import SearchPage from './pages/SearchPage';
 import NotFoundPage from './pages/NotFound';
 import ClinicalTrialsPage from './pages/ClinicalTrialsPage.jsx';
 
-import { CancerData } from './data/CancerData';
+import { cancerData } from './data/CancerData.ts';
 
 export default function App() {
 	return (
@@ -48,7 +48,7 @@ export default function App() {
 						exact
 					/>
 
-					{Object.entries(CancerData).map(
+					{Object.entries(cancerData).map(
 						([name, cancer]) => (
 							<Route
 								key={name}
@@ -61,7 +61,7 @@ export default function App() {
 						)
 					)}
 
-					{Object.entries(CancerData).map(
+					{Object.entries(cancerData).map(
 						([name, cancer]) => (
 							<Route
 								key={name}
