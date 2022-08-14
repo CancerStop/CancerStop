@@ -8,7 +8,7 @@ import {
 } from 'react-accessible-accordion';
 import '../../styles/componentStyles/AccordionStyles.css';
 import '../../styles/componentStyles/cancerMenuStyles/CancerMenuListStyles.css';
-import { CancerMenuListData } from '../../data/CancerMenuListData';
+import { CancerMenuListData } from '../../data/CancerMenuListData.ts';
 import { cancerData } from "../../data/CancerData.ts";
 
 function panel(cancer, index){

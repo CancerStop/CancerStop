@@ -21,17 +21,8 @@ export interface CancerData {
 		url: string;
 	}
 }
-
-const preprocessedCancerData: {
-	[cancerID:string]: {
-		approved_drugs_name: string;
-		survival_curves_id: string;
-		search_name?: string;
-		clinical_trials_name?: string;
-		name?: string;
-		url?: string;
-	}
-} = {
+export type CancerID = keyof typeof preprocessedCancerData;
+export const preprocessedCancerData = {
 	acute_lymphocytic_leukemia: {
 		approved_drugs_name: 'leukemia#1',
 		survival_curves_id: '92',
@@ -153,7 +144,16 @@ const preprocessedCancerData: {
 
 export const cancerData =
 	Object.fromEntries(
-		Object.entries(preprocessedCancerData).map(([id, cancer]) => [
+		Object.entries(preprocessedCancerData as {
+			[ID in CancerID]: { // eslint-disable-line no-unused-vars
+				url?: string;
+				approved_drugs_name: string;
+				clinical_trials_name?: string;
+				search_name?: string;
+				survival_curves_id: string;
+				name?: string;
+			}
+		}).map(([id, cancer]) => [
 			id,
 			{
 				url: '/' + (cancer.url ?? id.replaceAll('_', '-')),

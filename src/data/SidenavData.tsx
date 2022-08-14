@@ -8,7 +8,11 @@ import { FaDonate } from 'react-icons/fa';
 import { BiQuestionMark } from 'react-icons/bi';
 import { FaHome } from 'react-icons/fa';
 
-export const SidenavData = [
+export const SidenavData: {
+	title: string;
+	path: string;
+	icon: JSX.Element;
+}[] = [
 	{
 		title: 'Home',
 		path: '/',
@@ -27,8 +31,7 @@ export const SidenavData = [
 	{
 		title: 'Clinical Trials',
 		path: '/clinical-trials',
-		icon: <MdLocalHospital />,
-		cName: 'nav-text',
+		icon: <MdLocalHospital />
 	},
 	{
 		title: 'Genes & More',

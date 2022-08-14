@@ -1,4 +1,9 @@
-export const CancerMenuListData = [
+import { CancerID } from "./CancerData";
+
+export const CancerMenuListData: ({
+	name: string,
+	items: CancerID[]
+} | CancerID)[] = [
 	{
 		name: 'Breast',
 		items: [

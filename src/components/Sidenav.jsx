@@ -4,7 +4,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { SidenavData } from '../data/SidenavData';
+import { SidenavData } from '../data/SidenavData.tsx';
 
 export default function Sidenav() {
     const [sidebar, setSidebar] = useState(false);
