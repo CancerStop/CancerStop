@@ -91,7 +91,7 @@ export const preprocessedCancerData = {
 		name: 'Adenocarcinoma (Esophagus)',
 		approved_drugs_name: 'esophageal',
 		clinical_trials_name:
-			'Esophageal+Cancer&term=Adenosarcoma',
+			'Esophageal+Cancer&term=Adenocarcinoma',
 		survival_curves_id: '600',
 		search_name: 'Esophageal%20Cancer%20Adenocarcinoma',
 	},
