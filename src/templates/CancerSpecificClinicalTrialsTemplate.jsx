@@ -8,7 +8,7 @@ function CancerSpecificClinicalTrialsTemplate(data) {
 
 			<iframe
 				title="Clinical Trials"
-				src={data.clinical_trials_link_ref}
+				src={data.clinical_trials_link}
 				alt="Loading..."
 			/>
 		</div>

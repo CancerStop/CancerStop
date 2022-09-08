@@ -65,7 +65,7 @@ export default function App() {
 						([name, cancer]) => (
 							<Route
 								key={name}
-								path={cancer.clinical_trials_link}
+								path={`${cancer.url}/clinical-trials`}
 								component={CancerSpecificClinicalTrialsTemplate(
 									cancer
 								)}
