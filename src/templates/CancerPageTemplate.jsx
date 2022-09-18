@@ -11,7 +11,9 @@ export default function CancerPageTemplate(data) {
 	return () => (
 		<div className="cancerPageTemplate">
 			<SubHeader text={data.name} />
-
+			<div className="cancerDescription">
+				{data.description}
+			</div>
 			<div className="cancerPageTemplate_actionButtons">
 				<CancerPageCard
 					title="Approved Drugs"

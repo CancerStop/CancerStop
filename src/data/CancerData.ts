@@ -23,6 +23,7 @@ type PreprocessedCancerData<T extends string> = {
 		search_name?: string;
 		survival_curves_id: string;
 		name?: string;
+		description?: string;
 	};
 };
 
@@ -35,6 +36,7 @@ export type CancerData<T extends string> = {
 		clinical_trials_link: string;
 		name: string;
 		url: string;
+		description: string;
 	};
 };
 
@@ -58,12 +60,14 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 				cancer.search_name ??
 				capitalizeText(id, '_', '%20')
 			}`,
+			description: cancer.description ?? `No description provided.`
 		},
 	])
 )) as (<T extends string>(preprocessedCancerData: PreprocessedCancerData<T>) => CancerData<T>))({
 	acute_lymphocytic_leukemia: {
 		approved_drugs_name: 'leukemia#1',
 		survival_curves_id: '92',
+		description: "Acute lymphocytic leukemia is a cancer of the blood and bone marrow. Unlike chronic lymphocytic leukemia, the disease progresses rapidly and creates immature blood cells."
 	},
 	acute_monocytic_leukemia: {
 		approved_drugs_name: 'leukemia',
