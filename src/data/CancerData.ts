@@ -60,7 +60,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 				cancer.search_name ??
 				capitalizeText(id, '_', '%20')
 			}`,
-			description: cancer.description ?? `No description provided.`
+			description: cancer.description ?? ''
 		},
 	])
 )) as (<T extends string>(preprocessedCancerData: PreprocessedCancerData<T>) => CancerData<T>))({
