@@ -1,0 +1,13 @@
+.NYI {
+	animation: flash 1s infinite;
+	background-color: black;
+	font-size: 250%;
+}
+@keyframes flash {
+	0% { color: white; }
+	20% { color: red; }
+	40% { color: green; }
+	60% { color: yellow; }
+	80% { color: blue; }
+	100% { color: white; }
+}

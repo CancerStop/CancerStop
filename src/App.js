@@ -22,6 +22,7 @@ import NotFoundPage from './pages/NotFound';
 import ClinicalTrialsPage from './pages/ClinicalTrialsPage.jsx';
 
 import { cancerData } from './data/CancerData.ts';
+import SurvivalCurvesPage from './pages/SurvivalCurvesPage';
 
 export default function App() {
 	return (
@@ -67,6 +68,18 @@ export default function App() {
 								key={name}
 								path={`${cancer.url}/clinical-trials`}
 								component={CancerSpecificClinicalTrialsTemplate(
+									cancer
+								)}
+							/>
+						)
+					)}
+
+					{Object.entries(cancerData).map(
+						([name, cancer]) => (
+							<Route
+								key={name}
+								path={`${cancer.url}/survival-curves`}
+								component={SurvivalCurvesPage(
 									cancer
 								)}
 							/>
