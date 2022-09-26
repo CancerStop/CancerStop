@@ -10,7 +10,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import CancerPageTemplate from './templates/CancerPageTemplate';
-import CancerSpecificClinicalTrialsTemplate from './templates/CancerSpecificClinicalTrialsTemplate.jsx';
+import CancerSpecificClinicalTrialsTemplate from './templates/CancerSpecificClinicalTrialsTemplate';
 
 import HomePage from './pages/HomePage';
 import FaqPage from './pages/FaqPage';
@@ -19,10 +19,11 @@ import DonatePage from './pages/DonatePage';
 import GenesAndMore from './pages/GenesAndMore';
 import SearchPage from './pages/SearchPage';
 import NotFoundPage from './pages/NotFound';
-import ClinicalTrialsPage from './pages/ClinicalTrialsPage.jsx';
+import ClinicalTrialsPage from './pages/ClinicalTrialsPage';
 
-import { cancerData } from './data/CancerData.ts';
+import { cancerData } from './data/CancerData';
 import SurvivalCurvesPage from './pages/SurvivalCurvesPage';
+import React from 'react';
 
 export default function App() {
 	return (

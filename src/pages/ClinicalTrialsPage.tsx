@@ -9,7 +9,7 @@ export default function ClinicalTrialsPage() {
 			<iframe
 				title="Clinical Trials"
 				src="https://www.clinicaltrials.gov/ct2/home"
-				alt="Loading..."
+				placeholder="Loading..."
 			/>
 		</div>
 	);

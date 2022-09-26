@@ -1,7 +1,8 @@
 import '../styles/pageStyles/ClinicalTrialsStyles.css';
 import SubHeader from '../components/SubHeader';
+import { CancerData } from '../data/CancerData';
 
-function CancerSpecificClinicalTrialsTemplate(data) {
+function CancerSpecificClinicalTrialsTemplate(data:CancerData) {
 	return () => (
 		<div className="cancerSpecificClinicalTrialsTemplate clinicalTrialsPage">
 			<SubHeader text={`${data.name} - Clinical Trials`} />
@@ -9,7 +10,7 @@ function CancerSpecificClinicalTrialsTemplate(data) {
 			<iframe
 				title="Clinical Trials"
 				src={data.clinical_trials_link}
-				alt="Loading..."
+				placeholder="Loading..."
 			/>
 		</div>
 	);

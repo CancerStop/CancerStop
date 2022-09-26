@@ -27,18 +27,20 @@ type PreprocessedCancerData<T extends string> = {
 	};
 };
 
-export type CancerData<T extends string> = {
+export type CancersData<T extends string> = {
 	// eslint-disable-next-line no-unused-vars
-	[ID in T]: {
-		approved_drugs_link: string;
-		survival_curves_link: string;
-		search_link: string;
-		clinical_trials_link: string;
-		name: string;
-		url: string;
-		description: string;
-	};
+	[ID in T]: CancerData;
 };
+
+export interface CancerData {
+	approved_drugs_link: string;
+	survival_curves_link: string;
+	search_link: string;
+	clinical_trials_link: string;
+	name: string;
+	url: string;
+	description: string;
+}
 
 export type CancerID = keyof typeof cancerData;
 export const cancerData = ((<T extends string>(preprocessedCancerData:PreprocessedCancerData<T>) => Object.fromEntries(
@@ -63,7 +65,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 			description: cancer.description ?? ''
 		},
 	])
-)) as (<T extends string>(preprocessedCancerData: PreprocessedCancerData<T>) => CancerData<T>))({
+)) as (<T extends string>(preprocessedCancerData: PreprocessedCancerData<T>) => CancersData<T>))({
 	acute_lymphocytic_leukemia: {
 		approved_drugs_name: 'leukemia#1',
 		survival_curves_id: '92',

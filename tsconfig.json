@@ -2,7 +2,8 @@
 	"compilerOptions": {
 		"target": "ES2018",
 		"lib": [
-			"ES2022"
+			"ES2022",
+			"DOM"
 		],
 		"allowJs": true,
 		"skipLibCheck": true,
@@ -16,7 +17,8 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+		"jsxImportSource": "react"
 	},
 	"include": [
 		"src"

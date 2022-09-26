@@ -69,7 +69,7 @@ export default function GenesAndMore() {
 				<div className="genesAndMore_geneInfoForm">
 					<div>
 						<input
-							placeHolder="Enter variant info like c.4009C>T"
+							placeholder="Enter variant info like c.4009C>T"
 							value={variantInfoTerm}
 							onChange={(e) =>
 								setVariantInfoTerm(e.target.value)

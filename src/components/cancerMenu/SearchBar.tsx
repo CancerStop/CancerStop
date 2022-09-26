@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import '../../styles/componentStyles/cancerMenuStyles/SearchBarStyles.css';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import { Link } from 'react-router-dom';
-import { cancerData } from '../../data/CancerData.ts';
+import { CancerData, cancerData } from '../../data/CancerData';
 
 export default function SearchBar() {
-	const [filteredData, setFilteredData] = useState([]);
+	const [filteredData, setFilteredData] = useState<CancerData[]>([]);
 	const [wordEntered, setWordEntered] = useState('');
 
-	const handleFilter = (event) => {
+	const handleFilter = (event:ChangeEvent) => {
+		if(!(event.target instanceof HTMLInputElement)) return;
 		const searchWord = event.target.value;
 		setWordEntered(searchWord);
 		const newFilter = Object.values(cancerData).filter((value) => {

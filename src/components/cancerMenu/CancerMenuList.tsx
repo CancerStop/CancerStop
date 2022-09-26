@@ -8,13 +8,13 @@ import {
 } from 'react-accessible-accordion';
 import '../../styles/componentStyles/AccordionStyles.css';
 import '../../styles/componentStyles/cancerMenuStyles/CancerMenuListStyles.css';
-import { CancerMenuListData } from '../../data/CancerMenuListData.ts';
-import { cancerData } from "../../data/CancerData.ts";
+import { CancerMenuListData } from '../../data/CancerMenuListData';
+import { CancerData, cancerData } from "../../data/CancerData";
 
-function panel(cancer, index){
+function panel(cancer:CancerData){
     return <AccordionItemPanel
                 className='cancerMenuList_itemPanel'
-                key={index}
+                key={cancer.name}
             >
                 <Link
                     className='cancerMenuList_itemLink'
@@ -46,11 +46,11 @@ export default function CancerMenuList() {
                                         </AccordionItemButton>
                                     </AccordionItemHeading>
 
-                                    {item.items.map((cancer_id, index) => panel(cancerData[cancer_id], index))}
+                                    {item.items.map((cancer_id, index) => panel(cancerData[cancer_id]))}
                                 </AccordionItem>
                             </AccordionItemPanel>
                         :
-                            panel(cancerData[item], index)
+                            panel(cancerData[item])
                     )}
                 </AccordionItem>
             </Accordion>

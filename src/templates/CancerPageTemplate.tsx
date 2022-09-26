@@ -6,8 +6,9 @@ import clinicalTrialsImage from '../images/cancerPageCardImages/clinicalTrialsIm
 import genesAndMoreImage from '../images/cancerPageCardImages/genesAndMoreImage.jpg';
 import searchImage from '../images/cancerPageCardImages/searchImage.jpg';
 import survivalCurvesImage from '../images/cancerPageCardImages/survivalCurvesImage.jpg';
+import { CancerData } from '../data/CancerData';
 
-export default function CancerPageTemplate(data) {
+export default function CancerPageTemplate(data:CancerData) {
 	return () => (
 		<div className="cancerPageTemplate">
 			<SubHeader text={data.name} />
