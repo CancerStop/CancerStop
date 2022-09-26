@@ -67,67 +67,80 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 	acute_lymphocytic_leukemia: {
 		approved_drugs_name: 'leukemia#1',
 		survival_curves_id: '92',
-		description: "Acute lymphocytic leukemia is a cancer of the blood and bone marrow. Unlike chronic lymphocytic leukemia, the disease progresses rapidly and creates immature blood cells."
+		description: "Acute lymphocytic leukemia is a cancer of the blood and bone marrow. Unlike chronic lymphocytic leukemia, the disease progresses rapidly and creates immature blood cells.",
 	},
 	acute_monocytic_leukemia: {
 		approved_drugs_name: 'leukemia',
 		survival_curves_id: '100',
+		description: "",
 	},
 	acute_myeloid_leukemia: {
 		approved_drugs_name: 'leukemia#3',
 		survival_curves_id: '96',
+		description: "",
 	},
 	chronic_lymphocytic_leukemia: {
 		approved_drugs_name: 'leukemia#6',
 		survival_curves_id: '93',
+		description: "",
 	},
 	chronic_myeloid_leukemia: {
 		approved_drugs_name: 'leukemia#8',
 		survival_curves_id: '97',
+		description: "",
 	},
 	liver_lymphatic_bile_and_duct: {
 		approved_drugs_name: 'liver',
 		survival_curves_id: '35',
+		description: "",
 	},
 	pancreatic_cancer: {
 		approved_drugs_name: 'pancreatic',
 		survival_curves_id: '40',
+		description: "",
 	},
 	glioblastoma: {
 		approved_drugs_name: 'brain',
 		survival_curves_id: '661',
 		search_name:
 			'%22Glioblastoma%22%20OR%20%22Glioma%22%20OR%20%22Glioblastoma%20Multiforme%22',
+		description: "",
 	},
 	breast_cancer_and_luminal_a: {
 		approved_drugs_name: 'breast',
 		clinical_trials_name: 'Breast+Cancer&term=Luminal+A',
 		survival_curves_id: '622',
+		description: "",
 	},
 	breast_cancer_and_triple_negative_or_luminal_a: {
 		approved_drugs_name: 'breast',
 		clinical_trials_name:
 			'Breast+Cancer&term=%22Triple+Negative%22',
 		survival_curves_id: '623',
+		description: "",
 	},
 	breast_cancer_and_luminal_b: {
 		approved_drugs_name: 'breast',
 		clinical_trials_name: 'Breast+Cancer&term=%22Luminal+B%22',
 		survival_curves_id: '620',
+		description: "",
 	},
 	breast_cancer_and_HER2_enriched: {
 		approved_drugs_name: 'breast',
 		clinical_trials_name:
 			'Breast+Cancer&term=%22HER2+Enriched%22',
 		survival_curves_id: '621',
+		description: "",
 	},
 	colon_cancer: {
 		approved_drugs_name: 'colorectal',
 		survival_curves_id: '21',
+		description: "",
 	},
 	rectal_cancer: {
 		approved_drugs_name: 'colorectal',
 		survival_curves_id: '31',
+		description: "",
 	},
 	adenocarcinoma_in_esophagus: {
 		name: 'Adenocarcinoma (Esophagus)',
@@ -136,6 +149,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 			'Esophageal+Cancer&term=Adenocarcinoma',
 		survival_curves_id: '600',
 		search_name: 'Esophageal%20Cancer%20Adenocarcinoma',
+		description: "",
 	},
 	squamous_cell_carcinoma: {
 		approved_drugs_name: 'esophageal',
@@ -144,42 +158,51 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 		survival_curves_id: '601',
 		search_name:
 			'Esophageal%20Cancer%20Squamous%20Cell%20Carcinoma',
+		description: "",
 	},
 	skin_melanoma: {
 		name: 'Melanoma of the Skin',
 		approved_drugs_name: 'melanoma',
 		survival_curves_id: '53',
+		description: "",
 	},
 	multiple_myeloma: {
 		approved_drugs_name: 'multiple-myeloma',
 		survival_curves_id: '89',
+		description: "",
 	},
 	ovarian_cancer: {
 		approved_drugs_name: 'ovarian',
 		survival_curves_id: '61',
+		description: "",
 	},
 	prostate_cancer: {
 		approved_drugs_name: 'prostate',
 		survival_curves_id: '66',
+		description: "",
 	},
 	small_intestine_cancer: {
 		approved_drugs_name: 'gist',
 		survival_curves_id: '19',
+		description: "",
 	},
 	stomach_cancer: {
 		approved_drugs_name: 'stomach',
 		survival_curves_id: '18',
+		description: "",
 	},
 	testicular_cancer: {
 		approved_drugs_name: 'testicular',
 		clinical_trials_name: 'Testicular+Cancer',
 		survival_curves_id: '67',
 		search_name: 'Testicular%20Cancer',
+		description: "",
 	},
 	lung_adenocarcinoma: {
 		name: 'Adenocarcinoma (Lungs)',
 		approved_drugs_name: 'lung',
 		survival_curves_id: '612',
 		search_name: 'Lung%20Cancer%20and%20Adenocarcinoma',
+		description: "",
 	},
 });
