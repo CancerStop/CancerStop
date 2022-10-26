@@ -13,7 +13,7 @@ export default function CancerPageTemplate(data:CancerData) {
 		<div className="cancerPageTemplate">
 			<SubHeader text={data.name} />
 			<div className="cancerDescription">
-				{data.description}
+				{data.description} <a href={data.information_link} target='_blank' rel="noreferrer">Learn more</a>
 			</div>
 			<div className="cancerPageTemplate_actionButtons">
 				<CancerPageCard

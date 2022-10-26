@@ -24,6 +24,7 @@ type PreprocessedCancerData<T extends string> = {
 		survival_curves_id: string;
 		name?: string;
 		description?: string;
+		information_name?: string;
 	};
 };
 
@@ -40,6 +41,7 @@ export interface CancerData {
 	name: string;
 	url: string;
 	description: string;
+	information_link: string;
 }
 
 export type CancerID = keyof typeof cancerData;
@@ -62,7 +64,8 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 				cancer.search_name ??
 				capitalizeText(id, '_', '%20')
 			}`,
-			description: cancer.description ?? ''
+			description: cancer.description ?? '',
+			information_link: `https://www.cancer.gov/types/${cancer.information_name ?? cancer.approved_drugs_name.split("#")[0]}`
 		},
 	])
 )) as (<T extends string>(preprocessedCancerData: PreprocessedCancerData<T>) => CancersData<T>))({
@@ -167,11 +170,13 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 		approved_drugs_name: 'melanoma',
 		survival_curves_id: '53',
 		description: "",
+		information_name: "skin",
 	},
 	multiple_myeloma: {
 		approved_drugs_name: 'multiple-myeloma',
 		survival_curves_id: '89',
 		description: "",
+		information_name: "myeloma",
 	},
 	ovarian_cancer: {
 		approved_drugs_name: 'ovarian',
@@ -187,6 +192,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 		approved_drugs_name: 'gist',
 		survival_curves_id: '19',
 		description: "",
+		information_name: "small-intestine"
 	},
 	stomach_cancer: {
 		approved_drugs_name: 'stomach',
