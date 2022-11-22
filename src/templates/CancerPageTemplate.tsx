@@ -19,35 +19,30 @@ export default function CancerPageTemplate(data:CancerData) {
 				<CancerPageCard
 					title="Approved Drugs"
 					link={data.approved_drugs_link}
-					isInternal={false}
 					imagePath={approvedDrugsImage}
 				/>
 
 				<CancerPageCard
 					title="Clinical Trials"
-					link={`/${data.url}/clinical-trials`}
-					isInternal={true}
+					link={`${data.url}/clinical-trials`}
 					imagePath={clinicalTrialsImage}
 				/>
 
 				<CancerPageCard
 					title="Genes & More"
 					link="/genes-and-more"
-					isInternal={true}
 					imagePath={genesAndMoreImage}
 				/>
 
 				<CancerPageCard
 					title="Search"
 					link={data.search_link}
-					isInternal={true}
 					imagePath={searchImage}
 				/>
 
 				<CancerPageCard
 					title="Survival Curves"
 					link={data.survival_curves_link}
-					isInternal={false}
 					imagePath={survivalCurvesImage}
 				/>
 			</div>

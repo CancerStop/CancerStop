@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Link } from "react-router-dom";
 
-export default function CancerPageCard({ title, link, isInternal, imagePath }: {title:string, link:string, isInternal:boolean, imagePath:string}) {
+export default function CancerPageCard({ title, link, imagePath }: {title:string, link:string, imagePath:string}) {
     const card = (
         <Card sx={{maxWidth: 290}} className='cancerPageCard' variant='outlined'>
             <CardMedia
@@ -18,7 +18,7 @@ export default function CancerPageCard({ title, link, isInternal, imagePath }: {
             </CardContent>
         </Card>
     );
-    if (isInternal) {
+    if (link.startsWith("/")) {
         return (
             <Link
                 style={{
