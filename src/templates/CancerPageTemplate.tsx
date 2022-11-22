@@ -25,7 +25,7 @@ export default function CancerPageTemplate(data:CancerData) {
 
 				<CancerPageCard
 					title="Clinical Trials"
-					link={data.clinical_trials_link}
+					link={`/${data.url}/clinical-trials`}
 					isInternal={true}
 					imagePath={clinicalTrialsImage}
 				/>
