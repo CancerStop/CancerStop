@@ -47,6 +47,15 @@ export default function Footer() {
 					{' '}
 					Ganesh Ram
 				</a>{' '}
+				,
+				<a
+					target="_blank"
+					rel="noreferrer"
+					href="https://www.linkedin.com/in/govind-gnanakumar/"
+				>
+					{' '}
+					Govind Gnanakumar
+				</a>{' '}
 				and
 				<a
 					target="_blank"
