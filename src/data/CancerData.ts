@@ -77,22 +77,22 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 	acute_monocytic_leukemia: {
 		approved_drugs_name: 'leukemia',
 		survival_curves_id: '100',
-		description: "",
+		description: "Acute monocyctic leukemia is a cancer of the blood and bone marrow. It, and progresses rapidly.",
 	},
 	acute_myeloid_leukemia: {
 		approved_drugs_name: 'leukemia#3',
 		survival_curves_id: '96',
-		description: "",
+		description: "Acute myeloid leukemia is a cancer of the blood and bone marrow. It affects myeloid cells, and progresses rapidly.",
 	},
 	chronic_lymphocytic_leukemia: {
 		approved_drugs_name: 'leukemia#6',
 		survival_curves_id: '93',
-		description: "",
+		description: "Chronic lymphocytic leukemia is a cancer of the blood and bone marrow. It affects lymphocytes, and progresses more slowly than acute leukemias.",
 	},
 	chronic_myeloid_leukemia: {
 		approved_drugs_name: 'leukemia#8',
 		survival_curves_id: '97',
-		description: "",
+		description: "Chronic myeloid leukemia is a cancer of the blood and bone marrow. It affects myeloid cells, and progresses more slowly than acute leukemias.",
 	},
 	liver_lymphatic_bile_and_duct: {
 		approved_drugs_name: 'liver',
@@ -109,7 +109,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 		survival_curves_id: '661',
 		search_name:
 			'%22Glioblastoma%22%20OR%20%22Glioma%22%20OR%20%22Glioblastoma%20Multiforme%22',
-		description: "",
+		description: "Glioblastoma is an aggressive cancer that affects the brain and spinal cord. It is difficult to treat.",
 	},
 	breast_cancer_and_luminal_a: {
 		approved_drugs_name: 'breast',
@@ -163,7 +163,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 		survival_curves_id: '601',
 		search_name:
 			'Esophageal%20Cancer%20Squamous%20Cell%20Carcinoma',
-		description: "",
+		description: "Squamous cell carcinoma is a type of cancer that begins in squamous cells, which make up layers of the skin and hollow organs such as the esophagus.",
 	},
 	skin_melanoma: {
 		name: 'Melanoma of the Skin',
@@ -175,7 +175,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 	multiple_myeloma: {
 		approved_drugs_name: 'multiple-myeloma',
 		survival_curves_id: '89',
-		description: "",
+		description: "Multiple myeloma affects a type of white blood cells called plasma cells, and decreases the body's ability to fight infections.",
 		information_name: "myeloma",
 	},
 	ovarian_cancer: {
@@ -211,6 +211,6 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 		approved_drugs_name: 'lung',
 		survival_curves_id: '612',
 		search_name: 'Lung%20Cancer%20and%20Adenocarcinoma',
-		description: "",
+		description: "Lung adenocarcinoma is a non-small-cell lung cancer that is strongly associated with smoking. It usually starts from the mucosal glands.",
 	},
 });
