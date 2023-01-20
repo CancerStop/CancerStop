@@ -19,6 +19,11 @@ export const SidenavData: {
 		icon: <FaHome />,
 	},
 	{
+		title: 'Donate',
+		path: '/donate',
+		icon: <FaDonate />,
+	},
+	{
 		title: 'Search',
 		path: '/search',
 		icon: <GiArchiveResearch />,
@@ -47,11 +52,6 @@ export const SidenavData: {
 		title: 'Contact Us',
 		path: '/contact-us',
 		icon: <GrContact />,
-	},
-	{
-		title: 'Donate',
-		path: '/donate',
-		icon: <FaDonate />,
 	},
 	{
 		title: 'FAQ',
