@@ -46,7 +46,7 @@ export default function Footer() {
 				>
 					{' '}
 					Ganesh Ram
-				</a>{' '}
+				</a>
 				,
 				<a
 					target="_blank"
@@ -55,8 +55,8 @@ export default function Footer() {
 				>
 					{' '}
 					Govind Gnanakumar
-				</a>{' '}
-				and
+				</a>
+				, and
 				<a
 					target="_blank"
 					rel="noreferrer"
