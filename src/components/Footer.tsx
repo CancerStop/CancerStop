@@ -12,7 +12,7 @@ export default function Footer() {
 			</p>
 
 			<p className="footer_text">
-				© 2022{' '}
+				© 2023{' '}
 				<a
 					href="https://www.queromatics.org/"
 					target="_blank"

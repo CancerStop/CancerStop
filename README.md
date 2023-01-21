@@ -77,5 +77,5 @@ Sites and sources used here are from prominently used information sources.
 These sources are likely to updated as and when needed.*
 *AS ALWAYS one should always speak with your Doctor or Health Care Professional for any further guidance. Information provided here is for informational purposes only. NO RESPONSIBILITY OR LIABILITY IS CLAIMED WHATSOEVER.*
 
-© 2022 Queromatics. All Rights Reserved.
+© 2023 Queromatics. All Rights Reserved.
 Developed by Vedanth Ramji, Balaadithya Muralitharan, Ganesh Ram and Dr. Natarajan Ganesan.
