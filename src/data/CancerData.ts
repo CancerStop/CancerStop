@@ -39,6 +39,7 @@ export interface CancerData {
 	survival_curves_link: string;
 	search_link: string;
 	clinical_trials_link: string;
+	clinical_trials_name: string;
 	name: string;
 	url: string;
 	description: string;
@@ -56,6 +57,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 			url: '/' + (cancer.url ?? id.replaceAll('_', '-')),
 			name: cancer.name ?? capitalizeText(id, '_', ' '),
 			approved_drugs_link: `https://www.cancer.gov/about-cancer/treatment/drugs/${cancer.approved_drugs_name}`,
+			clinical_trials_name: cancer.clinical_trials_name ?? capitalizeText(id, '_', '+'),
 			clinical_trials_link: `https://www.clinicaltrials.gov/ct2/results?cond=${
 				cancer.clinical_trials_name ??
 				capitalizeText(id, '_', '+')

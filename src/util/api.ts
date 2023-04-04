@@ -1,11 +1,12 @@
 
 type CTStatus = "Unknown status" | "Recruiting" | "Completed" | "Not yet recruiting"
 
-interface CTStudy {
+export interface CTStudy {
 	id: string;
 	condition: string;
 	title: string;
 	status: CTStatus;
+	url: string;
 }
 
 //https://www.clinicaltrials.gov/api/query/study_fields?expr=Acute+Lymphocytic+Leukemia&fields=NCTId,Condition,BriefTitle,OverallStatus&fmt=json
@@ -31,14 +32,14 @@ interface CTStudyFieldsResponse {
 	}
 }
 
-function encodeUrlParameters(options:Record<string, string>){
+export function encodeUrlParameters(options:Record<string, string>){
 	return Object.entries(options)
 		.reduce((acc, item, index) =>
 			(acc += `${index === 0 ? "?" : "&"}${encodeURIComponent(item[0])}=${encodeURIComponent(item[1])}`, acc)
 		, "");
 }
 
-async function findStudies(condition:string, minRank:number = 1, maxRank:number = 20):Promise<CTStudy[]> {
+export async function findStudies(condition:string, minRank:number = 1, maxRank:number = 20):Promise<CTStudy[]> {
 	const url = `https://www.clinicaltrials.gov/api/query/study_fields?expr=${condition}&fields=NCTId,Condition,BriefTitle,OverallStatus,LocationFacility&fmt=json&minRank=${minRank}&maxRank=${maxRank}`;
 	const data = await (await fetch(url)).json() as CTStudyFieldsResponse;
 	return data.StudyFieldsResponse.StudyFields.map(obj => ({
