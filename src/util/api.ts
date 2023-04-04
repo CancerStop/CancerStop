@@ -26,6 +26,7 @@ interface CTStudyFieldsResponse {
 			Condition: string[];
 			BriefTitle: string[];
 			OverallStatus: string[];
+			LocationFacility: string[];
 		}>;
 	}
 }
@@ -38,12 +39,14 @@ function encodeUrlParameters(options:Record<string, string>){
 }
 
 async function findStudies(condition:string, minRank:number = 1, maxRank:number = 20):Promise<CTStudy[]> {
-	const url = `https://www.clinicaltrials.gov/api/query/study_fields?expr=${condition}&fields=NCTId,Condition,BriefTitle,OverallStatus&fmt=json&minRank=${minRank}&maxRank=${maxRank}`;
+	const url = `https://www.clinicaltrials.gov/api/query/study_fields?expr=${condition}&fields=NCTId,Condition,BriefTitle,OverallStatus,LocationFacility&fmt=json&minRank=${minRank}&maxRank=${maxRank}`;
 	const data = await (await fetch(url)).json() as CTStudyFieldsResponse;
 	return data.StudyFieldsResponse.StudyFields.map(obj => ({
 		id: obj.NCTId[0],
 		condition: obj.Condition[0],
 		status: obj.OverallStatus[0] as CTStatus,
-		title: obj.BriefTitle[0]
+		title: obj.BriefTitle[0],
+		locations: obj.LocationFacility,
+		url: `https://www.clinicaltrials.gov/ct2/show/${obj.NCTId[0]}`,
 	}));
 }
