@@ -1,5 +1,5 @@
 
-type CTStatus = "Unknown status" | "Recruiting" | "Completed" | "Not yet recruiting"
+type CTStatus = "Unknown status" | "Recruiting" | "Completed" | "Not yet recruiting" | "Withdrawn" | "Terminated" | "Active, not recruiting" | "Enrolling by invitation";
 
 export interface CTStudy {
 	id: string;
@@ -39,9 +39,10 @@ export type StudiesResponse = {
 
 export function encodeUrlParameters(options:Record<string, string>){
 	return Object.entries(options)
-		.reduce((acc, item, index) =>
-			(acc += `${index === 0 ? "?" : "&"}${encodeURIComponent(item[0])}=${encodeURIComponent(item[1])}`, acc)
-		, "");
+		.reduce((acc, item, index) => {
+			acc += `${index === 0 ? "?" : "&"}${encodeURIComponent(item[0])}=${encodeURIComponent(item[1])}`;
+			return acc;
+		}, "");
 }
 
 export async function findStudies(searchExpr:string, minRank:number = 1, maxRank:number = 20):Promise<StudiesResponse> {
