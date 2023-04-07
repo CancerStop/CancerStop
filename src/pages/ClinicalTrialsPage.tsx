@@ -1,7 +1,7 @@
 import SubHeader from '../components/SubHeader';
 import '../styles/pageStyles/ClinicalTrialsStyles.css';
 import { StudiesResponse, findStudies } from '../util/api';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { Table, TableContainer, TableRow, Button, TableBody, TableHead, TableCell } from '@material-ui/core';
 
 
@@ -9,7 +9,7 @@ export default function ClinicalTrialsPage() {
 	const resultsPerPage = 20;
 
 	const [response, setResponse] = useState<StudiesResponse | null>(null);
-	const [searchExpr, setSearchExpr] = useState("");
+	const [searchExpr, setSearchExpr] = useState<string>(window.location.search.match(/cond=([^&]+)/)?.[1]!.split("+").join(" ") ?? "");
 	const [page, setPage] = useState(1);
 	const [locked, setLocked] = useState(false);
 
@@ -41,6 +41,10 @@ export default function ClinicalTrialsPage() {
 		}
 	}
 
+	useEffect(() => {
+		if(searchExpr !== "") search();
+	}, []);
+
 	return (
 		<div className="cancerSpecificClinicalTrialsTemplate clinicalTrialsPage">
 			<SubHeader text="Clinical Trials" />
@@ -54,7 +58,7 @@ export default function ClinicalTrialsPage() {
 				<span id="pageSelector">
 					Page <input value={page} type="number" onChange={numberInputUpdated} className="numberInput"/> of {Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage)}
 				</span>
-				<Button onClick={search} variant="contained" id="searchButton" disabled={locked}>Search</Button>
+				<Button onClick={search} variant="contained" id="searchButton" disabled={locked}>{locked ? "Searching..." : "Search"}</Button>
 			</span>
 			<TableContainer>
 				<Table>
