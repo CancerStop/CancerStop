@@ -14,8 +14,8 @@ export default function Sidenav() {
         <div className="header-side_nav">
             <IconContext.Provider value={{ color: 'black' }}>
                 <div className='navbar'>
-                    <Link to='#' className='menu-bars'>
-                        <FaIcons.FaBars onClick={showSidebar} />
+                    <Link to='#' className='menu-bars' onClick={showSidebar}>
+                        <FaIcons.FaBars />
                     </Link>
                 </div>
 
