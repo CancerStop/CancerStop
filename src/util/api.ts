@@ -32,6 +32,11 @@ interface CTStudyFieldsResponse {
 	}
 }
 
+export type StudiesResponse = {
+	studies: CTStudy[];
+	totalStudiesAvailable: number;
+};
+
 export function encodeUrlParameters(options:Record<string, string>){
 	return Object.entries(options)
 		.reduce((acc, item, index) =>
@@ -39,15 +44,18 @@ export function encodeUrlParameters(options:Record<string, string>){
 		, "");
 }
 
-export async function findStudies(searchExpr:string, minRank:number = 1, maxRank:number = 20):Promise<CTStudy[]> {
-	const url = `https://www.clinicaltrials.gov/api/query/study_fields?expr=${searchExpr}&fields=NCTId,Condition,BriefTitle,OverallStatus,LocationFacility&fmt=json&minRank=${minRank}&maxRank=${maxRank}`;
+export async function findStudies(searchExpr:string, minRank:number = 1, maxRank:number = 20):Promise<StudiesResponse> {
+	const url = `https://www.clinicaltrials.gov/api/query/study_fields?expr=${searchExpr}&fields=NCTId,Condition,BriefTitle,OverallStatus,LocationFacility&fmt=json&min_rnk=${minRank}&max_rnk=${maxRank}`;
 	const data = await (await fetch(url)).json() as CTStudyFieldsResponse;
-	return data.StudyFieldsResponse.StudyFields?.map(obj => ({
-		id: obj.NCTId[0],
-		condition: obj.Condition[0],
-		status: obj.OverallStatus[0] as CTStatus,
-		title: obj.BriefTitle[0],
-		locations: obj.LocationFacility,
-		url: `https://www.clinicaltrials.gov/ct2/show/${obj.NCTId[0]}`,
-	})) ?? [];
+	return {
+		studies: data.StudyFieldsResponse.StudyFields?.map(obj => ({
+			id: obj.NCTId[0],
+			condition: obj.Condition[0],
+			status: obj.OverallStatus[0] as CTStatus,
+			title: obj.BriefTitle[0],
+			locations: obj.LocationFacility,
+			url: `https://www.clinicaltrials.gov/ct2/show/${obj.NCTId[0]}`,
+		})) ?? [],
+		totalStudiesAvailable: data.StudyFieldsResponse.NStudiesFound
+	};
 }

@@ -1,17 +1,17 @@
 import SubHeader from '../components/SubHeader';
 import '../styles/pageStyles/ClinicalTrialsStyles.css';
-import { CTStudy, findStudies } from '../util/api';
+import { StudiesResponse, findStudies } from '../util/api';
 import { useState } from 'react';
 import { Table, TableContainer, TableRow, Button, TableBody, TableHead, TableCell } from '@material-ui/core';
 
 
 export default function ClinicalTrialsPage() {
-	const [studies, setStudies] = useState<CTStudy[]>([]);
+	const [response, setResponse] = useState<StudiesResponse | null>(null);
 	const [searchExpr, setSearchExpr] = useState("");
 	const resultsPerPage = 20;
 	const [page, setPage] = useState(1);
 	const fetchData = () => {
-		findStudies(searchExpr, (page - 1) * resultsPerPage + 1, page * resultsPerPage).then(setStudies);
+		findStudies(searchExpr, (page - 1) * resultsPerPage + 1, page * resultsPerPage).then(setResponse);
 		console.log("Fetched data!");
 	}
 	console.log("Component re-rendered!");
@@ -23,8 +23,12 @@ export default function ClinicalTrialsPage() {
 					placeholder="Search Expression"
 					value={searchExpr}
 					onChange={(e) => setSearchExpr(e.target.value)}
+					id="searchInput"
 				/>
-				<Button onClick={fetchData} variant="contained">Search</Button>
+				<span id="pageSelector">
+					Page <input value={page} type="number" onChange={e => setPage(+ e.target.value)} className="numberInput"/> of {Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage)}
+				</span>
+				<Button onClick={fetchData} variant="contained" id="searchButton">Search</Button>
 			</span>
 			<TableContainer>
 				<Table>
@@ -37,7 +41,7 @@ export default function ClinicalTrialsPage() {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{studies.map(s =>
+						{response && response.studies.map(s =>
 							<TableRow key={s.id} >
 								<TableCell>{s.id}</TableCell>
 								<TableCell>
