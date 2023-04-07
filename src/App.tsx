@@ -4,13 +4,13 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
+	Redirect,
 } from 'react-router-dom';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 import CancerPageTemplate from './templates/CancerPageTemplate';
-import CancerSpecificClinicalTrialsTemplate from './templates/CancerSpecificClinicalTrialsTemplate';
 
 import HomePage from './pages/HomePage';
 import FaqPage from './pages/FaqPage';
@@ -65,12 +65,12 @@ export default function App() {
 
 					{Object.entries(cancerData).map(
 						([name, cancer]) => (
-							<Route
+							<Redirect
 								key={name}
-								path={`${cancer.url}/clinical-trials`}
-								component={CancerSpecificClinicalTrialsTemplate(
-									cancer
-								)}
+
+								from={`${cancer.url}/clinical-trials`}
+								to={cancer.clinical_trials_link}
+								
 							/>
 						)
 					)}

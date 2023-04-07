@@ -58,10 +58,11 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 			name: cancer.name ?? capitalizeText(id, '_', ' '),
 			approved_drugs_link: `https://www.cancer.gov/about-cancer/treatment/drugs/${cancer.approved_drugs_name}`,
 			clinical_trials_name: cancer.clinical_trials_name ?? capitalizeText(id, '_', '+'),
-			clinical_trials_link: `https://www.clinicaltrials.gov/ct2/results?cond=${
-				cancer.clinical_trials_name ??
-				capitalizeText(id, '_', '+')
-			}&recrs=b&recrs=a&recrs=f&recrs=d`,
+			// clinical_trials_link: `https://www.clinicaltrials.gov/ct2/results?cond=${
+			// 	cancer.clinical_trials_name ??
+			// 	capitalizeText(id, '_', '+')
+			// }&recrs=b&recrs=a&recrs=f&recrs=d`,
+			clinical_trials_link: `/clinical-trials?cond=${cancer.clinical_trials_name ?? capitalizeText(id, '_', '+')}`,
 			survival_curves_link: `https://seer.cancer.gov/explorer/application.html?site=${cancer.survival_curves_id}&data_type=4&graph_type=6&compareBy=age_range&chk_age_range_16=16&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&sex=1&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2#label_graphArea`,
 			search_link: `/search#gsc.q=${
 				cancer.search_name ??
