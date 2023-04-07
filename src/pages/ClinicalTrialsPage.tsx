@@ -43,7 +43,7 @@ export default function ClinicalTrialsPage() {
 
 	useEffect(() => {
 		if(searchExpr !== "") search();
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div className="cancerSpecificClinicalTrialsTemplate clinicalTrialsPage">

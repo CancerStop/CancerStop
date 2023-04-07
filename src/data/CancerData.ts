@@ -125,30 +125,28 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 	},
 	breast_cancer_and_luminal_a: {
 		approved_drugs_name: 'breast',
-		clinical_trials_name: 'Breast+Cancer&term=Luminal+A',
+		clinical_trials_name: 'Breast+Cancer+Luminal+A',
 		survival_curves_id: '622',
 		description: "",
 		information_subtype: "breast",
 	},
 	breast_cancer_and_triple_negative_or_luminal_a: {
 		approved_drugs_name: 'breast',
-		clinical_trials_name:
-			'Breast+Cancer&term=%22Triple+Negative%22',
+		clinical_trials_name: 'Breast+Cancer+Triple+Negative',
 		survival_curves_id: '623',
 		description: "",
 		information_subtype: "breast",
 	},
 	breast_cancer_and_luminal_b: {
 		approved_drugs_name: 'breast',
-		clinical_trials_name: 'Breast+Cancer&term=%22Luminal+B%22',
+		clinical_trials_name: 'Breast+Cancer+Luminal+B',
 		survival_curves_id: '620',
 		description: "",
 		information_subtype: "breast",
 	},
 	breast_cancer_and_HER2_enriched: {
 		approved_drugs_name: 'breast',
-		clinical_trials_name:
-			'Breast+Cancer&term=%22HER2+Enriched%22',
+		clinical_trials_name: 'Breast+Cancer+HER2+Enriched',
 		survival_curves_id: '621',
 		description: "",
 		information_subtype: "breast",
@@ -169,7 +167,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 		name: 'Adenocarcinoma (Esophagus)',
 		approved_drugs_name: 'esophageal',
 		clinical_trials_name:
-			'Esophageal+Cancer&term=Adenocarcinoma',
+			'Esophageal+Cancer+Adenocarcinoma',
 		survival_curves_id: '600',
 		search_name: 'Esophageal%20Cancer%20Adenocarcinoma',
 		information_subtype: "esophageal",
@@ -177,7 +175,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 	squamous_cell_carcinoma: {
 		approved_drugs_name: 'esophageal',
 		clinical_trials_name:
-			'Esophageal+Cancer&term=%22Squamous+Cell+Carcinoma%22',
+			'Esophageal+Cancer+Squamous+Cell+Carcinoma',
 		survival_curves_id: '601',
 		search_name:
 			'Esophageal%20Cancer%20Squamous%20Cell%20Carcinoma',
