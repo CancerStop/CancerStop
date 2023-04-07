@@ -6,10 +6,13 @@ import { Table, TableContainer, TableRow, Button, TableBody, TableHead, TableCel
 
 
 export default function ClinicalTrialsPage() {
+	const resultsPerPage = 20;
+
 	const [response, setResponse] = useState<StudiesResponse | null>(null);
 	const [searchExpr, setSearchExpr] = useState("");
-	const resultsPerPage = 20;
 	const [page, setPage] = useState(1);
+	const [locked, setLocked] = useState(false);
+
 	const fetchData = (p = page) => findStudies(searchExpr, (p - 1) * resultsPerPage + 1, p * resultsPerPage);
 	const numberInputUpdated = (e:ChangeEvent<HTMLInputElement>) => {
 		const val = + e.target.value;
@@ -25,16 +28,19 @@ export default function ClinicalTrialsPage() {
 		}
 	};
 	const search = async () => {
+		setLocked(true);
 		const data = await fetchData();
 		if(page > Math.ceil(data.totalStudiesAvailable / resultsPerPage) && data.studies.length === 0){
 			//If no studies were returned and page is more than the new max page, refetch
 			setPage(1);
 			setResponse(await fetchData(1));
+			setLocked(false);
 		} else {
 			setResponse(data);
+			setLocked(false);
 		}
 	}
-	console.log("Component re-rendered!");
+
 	return (
 		<div className="cancerSpecificClinicalTrialsTemplate clinicalTrialsPage">
 			<SubHeader text="Clinical Trials" />
@@ -48,7 +54,7 @@ export default function ClinicalTrialsPage() {
 				<span id="pageSelector">
 					Page <input value={page} type="number" onChange={numberInputUpdated} className="numberInput"/> of {Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage)}
 				</span>
-				<Button onClick={search} variant="contained" id="searchButton">Search</Button>
+				<Button onClick={search} variant="contained" id="searchButton" disabled={locked}>Search</Button>
 			</span>
 			<TableContainer>
 				<Table>
