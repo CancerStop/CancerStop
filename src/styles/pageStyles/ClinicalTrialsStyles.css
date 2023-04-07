@@ -1,7 +1,28 @@
-.clinicalTrialsPage > iframe {
-	height: 75vh;
-	margin-top: 20px;
-	margin-left: 2%;
-	border: 2px solid black;
-	width: 96%;
+#searchInput {
+	background-color: #f3f3f3;
+	border: 1px solid lightgray;
+	border-radius: 10px;
+	font-size: 15px;
+	padding: 8px;
+	height: 20px;
+	width: 300px;
+}
+.numberInput {
+	background-color: #f3f3f3;
+	border: 1px solid lightgray;
+	border-radius: 10px;
+	font-size: 15px;
+	padding: 8px;
+	height: 20px;
+	width: 60px;
+}
+.searchBar {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	display: flex;
+	justify-content: center;
+}
+#pageSelector {
+	margin-left: 30px;
+	margin-right: 30px;
 }
