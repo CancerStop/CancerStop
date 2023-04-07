@@ -35,7 +35,7 @@ export const SidenavData: {
 	},
 	{
 		title: 'Clinical Trials',
-		path: 'https://www.clinicaltrials.gov/ct2/home',
+		path: '/clinical-trials',
 		icon: <MdLocalHospital />
 	},
 	{
