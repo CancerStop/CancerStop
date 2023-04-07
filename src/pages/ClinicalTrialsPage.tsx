@@ -10,10 +10,7 @@ export default function ClinicalTrialsPage() {
 	const [searchExpr, setSearchExpr] = useState("");
 	const resultsPerPage = 20;
 	const [page, setPage] = useState(1);
-	const fetchData = () => {
-		findStudies(searchExpr, (page - 1) * resultsPerPage + 1, page * resultsPerPage).then(setResponse);
-		console.log("Fetched data!");
-	}
+	const fetchData = (p = page) => findStudies(searchExpr, (p - 1) * resultsPerPage + 1, p * resultsPerPage);
 	const numberInputUpdated = (e:ChangeEvent<HTMLInputElement>) => {
 		const val = + e.target.value;
 		const maxPage = Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage);
@@ -27,6 +24,16 @@ export default function ClinicalTrialsPage() {
 			setPage(val);
 		}
 	};
+	const search = async () => {
+		const data = await fetchData();
+		if(page > Math.ceil(data.totalStudiesAvailable / resultsPerPage) && data.studies.length === 0){
+			//If no studies were returned and page is more than the new max page, refetch
+			setPage(1);
+			setResponse(await fetchData(1));
+		} else {
+			setResponse(data);
+		}
+	}
 	console.log("Component re-rendered!");
 	return (
 		<div className="cancerSpecificClinicalTrialsTemplate clinicalTrialsPage">
@@ -41,7 +48,7 @@ export default function ClinicalTrialsPage() {
 				<span id="pageSelector">
 					Page <input value={page} type="number" onChange={numberInputUpdated} className="numberInput"/> of {Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage)}
 				</span>
-				<Button onClick={fetchData} variant="contained" id="searchButton">Search</Button>
+				<Button onClick={search} variant="contained" id="searchButton">Search</Button>
 			</span>
 			<TableContainer>
 				<Table>
