@@ -1,7 +1,7 @@
 import SubHeader from '../components/SubHeader';
 import '../styles/pageStyles/ClinicalTrialsStyles.css';
 import { StudiesResponse, findStudies } from '../util/api';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { Table, TableContainer, TableRow, Button, TableBody, TableHead, TableCell } from '@material-ui/core';
 
 
@@ -14,6 +14,19 @@ export default function ClinicalTrialsPage() {
 		findStudies(searchExpr, (page - 1) * resultsPerPage + 1, page * resultsPerPage).then(setResponse);
 		console.log("Fetched data!");
 	}
+	const numberInputUpdated = (e:ChangeEvent<HTMLInputElement>) => {
+		const val = + e.target.value;
+		const maxPage = Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage);
+		if(isNaN(val) || val <= 0){
+			e.target.value = "1";
+			setPage(1);
+		} else if(val > maxPage){
+			e.target.value = maxPage.toString();
+			setPage(maxPage);
+		} else {
+			setPage(val);
+		}
+	};
 	console.log("Component re-rendered!");
 	return (
 		<div className="cancerSpecificClinicalTrialsTemplate clinicalTrialsPage">
@@ -26,7 +39,7 @@ export default function ClinicalTrialsPage() {
 					id="searchInput"
 				/>
 				<span id="pageSelector">
-					Page <input value={page} type="number" onChange={e => setPage(+ e.target.value)} className="numberInput"/> of {Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage)}
+					Page <input value={page} type="number" onChange={numberInputUpdated} className="numberInput"/> of {Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage)}
 				</span>
 				<Button onClick={fetchData} variant="contained" id="searchButton">Search</Button>
 			</span>
