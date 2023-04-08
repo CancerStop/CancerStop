@@ -26,3 +26,15 @@
 	margin-left: 30px;
 	margin-right: 30px;
 }
+.MuiTableHead-root {
+	position: sticky;
+	top: 0;
+	z-index: 9999;
+}
+* {
+	/*
+		I have no idea why this works but it works
+		If this breaks something else please try to fix it
+	*/
+	overflow-x: revert !important;
+}

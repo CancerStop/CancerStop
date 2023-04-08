@@ -63,7 +63,7 @@ export default function ClinicalTrialsPage() {
 				<Button onClick={search} variant="contained" id="searchButton" disabled={locked}>{locked ? "Searching..." : "Search"}</Button>
 			</span>
 			<TableContainer>
-				<Table>
+				<Table stickyHeader>
 					<TableHead>
 						<TableRow>
 							<TableCell>ID</TableCell>
