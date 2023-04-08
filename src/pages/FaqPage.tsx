@@ -12,7 +12,7 @@ import '../styles/componentStyles/AccordionStyles.css';
 export default function FaqPage() {
 	return (
 		<div className="faqPage page">
-			<SubHeader text="FAQ" />
+			<SubHeader>FAQ</SubHeader>
 
 			<div style={{ marginTop: 20, padding: 5 }}>
 				<Accordion

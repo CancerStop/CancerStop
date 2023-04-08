@@ -47,7 +47,9 @@ export default function ClinicalTrialsPage() {
 
 	return (
 		<div className="cancerSpecificClinicalTrialsTemplate clinicalTrialsPage">
-			<SubHeader text="Clinical Trials" />
+			<SubHeader>
+				<a href="https://clinicaltrials.gov/ct2/" target="_blank" rel="noreferrer">Clinical Trials</a>
+			</SubHeader>
 			<span className="searchBar">
 				<input
 					placeholder="Search Expression"

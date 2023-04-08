@@ -3,7 +3,7 @@ import SubHeader from '../components/SubHeader';
 export default function DonatePage() {
 	return (
 		<div className="donatePage">
-			<SubHeader text="Donate" />
+			<SubHeader>Donate</SubHeader>
 
 			<iframe
 				title="Donate Form"

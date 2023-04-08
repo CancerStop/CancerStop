@@ -8,7 +8,7 @@ import SubHeader from '../components/SubHeader';
 // ) {
 // 	return (
 // 		<div className="survivalCurvesPageTemplate">
-// 			<SubHeader text={cancerName} />
+// 			<SubHeader>{cancerName}</SubHeader>
 
 // 			<LineGraph
 // 				xAxisLabels={xAxisLabels}

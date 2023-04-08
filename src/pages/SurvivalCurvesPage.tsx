@@ -6,7 +6,7 @@ import '../styles/pageStyles/SurvivalCurvesStyles.css';
 export default function SurvivalCurvesPage(cancer:CancerData) {
 	return () => (
 		<div className="survivalCurvesPage page">
-			<SubHeader text={cancer.name + "- Survival Curves"} />
+			<SubHeader>{cancer.name + "- Survival Curves"}</SubHeader>
 			<div className="NYI">NYI</div>
 			{/* <LineGraph></LineGraph> */}
 		</div>

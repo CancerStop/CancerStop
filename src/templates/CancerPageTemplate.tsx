@@ -11,7 +11,7 @@ import { CancerData } from '../data/CancerData';
 export default function CancerPageTemplate(data:CancerData) {
 	return () => (
 		<div className="cancerPageTemplate">
-			<SubHeader text={data.name} />
+			<SubHeader>{data.name}</SubHeader>
 			<div className="cancerDescription">
 				{/*data.description*/} <a href={data.information_link} target='_blank' rel="noreferrer">Learn more</a>
 			</div>

@@ -4,7 +4,7 @@ import SubHeader from '../components/SubHeader';
 export default function NotFoundPage() {
 	return (
 		<div className="notFoundPage page">
-			<SubHeader text="404 Not Found" />
+			<SubHeader>404 Not Found</SubHeader>
 			<a href="/" id="returnLink">Return to the home page</a>
 		</div>
 	);

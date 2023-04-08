@@ -32,7 +32,7 @@ export default function GenesAndMore() {
 
 	return (
 		<div className="genesAndMore page">
-			<SubHeader text="Genes & More" />
+			<SubHeader>Genes & More</SubHeader>
 
 			<div className="genesAndMore_formArea">
 				<div className="genesAndMore_geneInfoForm">

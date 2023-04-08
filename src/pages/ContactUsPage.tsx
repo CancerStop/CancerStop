@@ -4,7 +4,7 @@ import SubHeader from '../components/SubHeader';
 export default function ContactUsPage() {
 	return (
 		<div className="contactUsPage">
-			<SubHeader text="Contact Us" />
+			<SubHeader>Contact Us</SubHeader>
 			<iframe
 				title="Contact Us Form"
 				width="100%"
