@@ -56,16 +56,12 @@ export default function SearchBar() {
 				<div className="dataResult">
 					{filteredData
 						.slice(0, 15)
-						.map((value, index) => {
-							return (
-								<Link
-									className="dataItem"
-									to={value.url}
-								>
-									<p>{value.name} </p>
-								</Link>
-							);
-						})}
+						.map((value, index) =>
+							<Link className="dataItem" to={value.url}>
+								<p>{value.name} </p>
+							</Link>
+						)
+					}
 				</div>
 			)}
 		</div>
