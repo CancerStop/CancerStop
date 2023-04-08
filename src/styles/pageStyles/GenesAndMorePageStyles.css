@@ -3,7 +3,7 @@
 }
 
 .genesAndMore_geneInfoForm {
-    padding: 20;
+    margin: 0 20px 0 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,4 +32,6 @@
 
 .genesAndMore_formArea {
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
