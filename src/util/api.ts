@@ -2,12 +2,15 @@
 type CTStatus = "Unknown status" | "Recruiting" | "Completed" | "Not yet recruiting" | "Withdrawn" | "Terminated" | "Active, not recruiting" | "Enrolling by invitation";
 
 export interface CTStudy {
-	id: string;
-	condition: string;
-	title: string;
-	status: CTStatus;
+	ID: string;
+	Condition: string;
+	Title: string;
+	Status: CTStatus;
 	url: string;
+	Locations: string[];
 }
+
+export type CTColumn = "ID" | "Condition" | "Title" | "Status" | "Locations";
 
 //https://www.clinicaltrials.gov/api/query/study_fields?expr=Acute+Lymphocytic+Leukemia&fields=NCTId,Condition,BriefTitle,OverallStatus&fmt=json
 interface CTStudyFieldsResponse {
@@ -56,11 +59,11 @@ export async function findStudies(searchExpr:string, minRank:number = 1, maxRank
 	const data = await (await fetch(url)).json() as CTStudyFieldsResponse;
 	return {
 		studies: data.StudyFieldsResponse.StudyFields?.map(obj => ({
-			id: obj.NCTId[0],
-			condition: obj.Condition[0],
-			status: obj.OverallStatus[0] as CTStatus,
-			title: obj.BriefTitle[0],
-			locations: obj.LocationFacility,
+			ID: obj.NCTId[0],
+			Condition: obj.Condition[0],
+			Status: obj.OverallStatus[0] as CTStatus,
+			Title: obj.BriefTitle[0],
+			Locations: obj.LocationFacility,
 			url: `https://www.clinicaltrials.gov/ct2/show/${obj.NCTId[0]}`,
 		})) ?? [],
 		totalStudiesAvailable: data.StudyFieldsResponse.NStudiesFound

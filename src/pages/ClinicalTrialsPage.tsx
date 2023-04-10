@@ -1,6 +1,6 @@
 import SubHeader from '../components/SubHeader';
 import '../styles/pageStyles/ClinicalTrialsStyles.css';
-import { StudiesResponse, findStudies } from '../util/api';
+import { CTColumn, StudiesResponse, findStudies } from '../util/api';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Table, TableContainer, TableRow, Button, TableBody, TableHead, TableCell } from '@material-ui/core';
 
@@ -8,6 +8,7 @@ import { Table, TableContainer, TableRow, Button, TableBody, TableHead, TableCel
 export default function ClinicalTrialsPage() {
 	const resultsPerPage = 20;
 
+	const [columns, setColumns] = useState<CTColumn[]>(["ID", "Title", "Condition", "Status"]);
 	const [response, setResponse] = useState<StudiesResponse | null>(null);
 	const [searchExpr, setSearchExpr] = useState<string>(window.location.search.match(/cond=([^&]+)/)?.[1]!.split("+").join(" ") ?? "");
 	const [page, setPage] = useState(1);
@@ -41,6 +42,11 @@ export default function ClinicalTrialsPage() {
 		}
 	}
 
+	function format(obj:string | string[]){
+		if(Array.isArray(obj)) return obj.join(", ");
+		else return obj;
+	}
+
 	useEffect(() => {
 		if(searchExpr !== "") search();
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -61,26 +67,27 @@ export default function ClinicalTrialsPage() {
 					Page <input value={page} type="number" onChange={numberInputUpdated} className="numberInput"/> of {Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage)}
 				</span>
 				<Button onClick={search} variant="contained" id="searchButton" disabled={locked}>{locked ? "Searching..." : "Search"}</Button>
+				<Button onClick={() => setColumns(prompt("Columns (comma separated):", "ID,Title,Condition,Status")?.split(/, ?/) as CTColumn[] ?? ["ID", "Title", "Condition", "Status"])}>TEMP:set columns</Button>
 			</span>
 			<TableContainer>
 				<Table stickyHeader>
 					<TableHead>
 						<TableRow>
-							<TableCell>ID</TableCell>
-							<TableCell>Title</TableCell>
-							<TableCell>Condition</TableCell>
-							<TableCell>Status</TableCell>
+							{columns.map(name =>
+								<TableCell>{name}</TableCell>
+							)}
 						</TableRow>
 					</TableHead>
 					<TableBody>
 						{response && response.studies.map(s =>
-							<TableRow key={s.id} >
-								<TableCell>{s.id}</TableCell>
-								<TableCell>
-									<a href={s.url} target="_blank" rel="noreferrer">{s.title}</a>
-								</TableCell>
-								<TableCell>{s.condition}</TableCell>
-								<TableCell>{s.status}</TableCell>
+							<TableRow key={s.ID} >
+								{columns.map(name =>
+									<TableCell>{
+										name === "Title"
+											? <a href={s.url} target="_blank" rel="noreferrer">{s.Title}</a>
+											: format(s[name as CTColumn])
+									}</TableCell>
+								)}
 							</TableRow>
 						)}
 					</TableBody>
