@@ -45,8 +45,14 @@ export function encodeUrlParameters(options:Record<string, string>){
 		}, "");
 }
 
-export async function findStudies(searchExpr:string, minRank:number = 1, maxRank:number = 20):Promise<StudiesResponse> {
-	const url = `https://www.clinicaltrials.gov/api/query/study_fields?expr=${searchExpr}&fields=NCTId,Condition,BriefTitle,OverallStatus,LocationFacility&fmt=json&min_rnk=${minRank}&max_rnk=${maxRank}`;
+export async function findStudies(searchExpr:string, minRank:number = 1, maxRank:number = 20, fields = ["NCTId", "Condition", "BriefTitle", "OverallStatus", "LocationFacility"]):Promise<StudiesResponse> {
+	const url = `https://www.clinicaltrials.gov/api/query/study_fields` + encodeUrlParameters({
+		expr: searchExpr,
+		fields: fields.join(","),
+		fmt: "json",
+		min_rnk: minRank.toString(),
+		max_rank: maxRank.toString(),
+	});
 	const data = await (await fetch(url)).json() as CTStudyFieldsResponse;
 	return {
 		studies: data.StudyFieldsResponse.StudyFields?.map(obj => ({
