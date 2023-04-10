@@ -14,7 +14,9 @@ export default function ClinicalTrialsPage() {
 
 	const [columns, setColumns] = useState<CTColumn[]>(defaultColumns);
 	const [response, setResponse] = useState<StudiesResponse | null>(null);
-	const [searchExpr, setSearchExpr] = useState<string>(window.location.search.match(/cond=([^&]+)/)?.[1]!.split("+").join(" ") ?? "");
+	const [searchExpr, setSearchExpr] = useState<string>(
+		new URLSearchParams(window.location.search).get("cond")?.split("+").join(" ") ?? ""
+	);
 	const [page, setPage] = useState(1);
 	const [locked, setLocked] = useState(false);
 

@@ -40,22 +40,15 @@ export type StudiesResponse = {
 	totalStudiesAvailable: number;
 };
 
-export function encodeUrlParameters(options:Record<string, string>){
-	return Object.entries(options)
-		.reduce((acc, item, index) => {
-			acc += `${index === 0 ? "?" : "&"}${encodeURIComponent(item[0])}=${encodeURIComponent(item[1])}`;
-			return acc;
-		}, "");
-}
 
 export async function findStudies(searchExpr:string, minRank:number = 1, maxRank:number = 20, fields = ["NCTId", "Condition", "BriefTitle", "OverallStatus", "LocationFacility"]):Promise<StudiesResponse> {
-	const url = `https://www.clinicaltrials.gov/api/query/study_fields` + encodeUrlParameters({
+	const url = `https://www.clinicaltrials.gov/api/query/study_fields?` + new URLSearchParams({
 		expr: searchExpr,
 		fields: fields.join(","),
 		fmt: "json",
 		min_rnk: minRank.toString(),
 		max_rank: maxRank.toString(),
-	});
+	}).toString();
 	const data = await (await fetch(url)).json() as CTStudyFieldsResponse;
 	return {
 		studies: data.StudyFieldsResponse.StudyFields?.map(obj => ({
