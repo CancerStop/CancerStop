@@ -4,11 +4,15 @@ import { CTColumn, StudiesResponse, findStudies } from '../util/api';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Table, TableContainer, TableRow, Button, TableBody, TableHead, TableCell } from '@material-ui/core';
 
+const defaultColumns:CTColumn[] = ["ID", "Title", "Condition", "Status"];
+const resultsPerPage = 20;
+const columnTooltips: Partial<Record<CTColumn, string>> = {
+	ID: "The NCT ID for this study.",
+};
 
 export default function ClinicalTrialsPage() {
-	const resultsPerPage = 20;
 
-	const [columns, setColumns] = useState<CTColumn[]>(["ID", "Title", "Condition", "Status"]);
+	const [columns, setColumns] = useState<CTColumn[]>(defaultColumns);
 	const [response, setResponse] = useState<StudiesResponse | null>(null);
 	const [searchExpr, setSearchExpr] = useState<string>(window.location.search.match(/cond=([^&]+)/)?.[1]!.split("+").join(" ") ?? "");
 	const [page, setPage] = useState(1);
@@ -67,14 +71,14 @@ export default function ClinicalTrialsPage() {
 					Page <input value={page} type="number" onChange={numberInputUpdated} className="numberInput"/> of {Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage)}
 				</span>
 				<Button onClick={search} variant="contained" id="searchButton" disabled={locked}>{locked ? "Searching..." : "Search"}</Button>
-				<Button onClick={() => setColumns(prompt("Columns (comma separated):", "ID,Title,Condition,Status")?.split(/, ?/) as CTColumn[] ?? ["ID", "Title", "Condition", "Status"])}>TEMP:set columns</Button>
+				<Button onClick={() => setColumns(prompt("Columns (comma separated):", defaultColumns.join(","))?.split(/, ?/) as CTColumn[] ?? defaultColumns)}>TEMP:set columns</Button>
 			</span>
 			<TableContainer>
 				<Table stickyHeader>
 					<TableHead>
 						<TableRow>
 							{columns.map(name =>
-								<TableCell>{name}</TableCell>
+								<TableCell title={columnTooltips[name]}>{name}</TableCell>
 							)}
 						</TableRow>
 					</TableHead>
