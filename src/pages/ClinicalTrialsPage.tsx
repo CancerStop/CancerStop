@@ -1,6 +1,6 @@
 import SubHeader from '../components/SubHeader';
 import '../styles/pageStyles/ClinicalTrialsStyles.css';
-import { CTColumn, StudiesResponse, findStudies } from '../util/api';
+import { CTColumn, CTStudy, StudiesResponse, findStudies } from '../util/api';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Table, TableContainer, TableRow, Button, TableBody, TableHead, TableCell } from '@material-ui/core';
 
@@ -9,6 +9,40 @@ const resultsPerPage = 20;
 const columnTooltips: Partial<Record<CTColumn, string>> = {
 	ID: "The NCT ID for this study.",
 };
+const searchStatusName = {
+	"idle": "Search",
+	"searching": "Searching...",
+	"errored": "Search failed"
+};
+
+type StudySort = [property:CTColumn | "default", direction: -1 | 1];
+
+function compareProps<T>(a:T, b:T):number {
+	if(Array.isArray(a) && Array.isArray(b)){
+		let i = 0;
+		while(i < a.length && i < b.length){
+			const diff = compareProps(a.at(i), b.at(i));
+			if(diff !== 0) return diff;
+			i ++;
+		}
+		if(a.length !== b.length) return a.length - b.length;
+		return 0;
+	} else if(typeof a == "string" && typeof b == "string"){
+		let i = 0;
+		while(i < a.length && i < b.length){
+			const diff = a.codePointAt(i)! - b.codePointAt(i)!;
+			if(diff !== 0) return diff;
+			i ++;
+		}
+		if(a.length !== b.length) return a.length - b.length;
+		return 0;
+	} else throw new Error(`Cannot compare object ${a} (type ${typeof a})`);
+}
+
+function compareStudies(a:CTStudy, b:CTStudy, sort:StudySort):number {
+	if(sort[0] === "default") return 0;
+	return compareProps(a[sort[0]], b[sort[0]]) * sort[1];
+}
 
 export default function ClinicalTrialsPage() {
 
@@ -18,7 +52,8 @@ export default function ClinicalTrialsPage() {
 		new URLSearchParams(window.location.search).get("cond")?.split("+").join(" ") ?? ""
 	);
 	const [page, setPage] = useState(1);
-	const [locked, setLocked] = useState(false);
+	const [searchStatus, setSearchStatus] = useState<"idle" | "searching" | "errored">("idle");
+	const [sort, setSort] = useState<StudySort>(["default", 1]);
 
 	const fetchData = (p = page) => findStudies(searchExpr, (p - 1) * resultsPerPage + 1, p * resultsPerPage);
 	const numberInputUpdated = (e:ChangeEvent<HTMLInputElement>) => {
@@ -34,18 +69,19 @@ export default function ClinicalTrialsPage() {
 			setPage(val);
 		}
 	};
-	const search = async () => {
-		setLocked(true);
-		const data = await fetchData();
-		if(page > Math.ceil(data.totalStudiesAvailable / resultsPerPage) && data.studies.length === 0){
-			//If no studies were returned and page is more than the new max page, refetch
-			setPage(1);
-			setResponse(await fetchData(1));
-			setLocked(false);
-		} else {
-			setResponse(data);
-			setLocked(false);
-		}
+	const search = () => {
+		setSearchStatus("searching");
+		fetchData().then(data => {
+			if(page > Math.ceil(data.totalStudiesAvailable / resultsPerPage) && data.studies.length === 0){
+				//If no studies were returned and page is more than the new max page, refetch
+				setPage(1);
+				fetchData(1).then(setResponse).catch(e => setSearchStatus("errored"));
+				setSearchStatus("idle");
+			} else {
+				setResponse(data);
+				setSearchStatus("idle");
+			}
+		}).catch(e => setSearchStatus("errored"));
 	}
 
 	function format(obj:string | string[]){
@@ -72,20 +108,27 @@ export default function ClinicalTrialsPage() {
 				<span id="pageSelector">
 					Page <input value={page} type="number" onChange={numberInputUpdated} className="numberInput"/> of {Math.ceil((response?.totalStudiesAvailable ?? 1) / resultsPerPage)}
 				</span>
-				<Button onClick={search} variant="contained" id="searchButton" disabled={locked}>{locked ? "Searching..." : "Search"}</Button>
+				<Button
+					onClick={search}
+					variant="contained" id="searchButton"
+					disabled={searchStatus === "searching"}
+				>
+					{searchStatusName[searchStatus]}
+				</Button>
 				<Button onClick={() => setColumns(prompt("Columns (comma separated):", defaultColumns.join(","))?.split(/, ?/) as CTColumn[] ?? defaultColumns)}>TEMP:set columns</Button>
+				<Button onClick={() => setSort(prompt("Column, sort order", "ID,1")?.split(/, ?/) as StudySort ?? ["ID", 1])}>TEMP:set sort</Button>
 			</span>
 			<TableContainer>
 				<Table stickyHeader>
 					<TableHead>
 						<TableRow>
 							{columns.map(name =>
-								<TableCell title={columnTooltips[name]}>{name}</TableCell>
+								<TableCell title={columnTooltips[name]} key={name}>{name}</TableCell>
 							)}
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{response && response.studies.map(s =>
+						{response && response.studies.sort((a, b) => compareStudies(a, b, sort)).map(s =>
 							<TableRow key={s.ID} >
 								{columns.map(name =>
 									<TableCell>{
