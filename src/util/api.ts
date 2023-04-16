@@ -47,7 +47,7 @@ export async function findStudies(searchExpr:string, minRank:number = 1, maxRank
 		fields: fields.join(","),
 		fmt: "json",
 		min_rnk: minRank.toString(),
-		max_rank: maxRank.toString(),
+		max_rnk: maxRank.toString(),
 	}).toString();
 	const data = await (await fetch(url)).json() as CTStudyFieldsResponse;
 	return {
