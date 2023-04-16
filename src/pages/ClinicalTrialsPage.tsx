@@ -1,6 +1,6 @@
 import SubHeader from '../components/SubHeader';
 import '../styles/pageStyles/ClinicalTrialsStyles.css';
-import { CTColumn, CTStudy, StudiesResponse, findStudies } from '../util/api';
+import { StudiesResponse, findStudies } from '../util/api';
 import { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
@@ -18,8 +18,7 @@ const dataGridColumns: GridColDef[] = [
 		description: "The NCT ID for this study.",
 		minWidth: 140,
 		flex: 0.15,
-	},
-	{
+	},{
 		field: "Title",
 		headerName: "Title",
 		renderCell(params) {
@@ -29,21 +28,18 @@ const dataGridColumns: GridColDef[] = [
 		},
 		minWidth: 200,
 		flex: 1,
-	},
-	{
+	},{
 		field: "StudyType",
 		headerName: "Type",
 		description: "Interventional studies study the effect of an intervention, such as administering a new medication. Observational studies measure effects without attempting to change the outcome (no treatments are given).",
 		minWidth: 130,
 		flex: 0.1,
-	},
-	{
+	},{
 		field: "Status",
 		headerName: "Status",
 		minWidth: 120,
 		flex: 0.2
-	},
-	{
+	},{
 		field: "HasResults",
 		headerName: "Results",
 		minWidth: 100,
@@ -55,14 +51,12 @@ const dataGridColumns: GridColDef[] = [
 					: "No";
 			} else return `TypeError: ${typeof params.value}`;
 		},
-	},
-	{
+	},{
 		field: "Condition",
 		headerName: "Condition",
 		minWidth: 150,
 		flex: 0.4,
-	},
-	{
+	},{
 		field: "Locations",
 		headerName: "Locations",
 		description: "List of all locations involved in this study.",
@@ -73,8 +67,7 @@ const dataGridColumns: GridColDef[] = [
 		},
 		minWidth: 200,
 		flex: 1.1
-	},
-	{
+	},{
 		field: "Phase",
 		headerName: "Phase",
 		description: "A Phase 1 study is performed with 20 to 80 participants to determine safe dosage. Phase 2 studies involve hundreds of participants, and check for long term side effects. Phase 3 and 4 studies involve thousands of participants.",
@@ -128,6 +121,7 @@ export default function ClinicalTrialsPage() {
 		search(model);
 	}
 
+	//If there's a search expression on first load, search automatically
 	useEffect(() => {
 		if(searchExpr !== "") search();
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
