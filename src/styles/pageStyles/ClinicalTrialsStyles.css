@@ -31,10 +31,3 @@
 	top: 0;
 	z-index: 10;
 }
-* {
-	/*
-		I have no idea why this works but it works
-		If this breaks something else please try to fix it
-	*/
-	overflow-x: revert !important;
-}
