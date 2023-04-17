@@ -62,7 +62,9 @@ const dataGridColumns: GridColDef[] = [
 		description: "List of all locations involved in this study.",
 		renderCell(params) {
 			if(Array.isArray(params.value)){
-				return params.value.join(", ");
+				const text = params.value.join(", ");
+				if(text.length > 200) return <span title={text}>{text.slice(0, 197) + "..."}</span>;
+				else return text;
 			} else return `TypeError: ${typeof params.value}`;
 		},
 		minWidth: 200,
