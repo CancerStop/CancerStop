@@ -100,6 +100,10 @@ export default function ClinicalTrialsPage() {
 	const [searchStatus, setSearchStatus] = useState<"idle" | "searching" | "errored">("idle");
 
 	const fetchData = (page = paginationModel.page, resultsPerPage = paginationModel.pageSize) => findStudies(searchExpr, (page) * resultsPerPage + 1, (page + 1) * resultsPerPage);
+	const handle = (err:unknown) => {
+		console.error(err);
+		setSearchStatus("errored");
+	}
 	const search = (model = paginationModel) => {
 		setSearchStatus("searching");
 		fetchData(model.page, model.pageSize).then(data => {
@@ -111,12 +115,12 @@ export default function ClinicalTrialsPage() {
 				fetchData(0).then(d => {
 					setResponse(d);
 					setSearchStatus("idle");
-				}).catch(e => setSearchStatus("errored"));
+				}).catch(handle);
 			} else {
 				setResponse(data);
 				setSearchStatus("idle");
 			}
-		}).catch(e => setSearchStatus("errored"));
+		}).catch(handle);
 	}
 	const reloadWithPaginationModel = (model:GridPaginationModel) => {
 		setPaginationModel(model);
@@ -148,18 +152,23 @@ export default function ClinicalTrialsPage() {
 					{searchStatusName[searchStatus]}
 				</Button>
 			</span>
-			{response ? <DataGrid
-				columns={dataGridColumns}
-				rows={response.studies}
-				getRowId={row => row.ID}
-				autoHeight={true}
-				getRowHeight={() => "auto"}
-				paginationMode="server"
-				rowCount={response.totalStudiesAvailable}
-				paginationModel={paginationModel}
-				onPaginationModelChange={reloadWithPaginationModel}
-				rowSelection={false}
-			/> : searchStatus === "searching" ? "Loading..." : ""}
+			{
+				!response && searchStatus === "searching" ? <div className="table-text">Loading...</div> :
+				!response ? "" :
+				response.totalStudiesAvailable === 0 ? <div className="table-text">No studies found.</div> :
+				<DataGrid
+					columns={dataGridColumns}
+					rows={response.studies}
+					getRowId={row => row.ID}
+					autoHeight={true}
+					getRowHeight={() => "auto"}
+					paginationMode="server"
+					rowCount={response.totalStudiesAvailable}
+					paginationModel={paginationModel}
+					onPaginationModelChange={reloadWithPaginationModel}
+					rowSelection={false}
+				/>
+			}
 		</div>
 	);
 }
