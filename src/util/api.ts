@@ -59,7 +59,7 @@ export async function findStudies(
 		max_rnk: maxRank.toString(),
 	}).toString();
 	const data = await (await fetch(url)).json() as CTStudyFieldsResponse;
-	console.debug(`Fetched url ${url}, has results: ${data.StudyFieldsResponse.StudyFields![0].ResultsFirstSubmitDate}`);
+	console.debug(`Fetched url ${url}`);
 	return {
 		studies: data.StudyFieldsResponse.StudyFields?.map(obj => ({
 			ID: obj.NCTId[0],
