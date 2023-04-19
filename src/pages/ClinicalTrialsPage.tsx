@@ -147,7 +147,9 @@ export default function ClinicalTrialsPage() {
 				<input
 					placeholder="Search Expression"
 					defaultValue={new URLSearchParams(window.location.search).get("cond")?.split("+").join(" ") ?? ""}
-					onKeyDown={e => e.key === "Enter" && search()}
+					onKeyDown={(e) => {
+						if(e.key === "Enter" && searchStatus !== "searching") search();
+					}}
 					id="searchInput"
 					ref={searchInput}
 				/>
