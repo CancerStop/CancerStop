@@ -34,3 +34,6 @@
 .table-text {
 	margin: 10px;
 }
+.MuiDataGrid-menuIcon {
+	margin-right: 0px !important;
+}
