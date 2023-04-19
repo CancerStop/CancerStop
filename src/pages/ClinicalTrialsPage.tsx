@@ -1,7 +1,7 @@
 import SubHeader from '../components/SubHeader';
 import '../styles/pageStyles/ClinicalTrialsStyles.css';
 import { StudiesResponse, findStudies } from '../util/api';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@material-ui/core';
 import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 
@@ -90,16 +90,14 @@ const dataGridColumns: GridColDef[] = [
 export default function ClinicalTrialsPage() {
 
 	const [response, setResponse] = useState<StudiesResponse | null>(null);
-	const [searchExpr, setSearchExpr] = useState<string>(
-		new URLSearchParams(window.location.search).get("cond")?.split("+").join(" ") ?? ""
-	);
+	const searchInput = useRef<HTMLInputElement | null>(null);
 	const [paginationModel, setPaginationModel] = useState({
 		pageSize: 25,
 		page: 0,
 	});
 	const [searchStatus, setSearchStatus] = useState<"idle" | "searching" | "errored">("idle");
 
-	const fetchData = (page = paginationModel.page, resultsPerPage = paginationModel.pageSize) => findStudies(searchExpr, (page) * resultsPerPage + 1, (page + 1) * resultsPerPage);
+	const fetchData = (page = paginationModel.page, resultsPerPage = paginationModel.pageSize) => findStudies(searchInput.current?.value ?? "", (page) * resultsPerPage + 1, (page + 1) * resultsPerPage);
 	const handle = (err:unknown) => {
 		console.error(err);
 		setSearchStatus("errored");
@@ -129,7 +127,7 @@ export default function ClinicalTrialsPage() {
 
 	//If there's a search expression on first load, search automatically
 	useEffect(() => {
-		if(searchExpr !== "") search();
+		if(searchInput.current?.value !== "") search();
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
@@ -140,9 +138,9 @@ export default function ClinicalTrialsPage() {
 			<span className="searchBar">
 				<input
 					placeholder="Search Expression"
-					value={searchExpr}
-					onChange={(e) => setSearchExpr(e.target.value)}
+					defaultValue={new URLSearchParams(window.location.search).get("cond")?.split("+").join(" ") ?? ""}
 					id="searchInput"
+					ref={searchInput}
 				/>
 				<Button
 					onClick={() => search()}
