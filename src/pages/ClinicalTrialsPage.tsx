@@ -82,6 +82,14 @@ const dataGridColumns: GridColDef[] = [
 				} return params.value.join(", ");
 			} else return `TypeError: ${typeof params.value}`;
 		},
+		sortComparator(a, b){
+			function score(value:string[]){
+				if(value.length === 0 || value[0] === "Not Applicable") return 0;
+				const matchData = value.map(v => v.match(/Phase (\d)/)?.[1]);
+				return matchData.reduceRight((a, b) => a / 10 + (b ? +b : 0), 0);
+			}
+			return score(a) - score(b);
+		},
 		minWidth: 100,
 		flex: 0.1
 	},
