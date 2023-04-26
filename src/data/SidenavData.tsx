@@ -20,7 +20,7 @@ export const SidenavData: {
 	},
 	{
 		title: 'Donate',
-		path: '/donate',
+		path: 'https://www.nfggive.com/guidestar/83-2805054',
 		icon: <FaDonate />,
 	},
 	{

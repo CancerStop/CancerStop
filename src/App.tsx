@@ -38,7 +38,7 @@ export default function App() {
 						path="/contact-us"
 						component={ContactUsPage}
 					/>
-					<Route path="/donate" component={DonatePage} />
+					<Redirect from="/donate" to="https://www.nfggive.com/guidestar/83-2805054" />
 					<Route
 						path="/genes-and-more"
 						component={GenesAndMore}
