@@ -37,3 +37,16 @@
 .MuiDataGrid-menuIcon {
 	margin-right: 0px !important;
 }
+@media (any-hover: none) {
+	.MuiDataGrid-columnHeader .MuiDataGrid-iconButtonContainer {
+		width: auto !important;
+		visibility: visible !important;
+	}
+	.MuiDataGrid-columnHeader .MuiDataGrid-menuIcon {
+		width: auto !important;
+		visibility: visible !important;
+	}
+	.MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon {
+		opacity: 0.5 !important;
+	}
+}
