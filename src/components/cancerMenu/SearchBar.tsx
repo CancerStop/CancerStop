@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import '../../styles/componentStyles/cancerMenuStyles/SearchBarStyles.css';
-import SearchIcon from '@material-ui/icons/Search';
-import CloseIcon from '@material-ui/icons/Close';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import { CancerData, cancerData } from '../../data/CancerData';
 

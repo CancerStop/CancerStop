@@ -2,7 +2,7 @@ import SubHeader from '../components/SubHeader';
 import '../styles/pageStyles/ClinicalTrialsStyles.css';
 import { StudiesResponse, findStudies } from '../util/api';
 import { useState, useEffect, useRef } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 
 const searchStatusName = {

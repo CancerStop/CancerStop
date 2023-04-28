@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '@material-ui/core/Button';
+import { Button } from '@mui/material';
 import '../styles/pageStyles/GenesAndMorePageStyles.css';
 import SubHeader from '../components/SubHeader';
 
