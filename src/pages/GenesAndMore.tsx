@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@mui/material';
 import '../styles/pageStyles/GenesAndMorePageStyles.css';
 import SubHeader from '../components/SubHeader';
+import ControlledInput from '../components/ControlledInput';
 
 export default function GenesAndMore() {
 
@@ -25,14 +26,12 @@ export default function GenesAndMore() {
 			<div className="genesAndMore_formArea">
 				<div className="genesAndMore_geneInfoForm">
 					<div className="genesAndMore_termInputWrapper">
-						<form onSubmit={e => {e.preventDefault(); searchGeneInfo();}}>
-							<input
-								placeholder="Enter gene info like BCOR or NPM1"
-								value={geneInfoTerm}
-								onChange={e => setGeneInfoTerm(e.target.value)}
-								className="genesAndMore_termInput"
-							/>
-						</form>
+						<ControlledInput
+							className="genesAndMore_termInput"
+							value={geneInfoTerm} setValue={setGeneInfoTerm}
+							placeholder="Enter gene info like BCOR or NPM1"
+							onEnter={searchGeneInfo}
+						/>
 					</div>
 
 					<div className="genesAndMore_searchButtonContainer">
@@ -49,14 +48,12 @@ export default function GenesAndMore() {
 
 				<div className="genesAndMore_geneInfoForm">
 					<div>
-						<form onSubmit={e => {e.preventDefault(); searchVariantInfo();}}>
-							<input
-								placeholder="Enter variant info like c.4009C>T"
-								value={variantInfoTerm}
-								onChange={e => setVariantInfoTerm(e.target.value)}
-								className="genesAndMore_termInput"
-							/>
-						</form>
+						<ControlledInput
+							className="genesAndMore_termInput"
+							value={variantInfoTerm} setValue={setVariantInfoTerm}
+							placeholder="Enter variant info like c.4009C>T"
+							onEnter={searchVariantInfo}
+						/>
 					</div>
 
 					<div className="genesAndMore_searchButtonContainer">
