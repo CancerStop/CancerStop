@@ -4,31 +4,19 @@ import '../styles/pageStyles/GenesAndMorePageStyles.css';
 import SubHeader from '../components/SubHeader';
 
 export default function GenesAndMore() {
-	const geneInfoLinkTemplate =
-		'https://www.ncbi.nlm.nih.gov/gene/?term=';
-	const variantInfoLinkTemplate =
-		'https://www.ncbi.nlm.nih.gov/clinvar/?term=';
 
 	const [geneInfoTerm, setGeneInfoTerm] = useState('');
 	const [variantInfoTerm, setVariantInfoTerm] = useState('');
 
-	const [variantInfoLink, setVariantInfoLink] = useState('');
+	const searchVariantInfo = () => {
+		if(variantInfoTerm)
+			window.open(`https://www.ncbi.nlm.nih.gov/clinvar/?term=` + variantInfoTerm + (geneInfoTerm ? `%20${geneInfoTerm}` : ""));
+	}
 
-	const handleVariantInfoSubmit = () => {
-		if (geneInfoTerm !== '') {
-			setVariantInfoLink(
-				variantInfoLinkTemplate.concat(
-					variantInfoTerm,
-					'%20',
-					geneInfoTerm
-				)
-			);
-		} else {
-			setVariantInfoLink(
-				variantInfoLinkTemplate.concat(variantInfoTerm)
-			);
-		}
-	};
+	const searchGeneInfo = () => {
+		if(geneInfoTerm)
+			window.open(`https://www.ncbi.nlm.nih.gov/gene/?term=${geneInfoTerm}`);
+	}
 
 	return (
 		<div className="genesAndMore page">
@@ -37,61 +25,48 @@ export default function GenesAndMore() {
 			<div className="genesAndMore_formArea">
 				<div className="genesAndMore_geneInfoForm">
 					<div className="genesAndMore_termInputWrapper">
-						<input
-							placeholder="Enter gene info like BCOR or NPM1"
-							value={geneInfoTerm}
-							onChange={(e) =>
-								setGeneInfoTerm(e.target.value)
-							}
-							className="genesAndMore_termInput"
-						/>
+						<form onSubmit={e => {e.preventDefault(); searchGeneInfo();}}>
+							<input
+								placeholder="Enter gene info like BCOR or NPM1"
+								value={geneInfoTerm}
+								onChange={e => setGeneInfoTerm(e.target.value)}
+								className="genesAndMore_termInput"
+							/>
+						</form>
 					</div>
 
 					<div className="genesAndMore_searchButtonContainer">
 						<Button
 							className="genesAndMore_searchButton"
 							variant="contained"
+							onClick={searchGeneInfo}
+							disabled={geneInfoTerm === ""}
 						>
-							<a
-								href={geneInfoLinkTemplate.concat(
-									geneInfoTerm
-								)}
-								target="_blank"
-								rel="noreferrer"
-								className="genesAndMore_searchButton"
-							>
-								Search Gene Info
-							</a>
+							Search Gene Info
 						</Button>
 					</div>
 				</div>
 
 				<div className="genesAndMore_geneInfoForm">
 					<div>
-						<input
-							placeholder="Enter variant info like c.4009C>T"
-							value={variantInfoTerm}
-							onChange={(e) =>
-								setVariantInfoTerm(e.target.value)
-							}
-							className="genesAndMore_termInput"
-						/>
+						<form onSubmit={e => {e.preventDefault(); searchVariantInfo();}}>
+							<input
+								placeholder="Enter variant info like c.4009C>T"
+								value={variantInfoTerm}
+								onChange={e => setVariantInfoTerm(e.target.value)}
+								className="genesAndMore_termInput"
+							/>
+						</form>
 					</div>
 
 					<div className="genesAndMore_searchButtonContainer">
 						<Button
 							className="genesAndMore_searchButton"
 							variant="contained"
-							onClick={handleVariantInfoSubmit}
+							onClick={searchVariantInfo}
+							disabled={variantInfoTerm === ""}
 						>
-							<a
-								target="_blank"
-								href={variantInfoLink}
-								rel="noreferrer"
-								className="genesAndMore_searchButton"
-							>
-								Search Variant Info
-							</a>
+							Search Variant Info
 						</Button>
 					</div>
 				</div>
