@@ -508,13 +508,11 @@ export default function FaqPage() {
 								</AccordionItem>
 
 								<div className="faq_note">
-									<b>
-										Note: This feature is
-										likely to undergo more
-										improvements and upgrades
-										for use in precision
-										medicine.
-									</b>
+									Note: This feature is
+									likely to undergo more
+									improvements and upgrades
+									for use in precision
+									medicine.
 								</div>
 							</AccordionItemPanel>
 						</div>
