@@ -38,7 +38,7 @@
   "peerDependencies": {
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build && del build.zip && 7z a build.zip ./build/*",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
