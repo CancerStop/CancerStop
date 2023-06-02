@@ -4,7 +4,7 @@ import SubHeader from '../components/SubHeader';
 export default function SearchPage() {
 	return (
 		<div className="searchPage">
-			<SubHeader>Search</SubHeader>
+			<SubHeader>PresciQure</SubHeader>
 			{(() => {
 				/* I'm not sure if this is the best way to do this */
 				const script = document.createElement('script');

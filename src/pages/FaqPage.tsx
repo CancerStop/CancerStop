@@ -205,7 +205,7 @@ export default function FaqPage() {
 						<div>
 							<AccordionItemHeading>
 								<AccordionItemButton className="accordion__button faq_accordionButton">
-									Search
+									PresiQure
 								</AccordionItemButton>
 							</AccordionItemHeading>
 
@@ -219,7 +219,7 @@ export default function FaqPage() {
 
 									<AccordionItemPanel className="faq_accordionContent">
 										<p>
-											WebSeq is a curated
+											PresciQure is a curated
 											search engine powered
 											by Google Custom
 											Search. Sites and

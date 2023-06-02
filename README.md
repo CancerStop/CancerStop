@@ -20,7 +20,7 @@ As medical research and technology advances further and the standard of living i
 these are very likely to change. Numbers for these curves are for information purposes only.
 *NO RESPONSIBILITY IS CLAIMED WHATSOEVER.*
 
-# Search
+# PresciQure
 
 This is a curated search engine powered by Google custom search.
 Sites and sources are manually curated and checked so as to keep

@@ -42,7 +42,8 @@ export default function App() {
 						path="/genes-and-more"
 						component={GenesAndMore}
 					/>
-					<Route path="/search" component={SearchPage} />
+					<Redirect from="/search" to="/presciqure" />
+					<Route path="/presciqure" component={SearchPage} />
 					<Route
 						path="/clinical-trials"
 						component={ClinicalTrialsPage}
