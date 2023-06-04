@@ -14,7 +14,7 @@
 
 .faq_accordionContent {
     margin-top: 10px;
-    border: 1px solid rgb(194, 194, 194);
+    /* border: 1px solid rgb(194, 194, 194); */
     padding: 10px;
 }
 
@@ -24,6 +24,7 @@
 
 .faq_note {
     margin-top: 5px;
+    font-weight: bolder;
 }
 
 @media screen and (max-width: 1025px) {

@@ -24,8 +24,8 @@ export const SidenavData: {
 		icon: <FaDonate />,
 	},
 	{
-		title: 'Search',
-		path: '/search',
+		title: 'PresciQure',
+		path: '/presciqure',
 		icon: <GiArchiveResearch />,
 	},
 	{

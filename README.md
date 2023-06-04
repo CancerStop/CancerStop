@@ -20,31 +20,7 @@ As medical research and technology advances further and the standard of living i
 these are very likely to change. Numbers for these curves are for information purposes only.
 *NO RESPONSIBILITY IS CLAIMED WHATSOEVER.*
 
-Non-Linear regression from SEER Stats Data
-
-Data Source: 
-Non-linear regression was performed from data available from the interactive tool SEER Fast Stats from NCI SEER Webpage. Following were the selections made from the drop down list
-
-Data Selection Parameters:
-Data Type: ‘SEER Survival’
-Statistic Type: ‘Relative Survival by Survival Time’
-Year Range: ‘1988-2013 (SEER 13)’
-Cancer Site: ‘Chosen by what was being investigated’
-Sub-Site: ‘Chosen by what was available based on choice made above’
-Race/Ethnicity: ‘All Races (Includes Hispanic)’
-Sex: ‘Both Sexes’
-Age Range: 
-Ages <20, 20-49, 50-64, 65-74, 75+
-Output Format: 
-Table
-Regression Equation for Data:
-Data from Table imported into spreadsheet (Microsoft Excel). Age ranges were averaged. For ages <20, 0 was taken as the lower limit and for ages above 75, 100 was taken as the upper limit. Graphs were plotted with averaged ages (10, 34.5, 57, 69.5, 87.5) on x-axis and Survival rates on y-axis. 
-
-For each each year (1-10), trendline was added to each year series with display set to on for equation and R-squared values. Polynomial with 4th degree was chosen. Changed the trendline settings to display coefficients upto 10 digits. Recheck the correctness of the equation by entering random age values of x. 
-
-Noted the equation for each of the 10 years separately. Used the ‘x’ in these equations as input for age to the appropriate ‘y’ - survival percentage.
-
-# Search
+# PresciQure
 
 This is a curated search engine powered by Google custom search.
 Sites and sources are manually curated and checked so as to keep

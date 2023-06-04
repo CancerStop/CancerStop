@@ -151,13 +151,13 @@ export default function FaqPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem className="faq_mainAccordionSection">
-            <div>
-              <AccordionItemHeading>
-                <AccordionItemButton className="accordion__button faq_accordionButton">
-                  Search
-                </AccordionItemButton>
-              </AccordionItemHeading>
+					<AccordionItem className="faq_mainAccordionSection">
+						<div>
+							<AccordionItemHeading>
+								<AccordionItemButton className="accordion__button faq_accordionButton">
+									PresiQure
+								</AccordionItemButton>
+							</AccordionItemHeading>
 
               <AccordionItemPanel>
                 <AccordionItem className="faq_subAccordion">
@@ -167,14 +167,20 @@ export default function FaqPage() {
                     </AccordionItemButton>
                   </AccordionItemHeading>
 
-                  <AccordionItemPanel className="faq_accordionContent">
-                    <p>
-                      WebSeq is a curated search engine powered by Google Custom
-                      Search. Sites and sources are manually curated and checked
-                      so as to keep the results as relevant as possible.
-                    </p>
-                  </AccordionItemPanel>
-                </AccordionItem>
+									<AccordionItemPanel className="faq_accordionContent">
+										<p>
+											PresciQure is a curated
+											search engine powered
+											by Google Custom
+											Search. Sites and
+											sources are manually
+											curated and checked so
+											as to keep the results
+											as relevant as
+											possible.
+										</p>
+									</AccordionItemPanel>
+								</AccordionItem>
 
                 <AccordionItem className="faq_subAccordion">
                   <AccordionItemHeading>
@@ -390,15 +396,16 @@ export default function FaqPage() {
                   </AccordionItemPanel>
                 </AccordionItem>
 
-                <div className="faq_note">
-                  <b>
-                    Note: This feature is likely to undergo more improvements
-                    and upgrades for use in precision medicine.
-                  </b>
-                </div>
-              </AccordionItemPanel>
-            </div>
-          </AccordionItem>
+								<div className="faq_note">
+									Note: This feature is
+									likely to undergo more
+									improvements and upgrades
+									for use in precision
+									medicine.
+								</div>
+							</AccordionItemPanel>
+						</div>
+					</AccordionItem>
 
           <AccordionItem className="faq_mainAccordionSection">
             <div>

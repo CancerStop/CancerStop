@@ -39,7 +39,8 @@ export default function App() {
           <Route path="/sct" component={Survivalcurvetrial} />
           <Route path="/contact-us" component={ContactUsPage} />
           <Route path="/genes-and-more" component={GenesAndMore} />
-          <Route path="/search" component={SearchPage} />
+					<Redirect from="/search" to="/presciqure" />
+          <Route path="/presciqure" component={SearchPage} />
           <Route path="/clinical-trials" component={ClinicalTrialsPage} exact />
 
           {Object.entries(cancerData).map(([name, cancer]) => (
