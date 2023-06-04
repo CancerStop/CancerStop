@@ -141,6 +141,8 @@ export default function SurvivalCurvesPage(cancer: CancerData) {
                         </Grid>
                     </Grid>
                 </Box>
+
+                <h3>Survival curve presented is an extrapolation from the data presented online at NCI SEER survival data (url: https://seer.cancer.gov/statistics-network/explorer/application.html ). These are only indicators for research use. No claim or responsibility is made whatsoever. Refer to footnotes on the link for more details</h3>
             </div>
         );
     } else {
