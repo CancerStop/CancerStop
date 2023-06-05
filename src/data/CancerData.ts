@@ -12,8 +12,8 @@ type PreprocessedCancerData<T extends string> = {
 		description?: string;
 		information_name?: string;
 		information_subtype: string;
-		survival_curves_coefficients: Array<any>;
-		internalized_survival_curves: Boolean;
+		survival_curves_coefficients: SurvivalCurvesPoint[];
+		internalized_survival_curves: boolean;
 	};
 };
 
@@ -26,7 +26,7 @@ export interface CancerData {
 	approved_drugs_link: string;
 	survival_curves_link_external: string;
 	survival_curves_link_internal: string;
-	survival_curves_coefficients: Array<any>;
+	survival_curves_coefficients: SurvivalCurvesPoint[];
 	search_link: string;
 	clinical_trials_link: string;
 	clinical_trials_name: string;
@@ -34,7 +34,15 @@ export interface CancerData {
 	url: string;
 	description: string;
 	information_link: string;
-	internalized_survival_curves: Boolean;
+	internalized_survival_curves: boolean;
+}
+
+export interface SurvivalCurvesPoint {
+	y_intercept: number;
+	first_coeff: number;
+	second_coeff: number;
+	third_coeff: number;
+	fourth_coeff: number;
 }
 
 export type CancerID = keyof typeof cancerData;
