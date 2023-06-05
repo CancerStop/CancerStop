@@ -1,4 +1,3 @@
-
 export function capitalizeText(text: string, delimiter: string, joinCharacter: string):string {
 	return text
 		.split(delimiter)
@@ -9,4 +8,3 @@ export function capitalizeText(text: string, delimiter: string, joinCharacter: s
 				: word[0].toUpperCase() + word.substring(1)
 		).join(joinCharacter);
 }
-
