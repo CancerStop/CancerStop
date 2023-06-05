@@ -50,7 +50,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 			// }&recrs=b&recrs=a&recrs=f&recrs=d`,
 			clinical_trials_link: `/clinical-trials?cond=${cancer.clinical_trials_name ?? capitalizeText(id, '_', '+')}`,
 			survival_curves_link: `https://seer.cancer.gov/explorer/application.html?site=${cancer.survival_curves_id}&data_type=4&graph_type=6&compareBy=age_range&chk_age_range_16=16&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&sex=1&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2#label_graphArea`,
-			search_link: `/search#gsc.q=${
+			search_link: `/presciqure#gsc.q=${
 				cancer.search_name ??
 				capitalizeText(id, '_', '%20')
 			}`,

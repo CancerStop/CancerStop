@@ -35,7 +35,7 @@ export default function CancerPageTemplate(data:CancerData) {
 				/>
 
 				<CancerPageCard
-					title="Search"
+					title="PresciQure"
 					link={data.search_link}
 					imagePath={searchImage}
 				/>
