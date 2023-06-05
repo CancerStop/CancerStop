@@ -22,7 +22,7 @@ import NotFoundPage from "./pages/NotFound";
 import ClinicalTrialsPage from "./pages/ClinicalTrialsPage";
 
 import { cancerData } from "./data/CancerData";
-import SurvivalCurvesPage from "./pages/SurvivalCurvesPage";
+import SurvivalCurvesTemplate from "./pages/SurvivalCurvesPage";
 import React from "react";
 
 import Survivalcurvetrial from "./survivalcurvetrial";
@@ -64,7 +64,7 @@ export default function App() {
             <Route
               key={name}
               path={`${cancer.url}/survival-curves`}
-              component={SurvivalCurvesPage(cancer)}
+              component={SurvivalCurvesTemplate(cancer)}
             />
           ))}
 

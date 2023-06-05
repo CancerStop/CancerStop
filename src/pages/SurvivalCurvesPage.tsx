@@ -53,45 +53,43 @@ export const options = {
 
 const years_since_diagnosis = [0,1,2,3,4,5,6,7,8,9,10];
 
-export default function SurvivalCurvesPage(cancer: CancerData) {
-    const [age, setAge] = React.useState<any>(
-        0,
-    );
-    const [percentages, setPercentages] = React.useState<Array<number>>(
-        [100]
-    );
+//This isn't a component, it is called with cancerdata and retuns a component, which is different based on the cancerdata (if isinternal, component with graph and state, otherwise component that is just a div with NYI)
+//so it should be a template
+export default function SurvivalCurvesTemplate(cancer: CancerData) {
+    if (cancer.internalized_survival_curves) return function SurvivalCurvesPage(){
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let curr_age = Number(event.target.value);
-        setAge(event.target.value === '' ? '' : curr_age);
+        const [age, setAge] = React.useState(0);
 
-        let tempData = [100];
+        //Percentage array is derived state, and comes from evaluating the polynomial
+        let percentages = [100];
         for (let i = 1; i < 11; i++) {
-            tempData[i] = (cancer.survival_curves_coefficients[i - 1].fourth_coeff * (curr_age ** 4)) + (cancer.survival_curves_coefficients[i - 1].third_coeff * (curr_age ** 3)) + (cancer.survival_curves_coefficients[i - 1].second_coeff * (curr_age ** 2)) + (cancer.survival_curves_coefficients[i - 1].first_coeff * curr_age) + cancer.survival_curves_coefficients[i - 1].y_intercept;
+            percentages[i] = (cancer.survival_curves_coefficients[i - 1].fourth_coeff * (age ** 4)) + (cancer.survival_curves_coefficients[i - 1].third_coeff * (age ** 3)) + (cancer.survival_curves_coefficients[i - 1].second_coeff * (age ** 2)) + (cancer.survival_curves_coefficients[i - 1].first_coeff * age) + cancer.survival_curves_coefficients[i - 1].y_intercept;
         }
-        setPercentages(tempData);
-    };
 
-    const handleSliderChange = (event: Event, newValue: number | number[] | any) => {
-        let curr_age = newValue;
-        setAge(curr_age);
-        let tempData = [100];
-        for (let i = 1; i < 11; i++) {
-            tempData[i] = (cancer.survival_curves_coefficients[i - 1].fourth_coeff * (curr_age ** 4)) + (cancer.survival_curves_coefficients[i - 1].third_coeff * (curr_age ** 3)) + (cancer.survival_curves_coefficients[i - 1].second_coeff * (curr_age ** 2)) + (cancer.survival_curves_coefficients[i - 1].first_coeff * curr_age) + cancer.survival_curves_coefficients[i - 1].y_intercept;
-        }
-        setPercentages(tempData);
-    };
+        const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            let newAge:number;
+            //Validate input
+            if(event.target.value === "" || isNaN(Number(event.target.value))){
+                event.target.value = "0";
+                newAge = 0;
+            } else {
+                newAge = Number(event.target.value);
+            }
+            setAge(newAge);
+        };
 
-    const handleBlur = () => {
-        if (age < 0) {
-            setAge(0);
-        } else if (age > 100) {
-            setAge(100);
-        }
-    };
+        const handleSliderChange = (event: Event, newValue:number | number[]) => {
+            if(typeof newValue === "number"){
+                //No validation necessary
+                setAge(newValue);
+            } else {
+                //not sure when this can happen, just add an error to watch for it
+                console.error(newValue);
+                throw new Error(`slider change returned number[]`);
+            }
+        };
 
-    if (cancer.internalized_survival_curves) {
-        return () => (
+        return (
             <div>
                 <SubHeader>{cancer.name + ' - Survival Curves'}</SubHeader>
 
@@ -117,7 +115,7 @@ export default function SurvivalCurvesPage(cancer: CancerData) {
                     <Grid container spacing={2} alignItems="center">
                         <Grid item xs>
                             <Slider
-                                value = {typeof age == 'number' ? age : 0}
+                                value={age}
                                 onChange={handleSliderChange}
                                 aria-labelledby='input-slider'
                                 valueLabelDisplay='on'
@@ -129,7 +127,6 @@ export default function SurvivalCurvesPage(cancer: CancerData) {
                                 value={age}
                                 size="small"
                                 onChange={handleInputChange}
-                                onBlur={handleBlur}
                                 inputProps={{
                                     step: 10,
                                     min: 10,
@@ -145,8 +142,9 @@ export default function SurvivalCurvesPage(cancer: CancerData) {
                 <h3>Survival curve presented is an extrapolation from the data presented online at NCI SEER survival data (url: https://seer.cancer.gov/statistics-network/explorer/application.html ). These are only indicators for research use. No claim or responsibility is made whatsoever. Refer to footnotes on the link for more details</h3>
             </div>
         );
-    } else {
-        return () => (
+    }
+    else return function SurvivalCurvesPage(){
+        return (
             <div>NOT YET IMPLEMENTED</div>
         );
     }
