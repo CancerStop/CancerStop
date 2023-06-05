@@ -90,7 +90,7 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
         };
 
         return (
-            <div>
+            <div className="survivalCurvesPage">
                 <SubHeader>{cancer.name + ' - Survival Curves'}</SubHeader>
 
                 <div className="survivalcurves_line">
@@ -108,17 +108,20 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                 </div>
 
                 <Box>
-                    <Typography id="input-slider" gutterBottom>
-                        Age
-                    </Typography>
 
                     <Grid container spacing={2} alignItems="center">
+                        <Grid item>
+                            <Typography id="input-slider" gutterBottom>
+                                Age
+                            </Typography>
+                        </Grid>
+
                         <Grid item xs>
                             <Slider
                                 value={age}
                                 onChange={handleSliderChange}
                                 aria-labelledby='input-slider'
-                                valueLabelDisplay='on'
+                                valueLabelDisplay='off'
                             />
                         </Grid>
 
