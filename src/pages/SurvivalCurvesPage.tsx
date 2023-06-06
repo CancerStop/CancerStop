@@ -63,7 +63,7 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
         //Percentage array is derived state, and comes from evaluating the polynomial
         const percentages = [100];
         for (let i = 1; i < 11; i++) {
-            percentages[i] = (cancer.survival_curves_coefficients[i - 1].fourth_coeff * (age ** 4)) + (cancer.survival_curves_coefficients[i - 1].third_coeff * (age ** 3)) + (cancer.survival_curves_coefficients[i - 1].second_coeff * (age ** 2)) + (cancer.survival_curves_coefficients[i - 1].first_coeff * age) + cancer.survival_curves_coefficients[i - 1].y_intercept;
+            percentages[i] = (cancer.survival_curves_coefficients[i - 1].a4 * (age ** 4)) + (cancer.survival_curves_coefficients[i - 1].a3 * (age ** 3)) + (cancer.survival_curves_coefficients[i - 1].a2 * (age ** 2)) + (cancer.survival_curves_coefficients[i - 1].a1 * age) + cancer.survival_curves_coefficients[i - 1].a0;
         }
 
         const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
