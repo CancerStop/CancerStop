@@ -73,7 +73,8 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                 event.target.value = "0";
                 newAge = 0;
             } else {
-                newAge = Number(event.target.value);
+                newAge = Math.min(Math.max(Math.round(Number(event.target.value)), 0), 100);
+                event.target.value = newAge.toString();
             }
             setAge(newAge);
         };
