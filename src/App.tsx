@@ -25,7 +25,6 @@ import { cancerData } from "./data/CancerData";
 import SurvivalCurvesTemplate from "./pages/SurvivalCurvesPage";
 import React from "react";
 
-import Survivalcurvetrial from "./survivalcurvetrial";
 
 export default function App() {
   return (
@@ -36,7 +35,6 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/faq" component={FaqPage} />
-          <Route path="/sct" component={Survivalcurvetrial} />
           <Route path="/contact-us" component={ContactUsPage} />
           <Route path="/genes-and-more" component={GenesAndMore} />
 					<Redirect from="/search" to="/presciqure" />
