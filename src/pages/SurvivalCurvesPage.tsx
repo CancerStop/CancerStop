@@ -143,8 +143,8 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                     </Grid>
                 </Box>
 
-                <h3>Survival curves presented are an extrapolation from the data presented online at <a href="https://seer.cancer.gov/statistics-network/explorer/application.html">NCI SEER</a>. These are only indicators for research use. No claim or responsibility is made whatsoever.</h3>
-                <p>Relative survival is defined as the ratio of the proportion of observed survivors in a cohort of cancer patients to the proportion of expected survivors in a comparable set of cancer free individuals. <a href="https://seer.cancer.gov/seerstat/508_WebHelp/Relative_Survival.htm">More Information</a></p>
+                <h3 style={{fontSize: "100%"}}>Survival curves presented are an extrapolation from the data presented online at <a href="https://seer.cancer.gov/statistics-network/explorer/application.html">NCI SEER</a>. These are only indicators for research use. No claim or responsibility is made whatsoever.</h3>
+                <p style={{fontSize: "80%"}}>Relative survival is defined as the ratio of the proportion of observed survivors in a cohort of cancer patients to the proportion of expected survivors in a comparable set of cancer free individuals. <a href="https://seer.cancer.gov/seerstat/508_WebHelp/Relative_Survival.htm">More Information</a></p>
             </div>
         );
     }
