@@ -51,7 +51,7 @@ export async function findStudies(
 	searchExpr:string, minRank = 1, maxRank = 20,
 	fields = ["NCTId", "Condition", "BriefTitle", "OverallStatus", "LocationFacility", "Phase", "StudyType", "ResultsFirstSubmitDate"]
 ):Promise<StudiesResponse> {
-	const url = `https://www.clinicaltrials.gov/api/query/study_fields?` + new URLSearchParams({
+	const url = `https://classic.clinicaltrials.gov/api/query/study_fields?` + new URLSearchParams({
 		expr: searchExpr,
 		fields: fields.join(","),
 		fmt: "json",
