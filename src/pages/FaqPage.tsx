@@ -155,7 +155,7 @@ export default function FaqPage() {
 						<div>
 							<AccordionItemHeading>
 								<AccordionItemButton className="accordion__button faq_accordionButton">
-									PresiQure
+									PresciQure
 								</AccordionItemButton>
 							</AccordionItemHeading>
 
