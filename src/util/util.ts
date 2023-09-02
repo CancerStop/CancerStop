@@ -1,4 +1,4 @@
-export function capitalizeText(text: string, delimiter: string, joinCharacter: string):string {
+export function capitalizeText(text: string, delimiter = " ", joinCharacter = " "):string {
 	return text
 		.split(delimiter)
 		.map((word, index, arr) =>

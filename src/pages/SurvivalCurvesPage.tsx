@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SubHeader from '../components/SubHeader';
-import { CancerData } from '../data/CancerData';
+import { CancerData, StagewiseSurvivalData } from '../data/CancerData';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -19,6 +19,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    type ChartDataset,
 } from 'chart.js';
 
 import { Line } from 'react-chartjs-2';
@@ -37,6 +38,26 @@ const Input = styled(MuiInput)`
 width:42px;
 `;
 
+const stageMapping:{
+    [_ in keyof StagewiseSurvivalData]: Omit<ChartDataset<"line", number[]>, "data">
+} = {
+    distant: {
+        label: "distant",
+        borderColor: "#C088C8",
+    },
+    localized: {
+        label: "localized",
+        borderColor: "#3369E8",
+    },
+    regional: {
+        label: "regional",
+        borderColor: "#006D2C",
+    },
+    unstaged: {
+        label: "unstaged",
+        borderColor: "#AD5928",
+    },
+};
 
 const years_since_diagnosis = [0,1,2,3,4,5,6,7,8,9,10];
 
@@ -52,6 +73,14 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
         for (let i = 1; i < 11; i++) {
             percentages[i] = (cancer.survival_curves_coefficients[i - 1].a4 * (age ** 4)) + (cancer.survival_curves_coefficients[i - 1].a3 * (age ** 3)) + (cancer.survival_curves_coefficients[i - 1].a2 * (age ** 2)) + (cancer.survival_curves_coefficients[i - 1].a1 * age) + cancer.survival_curves_coefficients[i - 1].a0;
         }
+
+        const stageWiseSurvivalCurves:StagewiseSurvivalData | undefined = cancer.survival_curves_stagewise ? cancer.survival_curves_stagewise[
+            age < 15 ? "_15" :
+            age < 40 ? "_15_39" :
+            age < 65 ? "_40_64" :
+            age < 75 ? "_65_74" :
+            "_75"
+        ] : undefined;
 
         const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             let newAge:number;
@@ -85,7 +114,7 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                     <Line options={{
                         plugins: {
                             legend: {
-                                position: 'top' as const,
+                                position: 'top',
                             }
                         },
                         scales: {
@@ -102,9 +131,13 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                             {
                                 label: 'Percent Survival',
                                 data: percentages,
-                                borderColor: 'rgb(255, 99, 132)',
-                                backgroundColor: 'rgba(255, 99, 132, 0.5)'
-                            }
+                                borderColor: '#000000',
+                            }, ...(
+                                stageWiseSurvivalCurves ? Object.entries(stageWiseSurvivalCurves).map(([stage, data]) => ({
+                                    ...stageMapping[stage],
+                                    data,
+                                })) : []
+                            )
                         ]
                     }} />
                 </div>
