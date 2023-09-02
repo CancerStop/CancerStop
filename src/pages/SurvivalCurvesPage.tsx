@@ -143,8 +143,10 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                     </Grid>
                 </Box>
 
-                <h3 style={{fontSize: "100%"}}>Survival curves presented are an extrapolation from the data presented online at <a href="https://seer.cancer.gov/statistics-network/explorer/application.html">NCI SEER</a>. These are only indicators for research use. No claim or responsibility is made whatsoever.</h3>
-                <p style={{fontSize: "80%"}}>Relative survival is defined as the ratio of the proportion of observed survivors in a cohort of cancer patients to the proportion of expected survivors in a comparable set of cancer free individuals. <a href="https://seer.cancer.gov/seerstat/508_WebHelp/Relative_Survival.htm">More Information</a></p>
+                <p style={{fontSize: "80%", margin: "1% 8%"}}>
+                    The extrapolated line for each age can vary, and widely so, based on factors like the staging of cancer, race, and gender. Recent advances in genetic testing add a totally new level to these curves. These can influence the survival curves greatly.
+                    Data presented here is for Research Use Only, based on the NCI SEER data, and can change as new information emerges. Users are requested to visit the <a href="https://seer.cancer.gov/">NCI SEER</a> for full details. 
+                    Relative survival is defined as the ratio of the proportion of observed survivors in a cohort of cancer patients to the proportion of expected survivors in a comparable set of cancer-free individuals. <a href="https://seer.cancer.gov/seerstat/508_WebHelp/Relative_Survival.htm">More Information.</a> </p>
             </div>
         );
     }
