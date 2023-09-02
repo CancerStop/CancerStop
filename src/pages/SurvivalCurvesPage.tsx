@@ -37,19 +37,6 @@ const Input = styled(MuiInput)`
 width:42px;
 `;
 
-export const options = {
-	plugins: {
-		legend: {
-			position: 'top' as const,
-		}
-	},
-    scales: {
-        y: {
-            suggestedMin: 0,
-            suggestedMax: 100
-        }
-    }
-};
 
 const years_since_diagnosis = [0,1,2,3,4,5,6,7,8,9,10];
 
@@ -95,7 +82,21 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                 <SubHeader>{cancer.name + ' - Survival Curves'}</SubHeader>
 
                 <div className="survivalcurves_line">
-                    <Line options={options} data={{
+                    <Line options={{
+                        plugins: {
+                            legend: {
+                                position: 'top' as const,
+                            }
+                        },
+                        scales: {
+                            y: {
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    }} data={{
                         labels: years_since_diagnosis,
                         datasets: [
                             {

@@ -4,4 +4,13 @@
 .survivalCurvesPage * {
 	overflow-x: unset;
 }
-
+.survivalcurves_line {
+	margin: 0px 50px;
+	height: 60vh;
+}
+@media screen and (max-width: 500px) {
+	.survivalcurves_line {
+		margin: 0px 5px;
+		height: 55vh;
+	}
+}
