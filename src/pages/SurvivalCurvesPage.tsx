@@ -90,8 +90,8 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                         },
                         scales: {
                             y: {
-                                suggestedMin: 0,
-                                suggestedMax: 100
+                                min: 0,
+                                max: 100,
                             }
                         },
                         responsive: true,
