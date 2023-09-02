@@ -121,6 +121,13 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 			description: cancer.description ?? '',
 			information_link: `https://www.cancer.gov/types/${cancer.information_name ?? cancer.approved_drugs_name.split("#")[0]}/patient/${cancer.information_subtype !== "" ? `${cancer.information_subtype}-treatment-pdq` : ""}`,
 			survival_curves_coefficients: cancer.survival_curves_coefficients,
+			survival_curves_stagewise: cancer.survival_curves_stagewise ?
+				//Add 100 to the beginning
+				Object.fromEntries(Object.entries(cancer.survival_curves_stagewise).map(([age, stagewiseData]) =>
+					[age, Object.fromEntries(Object.entries(stagewiseData).map(([stage, data]) =>
+						[stage, [100].concat(data)]
+					))]
+				)) : undefined,
 			internalized_survival_curves: cancer.internalized_survival_curves,
 		},
 	])
