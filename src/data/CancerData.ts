@@ -54,13 +54,15 @@ onkeydown = () => {
 ```
 */
 		survival_curves_stagewise?: {
-			[_ in "_15" | "_15_39" | "_40_64" | "_65_74" | "_75"]: {
-				[_ in "localized" | "regional" | "distant" | "unstaged"]: number[];
-			}
+			[_ in "_15" | "_15_39" | "_40_64" | "_65_74" | "_75"]: StagewiseSurvivalData;
 		};
 		internalized_survival_curves: boolean;
 	};
 };
+
+export type StagewiseSurvivalData = {
+	[_ in "localized" | "regional" | "distant" | "unstaged"]: number[];
+}
 
 export type CancersData<T extends string> = {
 	// eslint-disable-next-line no-unused-vars
@@ -72,6 +74,9 @@ export interface CancerData {
 	survival_curves_link_external: string;
 	survival_curves_link_internal: string;
 	survival_curves_coefficients: SurvivalCurvesPoint[];
+	survival_curves_stagewise?: {
+		[_ in "_15" | "_15_39" | "_40_64" | "_65_74" | "_75"]: StagewiseSurvivalData;
+	};
 	search_link: string;
 	clinical_trials_link: string;
 	clinical_trials_name: string;
