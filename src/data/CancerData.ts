@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { capitalizeText } from "../util/util";
 
 type PreprocessedCancerData<T extends string> = {
@@ -13,6 +14,50 @@ type PreprocessedCancerData<T extends string> = {
 		information_name?: string;
 		information_subtype: string;
 		survival_curves_coefficients: SurvivalCurvesPoint[];
+/*
+Script to grab this data
+Usage instructions: Paste into dev console and run, wait 2.5 seconds, then switch to the page and press Enter to copy the data.
+```
+function delay(timeMs){
+	return new Promise((res, rej) => {
+		setTimeout(() => {
+			res();
+		}, timeMs);
+	});
+}
+function scrapeFromTable(){
+	arr = [...document.querySelector("#first-table tbody").children].slice(1).map(tr =>
+		[...tr.children].slice(1).filter((_, i) => i % 3 == 0).map(td => +td.innerText)
+	);
+	return (
+			`{
+				localized: [${arr.map(r => r[0])}],
+				regional: [${arr.map(r => r[1])}],
+				distant: [${arr.map(r => r[2])}],
+				unstaged: [${arr.map(r => r[3])}],
+			}`
+	);
+}
+out = `
+		survival_curves_stagewise: {
+			_15: ${document.querySelector("#set_age_range label:nth-child(5)").click(), await delay(500), scrapeFromTable()},
+			_15_39: ${document.querySelector("#set_age_range label:nth-child(6)").click(), await delay(500), scrapeFromTable()},
+			_40_64: ${document.querySelector("#set_age_range label:nth-child(7)").click(), await delay(500), scrapeFromTable()},
+			_65_74: ${document.querySelector("#set_age_range label:nth-child(8)").click(), await delay(500), scrapeFromTable()},
+			_75: ${document.querySelector("#set_age_range label:nth-child(9)").click(), await delay(500), scrapeFromTable()}
+		},`;
+onkeydown = () => {
+	navigator.clipboard.writeText(out);
+	alert("copied to clipboard");
+	onkeydown = undefined;
+}
+```
+*/
+		survival_curves_stagewise?: {
+			[_ in "_15" | "_15_39" | "_40_64" | "_65_74" | "_75"]: {
+				[_ in "localized" | "regional" | "distant" | "unstaged"]: number[];
+			}
+		};
 		internalized_survival_curves: boolean;
 	};
 };
@@ -547,6 +592,38 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 				a0: 108.4656998521218
 			}
 		],
+		survival_curves_stagewise: {
+			_15: {
+				localized: [93.1,90.1,88.6,87.3,86.6,86.4,86.1,85.8,85.4,84.9],
+				regional: [88.6,85.2,82.2,80.9,79.1,78.3,77.9,76.9,76.3,76.3],
+				distant: [75,61.5,57.2,53.2,52.8,52.3,51.2,51.2,50.5,50.5],
+				unstaged: [78,69.3,65.4,65.4,63.1,63.1,60.5,60.5,60.5,60.5],
+			},
+			_15_39: {
+				localized: [81.4,72.1,65.7,62,59.1,57.7,54.3,53.2,52.2,50.5],
+				regional: [52.6,38.3,32.5,27.5,25.8,22.9,21.7,20.6,20.6,20.3],
+				distant: [36.3,20.4,13.9,10.9,9.7,9.3,8.5,7.7,7.7,6.9],
+				unstaged: [61.1,52.4,47.9,44.4,41.4,39.8,38.6,38,38,37.2],
+			},
+			_40_64: {
+				localized: [70.7,56.2,47.1,41.4,37.2,34.4,32.4,30.7,29.3,28.2],
+				regional: [41.9,26.1,19.1,15.5,13.4,12.2,11.2,10.5,9.9,9.4],
+				distant: [17.9,8,4.9,3.4,2.7,2.4,2.2,2,1.8,1.6],
+				unstaged: [37,25.2,19.2,15.5,13.3,11.9,10.9,10.2,9.5,8.9],
+			},
+			_65_74: {
+				localized: [69.5,54.4,44.8,38.4,33.4,29.5,27,24.7,22.9,21.4],
+				regional: [41.4,25.7,18.3,13.8,11.4,9.9,8.7,7.9,7.4,6.7],
+				distant: [18.5,7.9,4.8,3.3,2.5,2.1,1.8,1.7,1.3,1.1],
+				unstaged: [33,20.9,14.9,11.5,9.7,7.9,6.9,6.2,5.7,5.7],
+			},
+			_75: {
+				localized: [53.6,38.6,28.8,22.9,18.7,15.9,13.5,11.8,10.1,8.7],
+				regional: [29.3,16.5,10.6,7.7,5.8,4.5,3.5,2.9,2.3,2],
+				distant: [12.9,5.4,3.1,2.2,1.5,1.1,1.1,1.1,1.1,0.9],
+				unstaged: [21.6,12.4,7.9,5.3,3.6,2.7,2.3,2.1,2.1,2.1],
+			}
+		},
 		internalized_survival_curves: true
 	},
 	pancreatic_cancer: {
@@ -626,6 +703,38 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 				a0: 109.11781149216307
 			}
 		],
+		survival_curves_stagewise: {
+			_15: {
+				localized: [93.1,90.1,88.6,87.3,86.6,86.4,86.1,85.8,85.4,84.9],
+				regional: [88.6,85.2,82.2,80.9,79.1,78.3,77.9,76.9,76.3,76.3],
+				distant: [75,61.5,57.2,53.2,52.8,52.3,51.2,51.2,50.5,50.5],
+				unstaged: [78,69.3,65.4,65.4,63.1,63.1,60.5,60.5,60.5,60.5],
+			},
+			_15_39: {
+				localized: [81.4,72.1,65.7,62,59.1,57.7,54.3,53.2,52.2,50.5],
+				regional: [52.6,38.3,32.5,27.5,25.8,22.9,21.7,20.6,20.6,20.3],
+				distant: [36.3,20.4,13.9,10.9,9.7,9.3,8.5,7.7,7.7,6.9],
+				unstaged: [61.1,52.4,47.9,44.4,41.4,39.8,38.6,38,38,37.2],
+			},
+			_40_64: {
+				localized: [70.7,56.2,47.1,41.4,37.2,34.4,32.4,30.7,29.3,28.2],
+				regional: [41.9,26.1,19.1,15.5,13.4,12.2,11.2,10.5,9.9,9.4],
+				distant: [17.9,8,4.9,3.4,2.7,2.4,2.2,2,1.8,1.6],
+				unstaged: [37,25.2,19.2,15.5,13.3,11.9,10.9,10.2,9.5,8.9],
+			},
+			_65_74: {
+				localized: [69.5,54.4,44.8,38.4,33.4,29.5,27,24.7,22.9,21.4],
+				regional: [41.4,25.7,18.3,13.8,11.4,9.9,8.7,7.9,7.4,6.7],
+				distant: [18.5,7.9,4.8,3.3,2.5,2.1,1.8,1.7,1.3,1.1],
+				unstaged: [33,20.9,14.9,11.5,9.7,7.9,6.9,6.2,5.7,5.7],
+			},
+			_75: {
+				localized: [53.6,38.6,28.8,22.9,18.7,15.9,13.5,11.8,10.1,8.7],
+				regional: [29.3,16.5,10.6,7.7,5.8,4.5,3.5,2.9,2.3,2],
+				distant: [12.9,5.4,3.1,2.2,1.5,1.1,1.1,1.1,1.1,0.9],
+				unstaged: [21.6,12.4,7.9,5.3,3.6,2.7,2.3,2.1,2.1,2.1],
+			}
+		},
 		internalized_survival_curves: true
 	},
 	glioblastoma: {
