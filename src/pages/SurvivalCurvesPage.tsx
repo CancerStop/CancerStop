@@ -45,7 +45,7 @@ const years_since_diagnosis = [0,1,2,3,4,5,6,7,8,9,10];
 export default function SurvivalCurvesTemplate(cancer: CancerData) {
     if (cancer.internalized_survival_curves) return function SurvivalCurvesPage(){
 
-        const [age, setAge] = React.useState(0);
+        const [age, setAge] = React.useState(50);
 
         //Percentage array is derived state, and comes from evaluating the polynomial
         const percentages = [100];
@@ -124,6 +124,7 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                                 onChange={handleSliderChange}
                                 aria-labelledby='input-slider'
                                 valueLabelDisplay='off'
+                                min={15} max={85}
                             />
                         </Grid>
 
@@ -134,8 +135,8 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                                 onChange={handleInputChange}
                                 inputProps={{
                                     step: 10,
-                                    min: 10,
-                                    max: 100,
+                                    min: 15,
+                                    max: 85,
                                     type: 'number',
                                     'aria-labelledby': 'input-slider',
                                 }}
