@@ -131,7 +131,7 @@ export const cancerData = ((<T extends string>(preprocessedCancerData:Preprocess
 			internalized_survival_curves: cancer.internalized_survival_curves,
 		},
 	])
-)) as (<T extends string>(preprocessedCancerData: PreprocessedCancerData<T>) => CancersData<T>))({
+)))({
 	acute_lymphocytic_leukemia: {
 		approved_drugs_name: 'leukemia#1',
 		survival_curves_id: '92',

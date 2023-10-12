@@ -1,4 +1,4 @@
-
+//TODO finish
 
 interface NestedStringObject {
 	[name:string]: string | NestedStringObject;
