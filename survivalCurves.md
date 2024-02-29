@@ -18,11 +18,11 @@ Repeat steps 2-3 for the rest of the stages: regional, distant, and unstaged. Th
 Repeat all this for every cancer-type possible.
 
 # Cancers with Staging Data
-1) Colon
-2) Rectum
-3) Adenocarcinoma of Esophagus
-4) Squamous Cell Carcinoma of the Esophagus
-5) Adenocarcinoma of Lungs
+1) Colon [DONE]
+2) Rectum [TOUGH TO DO]
+3) Adenocarcinoma of Esophagus [DONE]
+4) Squamous Cell Carcinoma of the Esophagus [TOUGH TO DO]
+5) Adenocarcinoma of Lungs [DONE]
 6) Glioblastoma
 7) Liver Lymphatic Bile & Duct
 8) Melanoma of the Skin

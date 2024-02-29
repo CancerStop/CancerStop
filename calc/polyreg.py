@@ -23,12 +23,12 @@ def preprocess_data(data_path):
 
 def perform_regression(data_path):
     dataframe = preprocess_data(data_path)
-    ages = np.array([15, 39, 64, 74]).reshape(-1, 1)
+    ages = np.array([39, 64, 74]).reshape(-1, 1)
     data = {}
 
     for i in range(2, 12):
         survival_data = [
-            dataframe['Ages &lt;15'][i],
+            # dataframe['Ages &lt;15'][i],
             dataframe['Ages 15-39'][i],
             dataframe['Ages 50-64'][i],
             dataframe['Ages 65-74'][i]
@@ -56,5 +56,5 @@ def create_json_output(data, output_path):
     with open(f'{ROOT}{output_path}_equations.json', 'w') as outfile:
         json.dump(data, outfile)
 
-data = perform_regression(r'/colon/regional/colon_regional_raw')
-create_json_output(data, r'/colon/regional/colon_regional_raw')
+data = perform_regression(r'/lung_adenocarcinoma/unstaged_raw')
+create_json_output(data, r'/lung_adenocarcinoma/unstaged')

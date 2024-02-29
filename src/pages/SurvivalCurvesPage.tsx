@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
-import '../styles/pageStyles/SurvivalCurvesStyles.css'; 
+import '../styles/pageStyles/SurvivalCurvesStyles.css';
 
 import {
     Chart as ChartJS,
@@ -169,7 +169,7 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                                 inputProps={{
                                     step: 10,
                                     min: 15,
-                                    max: 85,
+                                    max: 75,
                                     type: 'number',
                                     'aria-labelledby': 'input-slider',
                                 }}
@@ -180,7 +180,7 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
 
                 <p style={{fontSize: "80%", margin: "1% 8%"}}>
                     The extrapolated line for each age can vary, and widely so, based on factors like the staging of cancer, race, and gender. Recent advances in genetic testing add a totally new level to these curves. These can influence the survival curves greatly.
-                    Data presented here is for Research Use Only, based on the NCI SEER data, and can change as new information emerges. Users are requested to visit the <a href="https://seer.cancer.gov/">NCI SEER</a> for full details. 
+                    Data presented here is for Research Use Only, based on the NCI SEER data, and can change as new information emerges. Users are requested to visit the <a href="https://seer.cancer.gov/">NCI SEER</a> for full details.
                     Relative survival is defined as the ratio of the proportion of observed survivors in a cohort of cancer patients to the proportion of expected survivors in a comparable set of cancer-free individuals. <a href="https://seer.cancer.gov/seerstat/508_WebHelp/Relative_Survival.htm">More Information.</a> </p>
             </div>
         );
