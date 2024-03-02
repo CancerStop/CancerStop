@@ -23,12 +23,12 @@ def preprocess_data(data_path):
 
 def perform_regression(data_path):
     dataframe = preprocess_data(data_path)
-    ages = np.array([39, 64, 74]).reshape(-1, 1)
+    ages = np.array([15, 39, 64, 74]).reshape(-1, 1)
     data = {}
 
     for i in range(2, 12):
         survival_data = [
-            # dataframe['Ages &lt;15'][i],
+            dataframe['Ages &lt;15'][i],
             dataframe['Ages 15-39'][i],
             dataframe['Ages 50-64'][i],
             dataframe['Ages 65-74'][i]
