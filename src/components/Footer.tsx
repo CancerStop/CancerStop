@@ -1,4 +1,5 @@
 import '../styles/componentStyles/FooterStyles.css';
+import { Link } from "react-router-dom";
 
 export default function Footer() {
 	return (
@@ -8,7 +9,7 @@ export default function Footer() {
 				purposes only. Always consult with your healthcare
 				provider and healthcare professional. No
 				responsibility is claimed whatsoever. Please refer
-				to the FAQ section for further information.
+				to the <Link to={'/faq'}>FAQ section</Link> for further information.
 			</p>
 
 			<p className="footer_text">

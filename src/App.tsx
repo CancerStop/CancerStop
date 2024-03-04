@@ -15,7 +15,6 @@ import CancerPageTemplate from "./templates/CancerPageTemplate";
 import HomePage from "./pages/HomePage";
 import FaqPage from "./pages/FaqPage";
 import ContactUsPage from "./pages/ContactUsPage";
-// import DonatePage from "./pages/DonatePage";
 import GenesAndMore from "./pages/GenesAndMore";
 import SearchPage from "./pages/SearchPage";
 import NotFoundPage from "./pages/NotFound";
@@ -23,7 +22,6 @@ import ClinicalTrialsPage from "./pages/ClinicalTrialsPage";
 
 import { cancerData } from "./data/CancerData";
 import SurvivalCurvesTemplate from "./pages/SurvivalCurvesPage";
-import React from "react";
 
 
 export default function App() {
@@ -68,9 +66,7 @@ export default function App() {
 
           <Route component={NotFoundPage} />
         </Switch>
-      </Router>
 
-      <Router>
         <Footer />
       </Router>
     </div>

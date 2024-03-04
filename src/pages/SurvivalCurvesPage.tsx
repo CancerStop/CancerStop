@@ -18,8 +18,7 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
-  type ChartDataset,
+  Legend
 } from "chart.js";
 
 import { Line } from "react-chartjs-2";
@@ -63,6 +62,9 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
               coefficients[i - 1].a0;
           }
         }
+
+        console.log(coefficients)
+        console.log(data)
       }
 
       compute_data(all_stages, cancer.survival_curves_coefficients);
@@ -172,7 +174,7 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                   aria-labelledby="input-slider"
                   valueLabelDisplay="off"
                   min={15}
-                  max={85}
+                  max={75}
                 />
               </Grid>
 
