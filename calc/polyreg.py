@@ -56,5 +56,5 @@ def create_json_output(data, output_path):
     with open(f'{ROOT}{output_path}_equations.json', 'w') as outfile:
         json.dump(data, outfile)
 
-data = perform_regression(r'/lung_adenocarcinoma/unstaged_raw')
-create_json_output(data, r'/lung_adenocarcinoma/unstaged')
+data = perform_regression(r'/liver_lymphatic_bile_and_duct/unstaged_raw')
+create_json_output(data, r'/liver_lymphatic_bile_and_duct/unstaged')

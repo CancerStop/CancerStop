@@ -18,7 +18,7 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 } from "chart.js";
 
 import { Line } from "react-chartjs-2";
@@ -53,19 +53,30 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
       const regional_data = [100];
       const unstaged_data = [100];
 
-      const compute_data = (data: Array<Number>, coefficients?: SurvivalCurvesPoint[]) => {
+      const compute_data = (
+        data: Array<number>,
+        coefficients?: SurvivalCurvesPoint[]
+      ) => {
         if (coefficients) {
           for (let i = 1; i < 11; i++) {
             data[i] =
               coefficients[i - 1].a2 * age ** 2 +
               coefficients[i - 1].a1 * age +
               coefficients[i - 1].a0;
+
+            if (data[i] > 100) {
+              data[i] = 100;
+            }
+
+            if (data[i] < 0) {
+              data[i] = 0;
+            }
           }
         }
 
-        console.log(coefficients)
-        console.log(data)
-      }
+        console.log(coefficients);
+        console.log(data);
+      };
 
       compute_data(all_stages, cancer.survival_curves_coefficients);
       compute_data(localized_data, cancer.localized_curves_coefficients);
@@ -125,6 +136,11 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                 },
                 responsive: true,
                 maintainAspectRatio: false,
+                elements: {
+                  line: {
+                    tension: 0.4,
+                  },
+                },
               }}
               data={{
                 labels: years_since_diagnosis,
@@ -137,22 +153,22 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                   {
                     label: "Distant",
                     data: distant_data,
-                    borderColor: "#C088C8"
+                    borderColor: "#C088C8",
                   },
                   {
                     label: "Regional",
                     data: regional_data,
-                    borderColor: "#006D2C"
+                    borderColor: "#006D2C",
                   },
                   {
                     label: "Unstaged",
                     data: unstaged_data,
-                    borderColor: "#AD5928"
+                    borderColor: "#AD5928",
                   },
                   {
                     label: "Localized",
                     data: localized_data,
-                    borderColor: "#3369E8"
+                    borderColor: "#3369E8",
                   },
                 ],
               }}
@@ -198,14 +214,14 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
           <p style={{ fontSize: "80%", margin: "1% 8%" }}>
             The extrapolated line for each age can vary, and widely so, based on
             factors like the staging of cancer, race, and gender. Recent
-            advances in genetic testing add additional complexity to these curves.
-            These can influence the survival curves greatly. Data presented here
-            is for Research Use Only, based on the NCI SEER data, and can change
-            as new information emerges. Users are requested to visit the{" "}
-            <a href="https://seer.cancer.gov/">NCI SEER</a> for full details.
-            Relative survival is defined as the ratio of the proportion of
-            observed survivors in a cohort of cancer patients to the proportion
-            of expected survivors in a comparable set of cancer-free
+            advances in genetic testing add additional complexity to these
+            curves. These can influence the survival curves greatly. Data
+            presented here is for Research Use Only, based on the NCI SEER data,
+            and can change as new information emerges. Users are requested to
+            visit the <a href="https://seer.cancer.gov/">NCI SEER</a> for full
+            details. Relative survival is defined as the ratio of the proportion
+            of observed survivors in a cohort of cancer patients to the
+            proportion of expected survivors in a comparable set of cancer-free
             individuals.{" "}
             <a href="https://seer.cancer.gov/seerstat/508_WebHelp/Relative_Survival.htm">
               More Information.

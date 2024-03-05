@@ -23,8 +23,8 @@ Repeat all this for every cancer-type possible.
 3) Adenocarcinoma of Esophagus [DONE]
 4) Squamous Cell Carcinoma of the Esophagus [TOUGH TO DO]
 5) Adenocarcinoma of Lungs [DONE]
-6) Glioblastoma 
-7) Liver Lymphatic Bile & Duct
+6) Glioblastoma [DONE]
+7) Liver Lymphatic Bile & Duct [DONE]
 8) Melanoma of the Skin
 9) Ovary
 10) Pancreas
@@ -32,3 +32,5 @@ Repeat all this for every cancer-type possible.
 12) Small Intestine
 13) Stomach
 14) Testicular
+
+15) Leukemia block doesn't seem to have staging!
