@@ -29,6 +29,7 @@ def perform_regression(data_path):
     for i in range(2, 12):
         survival_data = [
             # dataframe['Ages &lt;15'][i],
+            # dataframe['Ages &lt; 20'][i],
             dataframe['Ages 15-39'][i],
             dataframe['Ages 50-64'][i],
             dataframe['Ages 65-74'][i]
@@ -56,5 +57,5 @@ def create_json_output(data, output_path):
     with open(f'{ROOT}{output_path}_equations.json', 'w') as outfile:
         json.dump(data, outfile)
 
-data = perform_regression(r'/prostate/distant_raw')
-create_json_output(data, r'/prostate/distant')
+data = perform_regression(r'/testis/unstaged_raw')
+create_json_output(data, r'/testis/unstaged')

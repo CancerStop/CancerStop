@@ -27,11 +27,10 @@ Repeat all this for every cancer-type possible.
 8) Melanoma of the Skin [DONE]
 9) Ovary [DONE]
 10) Pancreas [DONE]
-
 11) Prostate [DONE]
-12) Small Intestine
-13) Stomach
-14) Testicular
+12) Small Intestine [DONE]
+13) Stomach [DONE]
+14) Testicular [DONE]
 15) Multiple Myeloma
 
 16) Leukemia block doesn't seem to have staging!
