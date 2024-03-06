@@ -39,8 +39,6 @@ const Input = styled(MuiInput)`
 
 const years_since_diagnosis = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-//This isn't a component, it is called with cancerdata and retuns a component, which is different based on the cancerdata (if isinternal, component with graph and state, otherwise component that is just a div with NYI)
-//so it should be a template
 export default function SurvivalCurvesTemplate(cancer: CancerData) {
   if (cancer.internalized_survival_curves)
     return function SurvivalCurvesPage() {
@@ -73,9 +71,6 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
             }
           }
         }
-
-        console.log(coefficients);
-        console.log(data);
       };
 
       compute_data(all_stages, cancer.survival_curves_coefficients);
@@ -107,7 +102,6 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
         newValue: number | number[]
       ) => {
         if (typeof newValue === "number") {
-          //No validation necessary
           setAge(newValue);
         } else {
           //not sure when this can happen, just add an error to watch for it
@@ -148,27 +142,32 @@ export default function SurvivalCurvesTemplate(cancer: CancerData) {
                   {
                     label: "All Stages",
                     data: all_stages,
-                    borderColor: "#000000",
+                    borderColor: "#8dd3c7",
+                    backgroundColor: "#8dd3c7"
                   },
                   {
                     label: "Distant",
                     data: distant_data,
-                    borderColor: "#C088C8",
+                    borderColor: "#fb9a99",
+                    backgroundColor: '#fb9a99'
                   },
                   {
                     label: "Regional",
                     data: regional_data,
-                    borderColor: "#006D2C",
+                    borderColor: "#8856a7",
+                    backgroundColor: "#8856a7"
                   },
                   {
                     label: "Unstaged",
                     data: unstaged_data,
-                    borderColor: "#AD5928",
+                    borderColor: "#80b1d3",
+                    backgroundColor: "#80b1d3"
                   },
                   {
                     label: "Localized",
                     data: localized_data,
-                    borderColor: "#3369E8",
+                    borderColor: "#7E6363",
+                    backgroundColor: "#7E6363"
                   },
                 ],
               }}

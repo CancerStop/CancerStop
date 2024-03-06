@@ -5,15 +5,6 @@ export const CancerMenuListData: ({
 	items: CancerID[]
 } | CancerID)[] = [
 	{
-		name: 'Breast',
-		items: [
-			'breast_cancer_and_luminal_a',
-			'breast_cancer_and_triple_negative_or_luminal_a',
-			'breast_cancer_and_luminal_b',
-			'breast_cancer_and_HER2_enriched',
-		],
-	},
-	{
 		name: 'Colon and Rectum',
 		items: ['colon_cancer', 'rectal_cancer'],
 	},
@@ -35,9 +26,15 @@ export const CancerMenuListData: ({
 		],
 	},
 	{
-		name: 'Lung and Bronchus',
-		items: ['lung_adenocarcinoma'],
+		name: 'Breast',
+		items: [
+			'breast_cancer_and_luminal_a',
+			'breast_cancer_and_triple_negative_or_luminal_a',
+			'breast_cancer_and_luminal_b',
+			'breast_cancer_and_HER2_enriched',
+		],
 	},
+	'lung_adenocarcinoma',
 	'glioblastoma',
 	'liver_lymphatic_bile_and_duct',
 	'skin_melanoma',

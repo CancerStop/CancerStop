@@ -19,18 +19,20 @@ Repeat all this for every cancer-type possible.
 
 # Cancers with Staging Data
 1) Colon [DONE]
-2) Rectum [TOUGH TO DO]
+2) Rectum [DONE]
 3) Adenocarcinoma of Esophagus [DONE]
-4) Squamous Cell Carcinoma of the Esophagus [TOUGH TO DO]
 5) Adenocarcinoma of Lungs [DONE]
 6) Glioblastoma [DONE]
 7) Liver Lymphatic Bile & Duct [DONE]
-8) Melanoma of the Skin
-9) Ovary
-10) Pancreas
-11) Prostate
+8) Melanoma of the Skin [DONE]
+9) Ovary [DONE]
+10) Pancreas [DONE]
+
+11) Prostate [DONE]
 12) Small Intestine
 13) Stomach
 14) Testicular
+15) Multiple Myeloma
 
-15) Leukemia block doesn't seem to have staging!
+16) Leukemia block doesn't seem to have staging!
+4) Squamous Cell Carcinoma of the Esophagus [TOUGH TO DO]
