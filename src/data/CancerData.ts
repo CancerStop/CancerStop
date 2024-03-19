@@ -2,1863 +2,3740 @@
 import { capitalizeText } from "../util/util";
 
 type PreprocessedCancerData<T extends string> = {
-	// eslint-disable-next-line no-unused-vars
-	[ID in T]: {
-		url?: string;
-		approved_drugs_name: string;
-		clinical_trials_name?: string;
-		search_name?: string;
-		survival_curves_id: string;
-		name?: string;
-		description?: string;
-		information_name?: string;
-		information_subtype: string;
-		survival_curves_coefficients: SurvivalCurvesPoint[];
-/*
-Script to grab this data
-Usage instructions: Paste into dev console and run, wait 2.5 seconds, then switch to the page and press Enter to copy the data.
-```
-function delay(timeMs){
-	return new Promise((res, rej) => {
-		setTimeout(() => {
-			res();
-		}, timeMs);
-	});
-}
-function scrapeFromTable(){
-	arr = [...document.querySelector("#first-table tbody").children].slice(1).map(tr =>
-		[...tr.children].slice(1).filter((_, i) => i % 3 == 0).map(td => +td.innerText)
-	);
-	return (
-			`{
-				localized: [${arr.map(r => r[0])}],
-				regional: [${arr.map(r => r[1])}],
-				distant: [${arr.map(r => r[2])}],
-				unstaged: [${arr.map(r => r[3])}],
-			}`
-	);
-}
-out = `
-		survival_curves_stagewise: {
-			_15: ${document.querySelector("#set_age_range label:nth-child(5)").click(), await delay(500), scrapeFromTable()},
-			_15_39: ${document.querySelector("#set_age_range label:nth-child(6)").click(), await delay(500), scrapeFromTable()},
-			_40_64: ${document.querySelector("#set_age_range label:nth-child(7)").click(), await delay(500), scrapeFromTable()},
-			_65_74: ${document.querySelector("#set_age_range label:nth-child(8)").click(), await delay(500), scrapeFromTable()},
-			_75: ${document.querySelector("#set_age_range label:nth-child(9)").click(), await delay(500), scrapeFromTable()}
-		},`;
-onkeydown = () => {
-	navigator.clipboard.writeText(out);
-	alert("copied to clipboard");
-	onkeydown = undefined;
-}
-```
-*/
-		survival_curves_stagewise?: {
-			[_ in "_15" | "_15_39" | "_40_64" | "_65_74" | "_75"]: StagewiseSurvivalData;
-		};
-		internalized_survival_curves: boolean;
-	};
+  // eslint-disable-next-line no-unused-vars
+  [ID in T]: {
+    url?: string;
+    approved_drugs_name: string;
+    clinical_trials_name?: string;
+    search_name?: string;
+    survival_curves_id: string;
+    name?: string;
+    description?: string;
+    information_name?: string;
+    information_subtype: string;
+    survival_curves_coefficients: SurvivalCurvesPoint[];
+    internalized_survival_curves: boolean;
+    distant_curves_coefficients?: SurvivalCurvesPoint[];
+    localized_curves_coefficients?: SurvivalCurvesPoint[];
+    regional_curves_coefficients?: SurvivalCurvesPoint[];
+    unstaged_curves_coefficients?: SurvivalCurvesPoint[];
+  };
 };
 
-export type StagewiseSurvivalData = {
-	[_ in "localized" | "regional" | "distant" | "unstaged"]: number[];
-}
-
 export type CancersData<T extends string> = {
-	// eslint-disable-next-line no-unused-vars
-	[ID in T]: CancerData;
+  // eslint-disable-next-line no-unused-vars
+  [ID in T]: CancerData;
 };
 
 export interface CancerData {
-	approved_drugs_link: string;
-	survival_curves_link_external: string;
-	survival_curves_link_internal: string;
-	survival_curves_coefficients: SurvivalCurvesPoint[];
-	survival_curves_stagewise?: {
-		[_ in "_15" | "_15_39" | "_40_64" | "_65_74" | "_75"]: StagewiseSurvivalData;
-	};
-	search_link: string;
-	clinical_trials_link: string;
-	clinical_trials_name: string;
-	name: string;
-	url: string;
-	description: string;
-	information_link: string;
-	internalized_survival_curves: boolean;
+  approved_drugs_link: string;
+  survival_curves_link_external: string;
+  survival_curves_link_internal: string;
+  survival_curves_coefficients: SurvivalCurvesPoint[];
+  search_link: string;
+  clinical_trials_link: string;
+  clinical_trials_name: string;
+  name: string;
+  url: string;
+  description: string;
+  information_link: string;
+  internalized_survival_curves: boolean;
+  distant_curves_coefficients?: SurvivalCurvesPoint[];
+  localized_curves_coefficients?: SurvivalCurvesPoint[];
+  regional_curves_coefficients?: SurvivalCurvesPoint[];
+  unstaged_curves_coefficients?: SurvivalCurvesPoint[];
 }
 
 export interface SurvivalCurvesPoint {
-	a0: number;
-	a1: number;
-	a2: number;
-	a3: number;
-	a4: number;
+  a0: number;
+  a1: number;
+  a2: number;
 }
 
 export type CancerID = keyof typeof cancerData;
-export const cancerData = ((<T extends string>(preprocessedCancerData:PreprocessedCancerData<T>) => Object.fromEntries(
-	//Typescript shenanigans, not important
-	Object.entries<PreprocessedCancerData<T>[T]>(
-		preprocessedCancerData
-	).map(([id, cancer]) => [
-		id as T,
-		{
-			url: '/' + (cancer.url ?? id.replaceAll('_', '-')),
-			name: cancer.name ?? capitalizeText(id, '_', ' '),
-			approved_drugs_link: `https://www.cancer.gov/about-cancer/treatment/drugs/${cancer.approved_drugs_name}`,
-			clinical_trials_name: cancer.clinical_trials_name ?? capitalizeText(id, '_', '+'),
-			// clinical_trials_link: `https://www.clinicaltrials.gov/ct2/results?cond=${
-			// 	cancer.clinical_trials_name ??
-			// 	capitalizeText(id, '_', '+')
-			// }&recrs=b&recrs=a&recrs=f&recrs=d`,
-			clinical_trials_link: `/clinical-trials?cond=${cancer.clinical_trials_name ?? capitalizeText(id, '_', '+')}`,
-			survival_curves_link_external: `https://seer.cancer.gov/explorer/application.html?site=${cancer.survival_curves_id}&data_type=4&graph_type=6&compareBy=age_range&chk_age_range_16=16&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&sex=1&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2#label_graphArea`,
-			survival_curves_link_internal: `/${cancer.url ?? id.replaceAll('_', '-')}/survival-curves`,
-			search_link: `/presciqure#gsc.q=${
-				cancer.search_name ??
-				capitalizeText(id, '_', '%20')
-			}`,
-			description: cancer.description ?? '',
-			information_link: `https://www.cancer.gov/types/${cancer.information_name ?? cancer.approved_drugs_name.split("#")[0]}/patient/${cancer.information_subtype !== "" ? `${cancer.information_subtype}-treatment-pdq` : ""}`,
-			survival_curves_coefficients: cancer.survival_curves_coefficients,
-			survival_curves_stagewise: cancer.survival_curves_stagewise ?
-				//Add 100 to the beginning
-				Object.fromEntries(Object.entries(cancer.survival_curves_stagewise).map(([age, stagewiseData]) =>
-					[age, Object.fromEntries(Object.entries(stagewiseData).map(([stage, data]) =>
-						[stage, [100].concat(data)]
-					))]
-				)) : undefined,
-			internalized_survival_curves: cancer.internalized_survival_curves,
-		},
-	])
-)))({
-	acute_lymphocytic_leukemia: {
-		approved_drugs_name: 'leukemia#1',
-		survival_curves_id: '92',
-		description: "Acute lymphocytic leukemia is a cancer of the blood and bone marrow. Unlike chronic lymphocytic leukemia, the disease progresses rapidly and creates immature blood cells.",
-		information_subtype: "adult-all",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0079,
-				a1: -0.0899,
-				a0: 99.573
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0007,
-				a1: -0.9394,
-				a0: 108.4386
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0028,
-				a1: -1.3309,
-				a0: 111.6826
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0039,
-				a1: -1.4744,
-				a0: 112.1249
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0056,
-				a1: -1.6248,
-				a0: 112.9981
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0064,
-				a1: -1.704,
-				a0: 113.1834
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0070,
-				a1: -1.7712,
-				a0: 113.6112
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0077,
-				a1: -1.8237,
-				a0: 113.8142
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.007,
-				a1: -1.8314,
-				a0: 113.6294
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0075,
-				a1: -1.8254,
-				a0: 113.3014
-			}
-		],
-		internalized_survival_curves: true
-	},
-	acute_monocytic_leukemia: {
-		approved_drugs_name: 'leukemia',
-		survival_curves_id: '100',
-		description: "Acute monocyctic leukemia is a cancer of the blood and bone marrow. It, and progresses rapidly.",
-		information_subtype: "adult-aml",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0143,
-				a1: 0.5793,
-				a0: 67.8505
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0102,
-				a1: 0.2011,
-				a0: 61.271
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0072,
-				a1: -0.058,
-				a0: 61.0649
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0067,
-				a1: -0.1078,
-				a0: 59.8723
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0081,
-				a1: -0.0315,
-				a0: 58.2237
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0069,
-				a1: -0.1225,
-				a0: 59.2376
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0068,
-				a1: -0.1378,
-				a0: 59.0666
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0063,
-				a1: -0.1885,
-				a0: 59.6619
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0061,
-				a1: -0.2083,
-				a0: 59.8935
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0058,
-				a1: -0.2491,
-				a0: 60.5582
-			}
-		],
-		internalized_survival_curves: true
-	},
-	acute_myeloid_leukemia: {
-		approved_drugs_name: 'leukemia#3',
-		survival_curves_id: '96',
-		description: "Acute myeloid leukemia is a cancer of the blood and bone marrow. It affects myeloid cells, and progresses rapidly.",
-		information_subtype: "adult-aml",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0187,
-				a1: 0.9386,
-				a0: 72.7471
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0192,
-				a1: 0.9208,
-				a0: 62.6676
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0197,
-				a1: 0.9287,
-				a0: 58.6199
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0195,
-				a1: 0.9032,
-				a0: 56.8887
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.019,
-				a1: 0.8585,
-				a0: 56.1545
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0189,
-				a1: 0.8349,
-				a0: 55.9632
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0185,
-				a1: 0.7938,
-				a0: 56.2122
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0185,
-				a1: 0.7953,
-				a0: 55.6244
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0183,
-				a1: 0.7662,
-				a0: 55.9179
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.018,
-				a1: 0.7398,
-				a0: 55.079
-			}
-		],
-		internalized_survival_curves: true
-	},
-	chronic_lymphocytic_leukemia: {
-		approved_drugs_name: 'leukemia#6',
-		survival_curves_id: '93',
-		description: "Chronic lymphocytic leukemia is a cancer of the blood and bone marrow. It affects lymphocytes, and progresses more slowly than acute leukemias.",
-		information_subtype: "cll",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0038346249367040564,
-				a1: 0.39614665505539004,
-				a0: 88.43503181574542
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.005598645015400638,
-				a1: 0.5812158380527178,
-				a0: 82.44300584454565
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.011043200552470989,
-				a1: 1.1820398557566572,
-				a0: 65.33382288689711
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.014037479043347512,
-				a1: 1.483193630037666,
-				a0: 56.82575271134383
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.013800532031884138,
-				a1: 1.4194156910046978,
-				a0: 57.64165221599067
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.013469439256384996,
-				a1: 1.3477946309296822,
-				a0: 58.5926360913166
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.013247524477401962,
-				a1: 1.2770747275593237,
-				a0: 59.55928358596131
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.013197165671738453,
-				a1: 1.2256442212889513,
-				a0: 60.33545764631428
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.011792010790132812,
-				a1: 1.0584795583135944,
-				a0: 62.40847573162826
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.012174805184581583,
-				a1: 1.0417360889007983,
-				a0: 62.74527900253526
-			}
-		],
-		internalized_survival_curves: true
-	},
-	chronic_myeloid_leukemia: {
-		approved_drugs_name: 'leukemia#8',
-		survival_curves_id: '97',
-		description: "Chronic myeloid leukemia is a cancer of the blood and bone marrow. It affects myeloid cells, and progresses more slowly than acute leukemias.",
-		information_subtype: "cml",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.01330259966667735,
-				a1: 1.0579443446888679,
-				a0: 77.1333772117979
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.018672103186270217,
-				a1: 1.4620416417644544,
-				a0: 67.25471716085778
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.021755986350930456,
-				a1: 1.6850498279643549,
-				a0: 61.25117163766868
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.023651149014900064,
-				a1: 1.8022299399073491,
-				a0: 58.21388902210697
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.024799095618557976,
-				a1: 1.8777457009302376,
-				a0: 55.58724740805839
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.025690707103646293,
-				a1: 1.9101202214780901,
-				a0: 54.781085118818865
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.026646257668669904,
-				a1: 1.9582148620324358,
-				a0: 53.501272695944564
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.027235716319777614,
-				a1: 1.9820063449580345,
-				a0: 52.452154768825096
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.026952296723369074,
-				a1: 1.9414058626697759,
-				a0: 52.19904217062356
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.026940495842073586,
-				a1: 1.911575043914182,
-				a0: 52.39753087726646
-			}
-		],
-		internalized_survival_curves: true
-	},
-	liver_lymphatic_bile_and_duct: {
-		approved_drugs_name: 'liver',
-		survival_curves_id: '35',
-		description: "",
-		information_subtype: "",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.013844504205881902,
-				a1: -1.8755117491200481,
-				a0: 110.00153930721947
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0169286817310903,
-				a1: -2.266766836348319,
-				a0: 108.50510318659931
-			},	
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.01872254798490225,
-				a1: -2.500825175301504,
-				a0: 108.96415889119127
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.019584716800345348,
-				a1: -2.6210208986065524,
-				a0: 108.91904694653736
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.019719963896181802,
-				a1: -2.6648667059366553,
-				a0: 108.44096404071306
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.020067322572524304,
-				a1: -2.7211873082314093,
-				a0: 108.66150157615014
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0204961198980107,
-				a1: -2.769569079309524,
-				a0: 108.44554455543589
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.020717816387149757,
-				a1: -2.8031620673105264,
-				a0: 108.58071776346503
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.02057276609283898,
-				a1: -2.8010711515747064,
-				a0: 108.19077361589801
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.021035547178222203,
-				a1: -2.847620429018782,
-				a0: 108.4656998521218
-			}
-		],
-		// survival_curves_stagewise: {
-		// 	_15: {
-		// 		localized: [93.1,90.1,88.6,87.3,86.6,86.4,86.1,85.8,85.4,84.9],
-		// 		regional: [88.6,85.2,82.2,80.9,79.1,78.3,77.9,76.9,76.3,76.3],
-		// 		distant: [75,61.5,57.2,53.2,52.8,52.3,51.2,51.2,50.5,50.5],
-		// 		unstaged: [78,69.3,65.4,65.4,63.1,63.1,60.5,60.5,60.5,60.5],
-		// 	},
-		// 	_15_39: {
-		// 		localized: [81.4,72.1,65.7,62,59.1,57.7,54.3,53.2,52.2,50.5],
-		// 		regional: [52.6,38.3,32.5,27.5,25.8,22.9,21.7,20.6,20.6,20.3],
-		// 		distant: [36.3,20.4,13.9,10.9,9.7,9.3,8.5,7.7,7.7,6.9],
-		// 		unstaged: [61.1,52.4,47.9,44.4,41.4,39.8,38.6,38,38,37.2],
-		// 	},
-		// 	_40_64: {
-		// 		localized: [70.7,56.2,47.1,41.4,37.2,34.4,32.4,30.7,29.3,28.2],
-		// 		regional: [41.9,26.1,19.1,15.5,13.4,12.2,11.2,10.5,9.9,9.4],
-		// 		distant: [17.9,8,4.9,3.4,2.7,2.4,2.2,2,1.8,1.6],
-		// 		unstaged: [37,25.2,19.2,15.5,13.3,11.9,10.9,10.2,9.5,8.9],
-		// 	},
-		// 	_65_74: {
-		// 		localized: [69.5,54.4,44.8,38.4,33.4,29.5,27,24.7,22.9,21.4],
-		// 		regional: [41.4,25.7,18.3,13.8,11.4,9.9,8.7,7.9,7.4,6.7],
-		// 		distant: [18.5,7.9,4.8,3.3,2.5,2.1,1.8,1.7,1.3,1.1],
-		// 		unstaged: [33,20.9,14.9,11.5,9.7,7.9,6.9,6.2,5.7,5.7],
-		// 	},
-		// 	_75: {
-		// 		localized: [53.6,38.6,28.8,22.9,18.7,15.9,13.5,11.8,10.1,8.7],
-		// 		regional: [29.3,16.5,10.6,7.7,5.8,4.5,3.5,2.9,2.3,2],
-		// 		distant: [12.9,5.4,3.1,2.2,1.5,1.1,1.1,1.1,1.1,0.9],
-		// 		unstaged: [21.6,12.4,7.9,5.3,3.6,2.7,2.3,2.1,2.1,2.1],
-		// 	}
-		// },
-		internalized_survival_curves: true
-	},
-	pancreatic_cancer: {
-		approved_drugs_name: 'pancreatic',
-		survival_curves_id: '40',
-		description: "",
-		information_subtype: "pancreatic",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.002101205125312644,
-				a1: -1.2837777901989098,
-				a0: 115.47597402747554
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.00561580722757582,
-				a1: -1.7956334721677774,
-				a0: 117.72548011362753
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.006434549593632433,
-				a1: -1.9025504257808472,
-				a0: 115.5158623622977
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.006574589143783616,
-				a1: -1.9069553296291306,
-				a0: 112.55605583986252
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.008324341004456226,
-				a1: -2.0789106807566076,
-				a0: 114.70898980420829
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.008259277401079679,
-				a1: -2.040112511877662,
-				a0: 111.43077516377282
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.00717918917229321,
-				a1: -1.8923683059020184,
-				a0: 105.77016292029325
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.00811132319035135,
-				a1: -1.9804847522888713,
-				a0: 106.83727914276668
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.009176924911269424,
-				a1: -2.077988211025306,
-				a0: 108.02732509277786
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.010141481586093182,
-				a1: -2.1669402841669525,
-				a0: 109.11781149216307
-			}
-		],
-		// survival_curves_stagewise: {
-		// 	_15: {
-		// 		localized: [93.1,90.1,88.6,87.3,86.6,86.4,86.1,85.8,85.4,84.9],
-		// 		regional: [88.6,85.2,82.2,80.9,79.1,78.3,77.9,76.9,76.3,76.3],
-		// 		distant: [75,61.5,57.2,53.2,52.8,52.3,51.2,51.2,50.5,50.5],
-		// 		unstaged: [78,69.3,65.4,65.4,63.1,63.1,60.5,60.5,60.5,60.5],
-		// 	},
-		// 	_15_39: {
-		// 		localized: [81.4,72.1,65.7,62,59.1,57.7,54.3,53.2,52.2,50.5],
-		// 		regional: [52.6,38.3,32.5,27.5,25.8,22.9,21.7,20.6,20.6,20.3],
-		// 		distant: [36.3,20.4,13.9,10.9,9.7,9.3,8.5,7.7,7.7,6.9],
-		// 		unstaged: [61.1,52.4,47.9,44.4,41.4,39.8,38.6,38,38,37.2],
-		// 	},
-		// 	_40_64: {
-		// 		localized: [70.7,56.2,47.1,41.4,37.2,34.4,32.4,30.7,29.3,28.2],
-		// 		regional: [41.9,26.1,19.1,15.5,13.4,12.2,11.2,10.5,9.9,9.4],
-		// 		distant: [17.9,8,4.9,3.4,2.7,2.4,2.2,2,1.8,1.6],
-		// 		unstaged: [37,25.2,19.2,15.5,13.3,11.9,10.9,10.2,9.5,8.9],
-		// 	},
-		// 	_65_74: {
-		// 		localized: [69.5,54.4,44.8,38.4,33.4,29.5,27,24.7,22.9,21.4],
-		// 		regional: [41.4,25.7,18.3,13.8,11.4,9.9,8.7,7.9,7.4,6.7],
-		// 		distant: [18.5,7.9,4.8,3.3,2.5,2.1,1.8,1.7,1.3,1.1],
-		// 		unstaged: [33,20.9,14.9,11.5,9.7,7.9,6.9,6.2,5.7,5.7],
-		// 	},
-		// 	_75: {
-		// 		localized: [53.6,38.6,28.8,22.9,18.7,15.9,13.5,11.8,10.1,8.7],
-		// 		regional: [29.3,16.5,10.6,7.7,5.8,4.5,3.5,2.9,2.3,2],
-		// 		distant: [12.9,5.4,3.1,2.2,1.5,1.1,1.1,1.1,1.1,0.9],
-		// 		unstaged: [21.6,12.4,7.9,5.3,3.6,2.7,2.3,2.1,2.1,2.1],
-		// 	}
-		// },
-		internalized_survival_curves: true
-	},
-	glioblastoma: {
-		approved_drugs_name: 'brain',
-		survival_curves_id: '661',
-		search_name:
-			'%22Glioblastoma%22%20OR%20%22Glioma%22%20OR%20%22Glioblastoma%20Multiforme%22',
-		description: "Glioblastoma is an aggressive cancer that affects the brain and spinal cord. It is difficult to treat.",
-		information_subtype: "child-glioma",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.035387700954818246,
-				a1: 2.755495605593772,
-				a0: 21.315710783157186
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.02876177070106989,
-				a1: 2.180038650532081,
-				a0: 4.98957497313738
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.02142862434732118,
-				a1: 1.557052412383845,
-				a0: 5.018776796320715
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.015956220317955294,
-				a1: 1.0788249490739281,
-				a0: 8.66452783410595
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.012575370356834092,
-				a1: 0.7883701388753073,
-				a0: 10.865243758647317
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.010916532909012844,
-				a1: 0.6610306918828673,
-				a0: 10.733856655674208
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.009634136298194318,
-				a1: 0.5590567993482853,
-				a0: 11.025062287023129
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008946427372487853,
-				a1: 0.5156873169961946,
-				a0: 10.285925034637039
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.00784495335377533,
-				a1: 0.41699409922859604,
-				a0: 11.481578751534686
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.00700417032825823,
-				a1: 0.3477473877154969,
-				a0: 12.001425333462809
-			}
-		],
-		internalized_survival_curves: true
-	},
-	breast_cancer_and_luminal_a: {
-		approved_drugs_name: 'breast',
-		clinical_trials_name: 'Breast+Cancer+Luminal+A',
-		survival_curves_id: '622',
-		description: "",
-		information_subtype: "breast",
-		survival_curves_coefficients: [
-			{	
-				a4: 0.0000096110,
-				a3: -0.0017762552,
-				a2: 0.0990147150,
-				a1: -2.4166267103,
-				a0: 93.0449405119
-			}
-		],
-		internalized_survival_curves: false
-	},
-	breast_cancer_and_triple_negative_or_luminal_a: {
-		approved_drugs_name: 'breast',
-		clinical_trials_name: 'Breast+Cancer+Triple+Negative',
-		survival_curves_id: '623',
-		description: "",
-		information_subtype: "breast",
-		survival_curves_coefficients: [
-			{	
-				a4: 0.0000096110,
-				a3: -0.0017762552,
-				a2: 0.0990147150,
-				a1: -2.4166267103,
-				a0: 93.0449405119
-			}
-		],
-		internalized_survival_curves: false
-	},
-	breast_cancer_and_luminal_b: {
-		approved_drugs_name: 'breast',
-		clinical_trials_name: 'Breast+Cancer+Luminal+B',
-		survival_curves_id: '620',
-		description: "",
-		information_subtype: "breast",
-		survival_curves_coefficients: [
-			{	
-				a4: 0.0000096110,
-				a3: -0.0017762552,
-				a2: 0.0990147150,
-				a1: -2.4166267103,
-				a0: 93.0449405119
-			}
-		],
-		internalized_survival_curves: false
-	},
-	breast_cancer_and_HER2_enriched: {
-		approved_drugs_name: 'breast',
-		clinical_trials_name: 'Breast+Cancer+HER2+Enriched',
-		survival_curves_id: '621',
-		description: "",
-		information_subtype: "breast",
-		survival_curves_coefficients: [
-			{	
-				a4: 0.0000096110,
-				a3: -0.0017762552,
-				a2: 0.0990147150,
-				a1: -2.4166267103,
-				a0: 93.0449405119
-			}
-		],
-		internalized_survival_curves: false
-	},
-	colon_cancer: {
-		approved_drugs_name: 'colorectal',
-		survival_curves_id: '21',
-		description: "",
-		information_subtype: "colon",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.00035346086972617985,
-				a1: -0.23964119102907094,
-				a0: 100.32765963850517
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.005244320908561639,
-				a1: -0.7493000271538988,
-				a0: 104.67759529261198
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.008294078094183588,
-				a1: -1.0681337772774968,
-				a0: 106.82732734182738
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.010511185204710616,
-				a1: -1.3100705869978653,
-				a0: 109.24198963916885
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.011615672284763123,
-				a1: -1.4348641063031145,
-				a0: 109.85693237281222
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.012747898712188288,
-				a1: -1.5684976135296604,
-				a0: 111.59270604328694
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.013658756085241919,
-				a1: -1.6742285058092394,
-				a0: 112.94051793565149
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.014237177869509843,
-				a1: -1.7481333737719926,
-				a0: 113.90130715927756
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.01455490866058251,
-				a1: -1.7925917354802474,
-				a0: 114.48628924793366
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.014841777898020325,
-				a1: -1.8335463500448754,
-				a0: 115.01541423970552
-			}
-		],
-		internalized_survival_curves: true
-	},
-	rectal_cancer: {
-		approved_drugs_name: 'colorectal',
-		survival_curves_id: '31',
-		description: "",
-		information_subtype: "rectal",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.00722548195767081,
-				a1: 0.6432368025488855,
-				a0: 79.13120350934504
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008355072161968513,
-				a1: 0.824229689712751,
-				a0: 64.96289887102304
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008900261894904338,
-				a1: 0.8884206312123056,
-				a0: 57.56796140232783
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.007832691049760365,
-				a1: 0.7757147654372186,
-				a0: 55.92632736094095
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.006453222728264096,
-				a1: 0.6218788621388696,
-				a0: 56.66418824364549
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.00645765705732082,
-				a1: 0.6080147714099112,
-				a0: 55.13473564800893
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.005335232826774838,
-				a1: 0.46599080220978006,
-				a0: 57.429410710699145
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.007373970733428603,
-				a1: 0.6911740547229933,
-				a0: 50.09693921471631
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.006867232268196299,
-				a1: 0.6193662297077469,
-				a0: 51.30248830148848
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008011068673302923,
-				a1: 0.731841857582643,
-				a0: 47.94959157962246
-			}
-		],
-		internalized_survival_curves: true
-	},
-	adenocarcinoma_in_esophagus: {
-		name: 'Adenocarcinoma (Esophagus)',
-		approved_drugs_name: 'esophageal',
-		clinical_trials_name:
-			'Esophageal+Cancer+Adenocarcinoma',
-		survival_curves_id: '600',
-		search_name: 'Esophageal%20Cancer%20Adenocarcinoma',
-		information_subtype: "esophageal",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0003428571428570337,
-				a1: -0.1873142857142763,
-				a0: 66.88377142857128
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0001714285714285585,
-				a1: -0.05365714285714161,
-				a0: 40.031885714285686
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0003428571428571378,
-				a1: 0.027314285714285135,
-				a0: 29.256228571428593
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0009142857142856453,
-				a1: -0.12617142857142108,
-				a0: 29.930057142856953
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0014857142857141736,
-				a1: -0.22502857142855925,
-				a0: 31.616342857142552
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0020571428571427575,
-				a1: -0.3038857142856976,
-				a0: 32.92262857142795
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.002285714285714169,
-				a1: -0.33542857142855287,
-				a0: 32.905142857142195
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.00217142857142838,
-				a1: -0.3396571428571242,
-				a0: 32.84388571428532
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0021714285714284354,
-				a1: -0.35965714285712214,
-				a0: 33.42388571428499
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0010285714285713232,
-				a1: -0.22194285714284437,
-				a0: 28.791314285713923
-			}
-		],
-		internalized_survival_curves: true
-	},
-	squamous_cell_carcinoma: {
-		approved_drugs_name: 'esophageal',
-		clinical_trials_name:
-			'Esophageal+Cancer+Squamous+Cell+Carcinoma',
-		survival_curves_id: '601',
-		search_name:
-			'Esophageal%20Cancer%20Squamous%20Cell%20Carcinoma',
-		description: "Squamous cell carcinoma is a type of cancer that begins in squamous cells, which make up layers of the skin and hollow organs such as the esophagus.",
-		information_subtype: "esophageal",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.021542857142855976,
-				a1: -2.8029142857141305,
-				a0: 135.6469714285666
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.02497142857142709,
-				a1: -3.2160571428569638,
-				a0: 131.54468571428063
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.021199999999998553,
-				a1: -2.8155999999998427,
-				a0: 115.86319999999608
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.019485714285712774,
-				a1: -2.5790285714284273,
-				a0: 104.44434285713994
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.019771428571427663,
-				a1: -2.688457142856992,
-				a0: 108.27748571428017
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.02045714285714162,
-				a1: -2.7830857142855585,
-				a0: 110.12502857142397
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.019942857142855708,
-				a1: -2.742114285714132,
-				a0: 108.40937142856765
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.020057142857141663,
-				a1: -2.75788571428556,
-				a0: 107.95062857142388
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.01611428571428508,
-				a1: -2.263771428571301,
-				a0: 91.67725714285196
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.01645714285714206,
-				a1: -2.331085714285584,
-				a0: 93.7810285714238
-			}
-		],
-		internalized_survival_curves: true
-	},
-	skin_melanoma: {
-		name: 'Melanoma of the Skin',
-		approved_drugs_name: 'melanoma',
-		survival_curves_id: '53',
-		description: "",
-		information_name: "skin",
-		information_subtype: "melanoma",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.001417752851576401,
-				a1: 0.11438315754936661,
-				a0: 96.07114013116583
-			},	
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0015416356458055058,
-				a1: 0.10265197686259576,
-				a0: 95.48476317040209
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0012663489998190683,
-				a1: 0.054401265684206494,
-				a0: 95.94687374214615
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0012093092019422325,
-				a1: 0.039389410230449146,
-				a0: 95.65604869583399
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0012501922438972121,
-				a1: 0.03826518114914901,
-				a0: 95.20069025894801
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0011507083009343715,
-				a1: 0.027045675165527576,
-				a0: 94.93273672954848
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0010203628043365578,
-				a1: 0.012322422038278035,
-				a0: 94.92064029703295
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.000984490506541591,
-				a1: 0.011132663007115155,
-				a0: 94.62624806391791
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0012093092019422533,
-				a1: 0.03938941023045073,
-				a0: 93.55604869583398
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0015301621992767772,
-				a1: 0.07851153116103783,
-				a0: 92.33604044712382
-			}
-		],
-		internalized_survival_curves: true
-	},
-	multiple_myeloma: {
-		approved_drugs_name: 'multiple-myeloma',
-		survival_curves_id: '89',
-		description: "Multiple myeloma affects a type of white blood cells called plasma cells, and decreases the body's ability to fight infections.",
-		information_name: "myeloma",
-		information_subtype: "myeloma",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.006944869775270368,
-				a1: 0.45552096354619165,
-				a0: 85.89493962714565
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.007530789188076925,
-				a1: 0.3927786845713882,
-				a0: 84.64348981950117
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008076799639374077,
-				a1: 0.35481322215720174,
-				a0: 82.85711337258938
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0072662728851803915,
-				a1: 0.15391929048032715,
-				a0: 86.47229351118844
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008366402975165388,
-				a1: 0.19003229651360068,
-				a0: 83.42967674509912
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.006589082240879604,
-				a1: -0.07481882103617572,
-				a0: 87.89190748463898
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008305596319261942,
-				a1: 0.054122508456614676,
-				a0: 82.8735210828311
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.006599469840437605,
-				a1: -0.18209122713320236,
-				a0: 86.85491965534757
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.005351181711944875,
-				a1: -0.36922355650088007,
-				a0: 90.05954301151395
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.004314075442391374,
-				a1: -0.5263588198416598,
-				a0: 92.79358914205275
-			}
-		],
-		internalized_survival_curves: true
-	},
-	ovarian_cancer: {
-		approved_drugs_name: 'ovarian',
-		survival_curves_id: '61',
-		description: "",
-		information_subtype: "",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.00574844476754266,
-				a1: 0.1501893366733752,
-				a0: 97.35613630943995
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008073605351143875,
-				a1: 0.169949254225963,
-				a0: 95.46170213821537
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.009625371630191781,
-				a1: 0.13653671254831623,
-				a0: 95.53122682530847
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.010416450719579202,
-				a1: 0.06573366389912282,
-				a0: 96.69313144389146
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.010464887913125956,
-				a1: -0.023301554521359714,
-				a0: 97.67887496721517
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.01045083798494667,
-				a1: -0.09928847102185037,
-				a0: 98.88649268745542
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.010373067266677194,
-				a1: -0.1538685921594807,
-				a0: 99.53628625471819
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.010054211952162911,
-				a1: -0.22140500274018318,
-				a0: 100.52583285017377
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.009458399743608903,
-				a1: -0.3030874617951228,
-				a0: 101.6607402407073
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.009085517692557554,
-				a1: -0.35953542629192975,
-				a0: 102.44017277310422
-			}
-		],
-		internalized_survival_curves: true
-	},
-	prostate_cancer: {
-		approved_drugs_name: 'prostate',
-		survival_curves_id: '66',
-		description: "",
-		information_subtype: "prostate",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0006349158575333913,
-				a1: 0.1460994349931107,
-				a0: 92.80872153922142
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.007705667895814283,
-				a1: 1.0363003575653278,
-				a0: 65.18577014807079
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.010344782194692037,
-				a1: 1.3944741314957463,
-				a0: 52.93580290808529
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.009575743764764777,
-				a1: 1.3276069380449738,
-				a0: 53.74443395624319
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.00890430073990256,
-				a1: 1.2689369979126202,
-				a0: 54.43574304374853
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.009469578829588654,
-				a1: 1.3528060828779698,
-				a0: 51.30948132017855
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.00825703827646218,
-				a1: 1.2501894557405115,
-				a0: 52.5041959277052
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.009120440760269632,
-				a1: 1.3620266856026875,
-				a0: 48.82900622225394
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008514170483706396,
-				a1: 1.3107183720339588,
-				a0: 49.42636352601723
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.008209146807526935,
-				a1: 1.2820419625843906,
-				a0: 49.7397666878467
-			}
-		],
-		internalized_survival_curves: true
-	},
-	small_intestine_cancer: {
-		approved_drugs_name: 'gist',
-		survival_curves_id: '19',
-		description: "",
-		information_name: "small-intestine",
-		information_subtype: "small-intestine",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.012342857142856545,
-				a1: 1.1233142857142209,
-				a0: 66.4642285714302
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.013314285714285168,
-				a1: 1.1873714285713608,
-				a0: 60.64354285714484
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.015714285714285126,
-				a1: 1.458571428571345,
-				a0: 49.6171428571456
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.01662857142857055,
-				a1: 1.564742857142775,
-				a0: 43.867085714287306
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.015657142857142148,
-				a1: 1.4206857142856368,
-				a0: 46.607771428573386
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.016228571428570815,
-				a1: 1.4395428571427789,
-				a0: 45.741485714288075
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.016685714285713527,
-				a1: 1.48262857142849,
-				a0: 43.356457142859135
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.016914285714284993,
-				a1: 1.4741714285713439,
-				a0: 43.233942857145195
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.016571428571428015,
-				a1: 1.4068571428570655,
-				a0: 44.23771428571679
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.017885714285713394,
-				a1: 1.538228571428483,
-				a0: 39.91325714285908
-			}
-		],
-		internalized_survival_curves: true
-	},
-	stomach_cancer: {
-		approved_drugs_name: 'stomach',
-		survival_curves_id: '18',
-		description: "",
-		information_subtype: "stomach",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0169553395515063,
-				a1: -1.9462052890305466,
-				a0: 112.54272061247917
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.02305753954932266,
-				a1: -2.604282717761359,
-				a0: 114.41426229773674
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.024623137466705636,
-				a1: -2.8097301772148366,
-				a0: 114.72088104426857
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.02663848191981133,
-				a1: -3.040254588799666,
-				a0: 117.68363567027781
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.026175700834428106,
-				a1: -2.9937053113555896,
-				a0: 114.50870943405394
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.027052247012818054,
-				a1: -3.0955783242151718,
-				a0: 115.81842663955956
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.0274675732089551,
-				a1: -3.1482339392418455,
-				a0: 116.52073068887015
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.027858937133515393,
-				a1: -3.198094071677631,
-				a0: 117.1316528212445
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.02794371627876524,
-				a1: -3.2219459150526815,
-				a0: 117.46165871176245
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.02592023887523709,
-				a1: -2.9990717323579847,
-				a0: 111.11412725569993
-			}
-		],
-		internalized_survival_curves: true
-	},
-	testicular_cancer: {
-		approved_drugs_name: 'testicular',
-		clinical_trials_name: 'Testicular+Cancer',
-		survival_curves_id: '67',
-		search_name: 'Testicular%20Cancer',
-		description: "",
-		information_subtype: "testicular",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.003387487956849927,
-				a1: 0.16035964574864423,
-				a0: 97.78763417797194
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0026939711983086367,
-				a1: 0.1019164756906065,
-				a0: 97.65560067246517
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0032833207044939416,
-				a1: 0.15714450093152352,
-				a0: 95.8222198886525
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0036934178666267192,
-				a1: 0.1749871887013046,
-				a0: 95.60114079595768
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0038917308830186403,
-				a1: 0.1860454545604734,
-				a0: 95.43147071459853
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.00403522007419857,
-				a1: 0.19080449068512856,
-				a0: 95.30903964705868
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.004062959421571449,
-				a1: 0.19964447860642204,
-				a0: 94.78820871022816
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.0041624433645342795,
-				a1: 0.21086398459004455,
-				a0: 94.4561622396276
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.004030536764805442,
-				a1: 0.19880885185162905,
-				a0: 94.61157888713879
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: -0.004227616112833232,
-				a1: 0.2182256111536689,
-				a0: 94.06221045588552
-			}
-		],
-		internalized_survival_curves: true
-	},
-	lung_adenocarcinoma: {
-		name: 'Adenocarcinoma (Lungs)',
-		approved_drugs_name: 'lung',
-		survival_curves_id: '612',
-		search_name: 'Lung%20Cancer%20and%20Adenocarcinoma',
-		description: "Lung adenocarcinoma is a non-small-cell lung cancer that is strongly associated with smoking. It usually starts from the mucosal glands.",
-		information_subtype: "",
-		survival_curves_coefficients: [
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.01141011664000402,
-				a1: -1.4122536309501865,
-				a0: 100.36937368840515
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.015748433897873726,
-				a1: -1.7755715084770598,
-				a0: 90.72270909542951
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.019323728070283597,
-				a1: -2.11549751457092,
-				a0: 89.71635091467547
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.021604810634550997,
-				a1: -2.348860614819968,
-				a0: 90.23036312415978
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.024151107724798226,
-				a1: -2.6436952884346945,
-				a0: 94.95982268513221
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.026297335237727815,
-				a1: -2.884446793162475,
-				a0: 98.80018609145043
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.02451418372821834,
-				a1: -2.6882354077924053,
-				a0: 91.9352154366726
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.025226150781888723,
-				a1: -2.783448614202612,
-				a0: 93.50380651541687
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.02570102822536313,
-				a1: -2.8544614782342945,
-				a0: 94.7117484545144
-			},
-			{
-				a4: 0,
-				a3: 0,
-				a2: 0.026075190051424446,
-				a1: -2.9143413707696113,
-				a0: 95.71077269514805
-			}
-		],
-		internalized_survival_curves: true
-	},
+export const cancerData = (<T extends string>(
+  preprocessedCancerData: PreprocessedCancerData<T>
+) =>
+  Object.fromEntries(
+    //Typescript shenanigans, not important
+    Object.entries<PreprocessedCancerData<T>[T]>(preprocessedCancerData).map(
+      ([id, cancer]) => [
+        id as T,
+        {
+          url: "/" + (cancer.url ?? id.replaceAll("_", "-")),
+          name: cancer.name ?? capitalizeText(id, "_", " "),
+          approved_drugs_link: `https://www.cancer.gov/about-cancer/treatment/drugs/${cancer.approved_drugs_name}`,
+          clinical_trials_name:
+            cancer.clinical_trials_name ?? capitalizeText(id, "_", "+"),
+          clinical_trials_link: `/clinical-trials?cond=${
+            cancer.clinical_trials_name ?? capitalizeText(id, "_", "+")
+          }`,
+          survival_curves_link_external: `https://seer.cancer.gov/explorer/application.html?site=${cancer.survival_curves_id}&data_type=4&graph_type=6&compareBy=age_range&chk_age_range_16=16&chk_age_range_62=62&chk_age_range_122=122&chk_age_range_160=160&chk_age_range_166=166&sex=1&race=1&hdn_stage=101&advopt_precision=1&advopt_show_ci=on&advopt_display=2#label_graphArea`,
+          survival_curves_link_internal: `/${
+            cancer.url ?? id.replaceAll("_", "-")
+          }/survival-curves`,
+          search_link: `/presciqure#gsc.q=${
+            cancer.search_name ?? capitalizeText(id, "_", "%20")
+          }`,
+          description: cancer.description ?? "",
+          information_link: `https://www.cancer.gov/types/${
+            cancer.information_name ?? cancer.approved_drugs_name.split("#")[0]
+          }/patient/${
+            cancer.information_subtype !== ""
+              ? `${cancer.information_subtype}-treatment-pdq`
+              : ""
+          }`,
+          survival_curves_coefficients: cancer.survival_curves_coefficients,
+          internalized_survival_curves: cancer.internalized_survival_curves,
+          distant_curves_coefficients: cancer.distant_curves_coefficients
+            ? cancer.distant_curves_coefficients
+            : undefined,
+          localized_curves_coefficients: cancer.localized_curves_coefficients
+            ? cancer.localized_curves_coefficients
+            : undefined,
+          regional_curves_coefficients: cancer.regional_curves_coefficients
+            ? cancer.regional_curves_coefficients
+            : undefined,
+          unstaged_curves_coefficients: cancer.unstaged_curves_coefficients
+            ? cancer.unstaged_curves_coefficients
+            : undefined,
+        },
+      ]
+    )
+  ))({
+  acute_lymphocytic_leukemia: {
+    approved_drugs_name: "leukemia#1",
+    survival_curves_id: "92",
+    description:
+      "Acute lymphocytic leukemia is a cancer of the blood and bone marrow. Unlike chronic lymphocytic leukemia, the disease progresses rapidly and creates immature blood cells.",
+    information_subtype: "adult-all",
+    survival_curves_coefficients: [
+      {
+        a2: -0.0079,
+        a1: -0.0899,
+        a0: 99.573,
+      },
+      {
+        a2: -0.0007,
+        a1: -0.9394,
+        a0: 108.4386,
+      },
+      {
+        a2: 0.0028,
+        a1: -1.3309,
+        a0: 111.6826,
+      },
+      {
+        a2: 0.0039,
+        a1: -1.4744,
+        a0: 112.1249,
+      },
+      {
+        a2: 0.0056,
+        a1: -1.6248,
+        a0: 112.9981,
+      },
+      {
+        a2: 0.0064,
+        a1: -1.704,
+        a0: 113.1834,
+      },
+      {
+        a2: 0.007,
+        a1: -1.7712,
+        a0: 113.6112,
+      },
+      {
+        a2: 0.0077,
+        a1: -1.8237,
+        a0: 113.8142,
+      },
+      {
+        a2: 0.007,
+        a1: -1.8314,
+        a0: 113.6294,
+      },
+      {
+        a2: 0.0075,
+        a1: -1.8254,
+        a0: 113.3014,
+      },
+    ],
+    internalized_survival_curves: true,
+  },
+  acute_monocytic_leukemia: {
+    approved_drugs_name: "leukemia",
+    survival_curves_id: "100",
+    description:
+      "Acute monocyctic leukemia is a cancer of the blood and bone marrow. It, and progresses rapidly.",
+    information_subtype: "adult-aml",
+    survival_curves_coefficients: [
+      {
+        a2: -0.0143,
+        a1: 0.5793,
+        a0: 67.8505,
+      },
+      {
+        a2: -0.0102,
+        a1: 0.2011,
+        a0: 61.271,
+      },
+      {
+        a2: -0.0072,
+        a1: -0.058,
+        a0: 61.0649,
+      },
+      {
+        a2: -0.0067,
+        a1: -0.1078,
+        a0: 59.8723,
+      },
+      {
+        a2: -0.0081,
+        a1: -0.0315,
+        a0: 58.2237,
+      },
+      {
+        a2: -0.0069,
+        a1: -0.1225,
+        a0: 59.2376,
+      },
+      {
+        a2: -0.0068,
+        a1: -0.1378,
+        a0: 59.0666,
+      },
+      {
+        a2: -0.0063,
+        a1: -0.1885,
+        a0: 59.6619,
+      },
+      {
+        a2: -0.0061,
+        a1: -0.2083,
+        a0: 59.8935,
+      },
+      {
+        a2: -0.0058,
+        a1: -0.2491,
+        a0: 60.5582,
+      },
+    ],
+    internalized_survival_curves: true,
+  },
+  acute_myeloid_leukemia: {
+    approved_drugs_name: "leukemia#3",
+    survival_curves_id: "96",
+    description:
+      "Acute myeloid leukemia is a cancer of the blood and bone marrow. It affects myeloid cells, and progresses rapidly.",
+    information_subtype: "adult-aml",
+    survival_curves_coefficients: [
+      {
+        a2: -0.0187,
+        a1: 0.9386,
+        a0: 72.7471,
+      },
+      {
+        a2: -0.0192,
+        a1: 0.9208,
+        a0: 62.6676,
+      },
+      {
+        a2: -0.0197,
+        a1: 0.9287,
+        a0: 58.6199,
+      },
+      {
+        a2: -0.0195,
+        a1: 0.9032,
+        a0: 56.8887,
+      },
+      {
+        a2: -0.019,
+        a1: 0.8585,
+        a0: 56.1545,
+      },
+      {
+        a2: -0.0189,
+        a1: 0.8349,
+        a0: 55.9632,
+      },
+      {
+        a2: -0.0185,
+        a1: 0.7938,
+        a0: 56.2122,
+      },
+      {
+        a2: -0.0185,
+        a1: 0.7953,
+        a0: 55.6244,
+      },
+      {
+        a2: -0.0183,
+        a1: 0.7662,
+        a0: 55.9179,
+      },
+      {
+        a2: -0.018,
+        a1: 0.7398,
+        a0: 55.079,
+      },
+    ],
+    internalized_survival_curves: true,
+  },
+  chronic_lymphocytic_leukemia: {
+    approved_drugs_name: "leukemia#6",
+    survival_curves_id: "93",
+    description:
+      "Chronic lymphocytic leukemia is a cancer of the blood and bone marrow. It affects lymphocytes, and progresses more slowly than acute leukemias.",
+    information_subtype: "cll",
+    survival_curves_coefficients: [
+      {
+        a2: -0.0038346249367040564,
+        a1: 0.39614665505539004,
+        a0: 88.43503181574542,
+      },
+      {
+        a2: -0.005598645015400638,
+        a1: 0.5812158380527178,
+        a0: 82.44300584454565,
+      },
+      {
+        a2: -0.011043200552470989,
+        a1: 1.1820398557566572,
+        a0: 65.33382288689711,
+      },
+      {
+        a2: -0.014037479043347512,
+        a1: 1.483193630037666,
+        a0: 56.82575271134383,
+      },
+      {
+        a2: -0.013800532031884138,
+        a1: 1.4194156910046978,
+        a0: 57.64165221599067,
+      },
+      {
+        a2: -0.013469439256384996,
+        a1: 1.3477946309296822,
+        a0: 58.5926360913166,
+      },
+      {
+        a2: -0.013247524477401962,
+        a1: 1.2770747275593237,
+        a0: 59.55928358596131,
+      },
+      {
+        a2: -0.013197165671738453,
+        a1: 1.2256442212889513,
+        a0: 60.33545764631428,
+      },
+      {
+        a2: -0.011792010790132812,
+        a1: 1.0584795583135944,
+        a0: 62.40847573162826,
+      },
+      {
+        a2: -0.012174805184581583,
+        a1: 1.0417360889007983,
+        a0: 62.74527900253526,
+      },
+    ],
+    internalized_survival_curves: true,
+  },
+  chronic_myeloid_leukemia: {
+    approved_drugs_name: "leukemia#8",
+    survival_curves_id: "97",
+    description:
+      "Chronic myeloid leukemia is a cancer of the blood and bone marrow. It affects myeloid cells, and progresses more slowly than acute leukemias.",
+    information_subtype: "cml",
+    survival_curves_coefficients: [
+      {
+        a2: -0.01330259966667735,
+        a1: 1.0579443446888679,
+        a0: 77.1333772117979,
+      },
+      {
+        a2: -0.018672103186270217,
+        a1: 1.4620416417644544,
+        a0: 67.25471716085778,
+      },
+      {
+        a2: -0.021755986350930456,
+        a1: 1.6850498279643549,
+        a0: 61.25117163766868,
+      },
+      {
+        a2: -0.023651149014900064,
+        a1: 1.8022299399073491,
+        a0: 58.21388902210697,
+      },
+      {
+        a2: -0.024799095618557976,
+        a1: 1.8777457009302376,
+        a0: 55.58724740805839,
+      },
+      {
+        a2: -0.025690707103646293,
+        a1: 1.9101202214780901,
+        a0: 54.781085118818865,
+      },
+      {
+        a2: -0.026646257668669904,
+        a1: 1.9582148620324358,
+        a0: 53.501272695944564,
+      },
+      {
+        a2: -0.027235716319777614,
+        a1: 1.9820063449580345,
+        a0: 52.452154768825096,
+      },
+      {
+        a2: -0.026952296723369074,
+        a1: 1.9414058626697759,
+        a0: 52.19904217062356,
+      },
+      {
+        a2: -0.026940495842073586,
+        a1: 1.911575043914182,
+        a0: 52.39753087726646,
+      },
+    ],
+    internalized_survival_curves: true,
+  },
+  liver_lymphatic_bile_and_duct: {
+    approved_drugs_name: "liver",
+    survival_curves_id: "35",
+    description: "",
+    information_subtype: "",
+    survival_curves_coefficients: [
+      {
+        a2: 0.013844504205881902,
+        a1: -1.8755117491200481,
+        a0: 110.00153930721947,
+      },
+      {
+        a2: 0.0169286817310903,
+        a1: -2.266766836348319,
+        a0: 108.50510318659931,
+      },
+      {
+        a2: 0.01872254798490225,
+        a1: -2.500825175301504,
+        a0: 108.96415889119127,
+      },
+      {
+        a2: 0.019584716800345348,
+        a1: -2.6210208986065524,
+        a0: 108.91904694653736,
+      },
+      {
+        a2: 0.019719963896181802,
+        a1: -2.6648667059366553,
+        a0: 108.44096404071306,
+      },
+      {
+        a2: 0.020067322572524304,
+        a1: -2.7211873082314093,
+        a0: 108.66150157615014,
+      },
+      {
+        a2: 0.0204961198980107,
+        a1: -2.769569079309524,
+        a0: 108.44554455543589,
+      },
+      {
+        a2: 0.020717816387149757,
+        a1: -2.8031620673105264,
+        a0: 108.58071776346503,
+      },
+      {
+        a2: 0.02057276609283898,
+        a1: -2.8010711515747064,
+        a0: 108.19077361589801,
+      },
+      {
+        a2: 0.021035547178222203,
+        a1: -2.847620429018782,
+        a0: 108.4656998521218,
+      },
+    ],
+    internalized_survival_curves: true,
+    localized_curves_coefficients: [
+      {
+        a2: 0.002986069469750552,
+        a1: -0.6776840175120987,
+        a0: 102.75474927592155,
+      },
+      {
+        a2: 0.004857051572298099,
+        a1: -1.0549417314948335,
+        a0: 105.06917568793453,
+      },
+      {
+        a2: 0.006779156494965299,
+        a1: -1.3635741555407002,
+        a0: 107.7699361634493,
+      },
+      {
+        a2: 0.007158719538230107,
+        a1: -1.483603469220886,
+        a0: 108.18236958918044,
+      },
+      {
+        a2: 0.007592309318031676,
+        a1: -1.5925443368171748,
+        a0: 108.98468895185376,
+      },
+      {
+        a2: 0.0071689593163946075,
+        a1: -1.6161024083653097,
+        a0: 109.21334521579634,
+      },
+      {
+        a2: 0.009388718979275623,
+        a1: -1.8410056745436358,
+        a0: 111.65289202623413,
+      },
+      {
+        a2: 0.009294464070317643,
+        a1: -1.8645990958169063,
+        a0: 111.70207051224773,
+      },
+      {
+        a2: 0.009275075963211421,
+        a1: -1.8852357943748366,
+        a0: 111.59749069208544,
+      },
+      {
+        a2: 0.010005447323848227,
+        a1: -1.961939842626151,
+        a0: 112.01269924322669,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: 0.019290184266394395,
+        a1: -2.4994138156964336,
+        a0: 121.51528677166587,
+      },
+      {
+        a2: 0.025922663215480757,
+        a1: -3.2886782318388628,
+        a0: 128.3333795600626,
+      },
+      {
+        a2: 0.027111820295860234,
+        a1: -3.4687601368344834,
+        a0: 127.76259104091866,
+      },
+      {
+        a2: 0.029424819489180187,
+        a1: -3.715555390551766,
+        a0: 129.4641320018494,
+      },
+      {
+        a2: 0.02901595599541107,
+        a1: -3.6893542093391147,
+        a0: 127.3633545592619,
+      },
+      {
+        a2: 0.030825072771548445,
+        a1: -3.853597499324267,
+        a0: 128.5031365604685,
+      },
+      {
+        a2: 0.03128473165066925,
+        a1: -3.9054830175460102,
+        a0: 128.74303663663983,
+      },
+      {
+        a2: 0.03142665973871894,
+        a1: -3.9129101740594976,
+        a0: 127.79795462415065,
+      },
+      {
+        a2: 0.030887123313585008,
+        a1: -3.866295366665559,
+        a0: 126.66206218415803,
+      },
+      {
+        a2: 0.030846567706396932,
+        a1: -3.8731099688008954,
+        a0: 126.75391517719287,
+      },
+    ],
+    distant_curves_coefficients: [
+      {
+        a2: 0.019176061674155864,
+        a1: -2.6757135911555476,
+        a0: 110.97558586844227,
+      },
+      {
+        a2: 0.02236368543374878,
+        a1: -2.8839161330415597,
+        a0: 99.5249264512027,
+      },
+      {
+        a2: 0.025017144021353577,
+        a1: -3.0863237245008612,
+        a0: 97.4825297676214,
+      },
+      {
+        a2: 0.024841777898019224,
+        a1: -3.0235463500448136,
+        a0: 92.51541423970565,
+      },
+      {
+        a2: 0.02547578752195534,
+        a1: -3.0836946515348362,
+        a0: 92.8336024802995,
+      },
+      {
+        a2: 0.025348891666386653,
+        a1: -3.0693255306839573,
+        a0: 92.12793650278891,
+      },
+      {
+        a2: 0.02533273491046506,
+        a1: -3.053189446148901,
+        a0: 90.77411998598637,
+      },
+      {
+        a2: 0.026136084535056447,
+        a1: -3.123914519019671,
+        a0: 91.62084572100198,
+      },
+      {
+        a2: 0.025474662998514308,
+        a1: -3.0606166026623884,
+        a0: 90.1290379734984,
+      },
+      {
+        a2: 0.026180417218039764,
+        a1: -3.1231444222147404,
+        a0: 90.85844174786405,
+      },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: 0.00016253994125292603,
+        a1: -0.822198922904937,
+        a0: 90.90564153566183,
+      },
+      {
+        a2: -0.0011497028446809665,
+        a1: -0.771235874414494,
+        a0: 81.84740617092051,
+      },
+      {
+        a2: -0.0012658892681772782,
+        a1: -0.8010629954724175,
+        a0: 78.48285746698366,
+      },
+      {
+        a2: 0.0010818907737144556,
+        a1: -1.0634134313740724,
+        a0: 81.83263476173042,
+      },
+      {
+        a2: 0.002061152246251474,
+        a1: -1.1397331671242898,
+        a0: 80.42516174119736,
+      },
+      {
+        a2: 0.002908725408904189,
+        a1: -1.2411246855054479,
+        a0: 81.69374635976709,
+      },
+      {
+        a2: 0.0020989130819444313,
+        a1: -1.1439451788206572,
+        a0: 77.84549401802977,
+      },
+      {
+        a2: 0.002423215720307681,
+        a1: -1.1834214320276133,
+        a0: 78.34773985671485,
+      },
+      {
+        a2: 0.002274715784967851,
+        a1: -1.1809763840154235,
+        a0: 78.3755581191738,
+      },
+      {
+        a2: 0.0032065223682586907,
+        a1: -1.2634024573482399,
+        a0: 79.39546291172755,
+      },
+    ],
+  },
+  pancreatic_cancer: {
+    approved_drugs_name: "pancreatic",
+    survival_curves_id: "40",
+    description: "",
+    information_subtype: "pancreatic",
+    survival_curves_coefficients: [
+      {
+        a2: 0.002101205125312644,
+        a1: -1.2837777901989098,
+        a0: 115.47597402747554,
+      },
+      {
+        a2: 0.00561580722757582,
+        a1: -1.7956334721677774,
+        a0: 117.72548011362753,
+      },
+      {
+        a2: 0.006434549593632433,
+        a1: -1.9025504257808472,
+        a0: 115.5158623622977,
+      },
+      {
+        a2: 0.006574589143783616,
+        a1: -1.9069553296291306,
+        a0: 112.55605583986252,
+      },
+      {
+        a2: 0.008324341004456226,
+        a1: -2.0789106807566076,
+        a0: 114.70898980420829,
+      },
+      {
+        a2: 0.008259277401079679,
+        a1: -2.040112511877662,
+        a0: 111.43077516377282,
+      },
+      {
+        a2: 0.00717918917229321,
+        a1: -1.8923683059020184,
+        a0: 105.77016292029325,
+      },
+      {
+        a2: 0.00811132319035135,
+        a1: -1.9804847522888713,
+        a0: 106.83727914276668,
+      },
+      {
+        a2: 0.009176924911269424,
+        a1: -2.077988211025306,
+        a0: 108.02732509277786,
+      },
+      {
+        a2: 0.010141481586093182,
+        a1: -2.1669402841669525,
+        a0: 109.11781149216307,
+      },
+    ],
+    internalized_survival_curves: true,
+    localized_curves_coefficients: [
+      {
+        a2: -0.015227072703416722,
+        a1: 0.7375293657720507,
+        a0: 90.83359265725917,
+      },
+      {
+        a2: -0.018477401874580246,
+        a1: 0.76981052110744,
+        a0: 91.53090359096768,
+      },
+      {
+        a2: -0.01947046191123314,
+        a1: 0.7475467859631415,
+        a0: 92.20942625160338,
+      },
+      {
+        a2: -0.019798432480470307,
+        a1: 0.7245040868158305,
+        a0: 92.69346853633087,
+      },
+      {
+        a2: -0.019332965768513954,
+        a1: 0.6575448808881419,
+        a0: 93.64047235937943,
+      },
+      {
+        a2: -0.018821605270442743,
+        a1: 0.5940238921542158,
+        a0: 94.49258528931537,
+      },
+      {
+        a2: -0.01774140789673423,
+        a1: 0.47771622849389117,
+        a0: 95.96893467610272,
+      },
+      {
+        a2: -0.01611542968536822,
+        a1: 0.325466238994964,
+        a0: 97.85122882299112,
+      },
+      {
+        a2: -0.015304711124811216,
+        a1: 0.24233559880708005,
+        a0: 98.97257138491351,
+      },
+      {
+        a2: -0.014639042858565127,
+        a1: 0.16129587435501702,
+        a0: 100.10396979926921,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: 0.00016690573814504006,
+        a1: -0.7647372302921065,
+        a0: 111.53512726793971,
+      },
+      {
+        a2: 0.007315276353288658,
+        a1: -1.8472783026839041,
+        a0: 126.47078408719715,
+      },
+      {
+        a2: 0.008204781010634932,
+        a1: -2.0395036551971844,
+        a0: 124.8307475798733,
+      },
+      {
+        a2: 0.005457285803915468,
+        a1: -1.7978164003805146,
+        a0: 116.35379703608588,
+      },
+      {
+        a2: 0.007716837059528636,
+        a1: -2.035960860630748,
+        a0: 119.39133085033964,
+      },
+      {
+        a2: 0.00879046258594629,
+        a1: -2.1572506327923704,
+        a0: 120.95041648709875,
+      },
+      {
+        a2: 0.01068403107256577,
+        a1: -2.339655393098538,
+        a0: 123.17299294890498,
+      },
+      {
+        a2: 0.012277586627166048,
+        a1: -2.491069755842671,
+        a0: 125.03191691888188,
+      },
+      {
+        a2: 0.013036931003539642,
+        a1: -2.5682552985724088,
+        a0: 125.9882580569602,
+      },
+      {
+        a2: 0.01440410675960857,
+        a1: -2.694081034482042,
+        a0: 127.50946957882553,
+      },
+    ],
+    distant_curves_coefficients: [
+      {
+        a2: 0.016128059013325924,
+        a1: -2.6411174183978003,
+        a0: 126.21008729605295,
+      },
+      {
+        a2: 0.020489821867368363,
+        a1: -3.0051077840175022,
+        a0: 117.67917768244583,
+      },
+      {
+        a2: 0.011603585681772666,
+        a1: -1.9065464467035513,
+        a0: 81.2824099399966,
+      },
+      {
+        a2: 0.01123625909221282,
+        a1: -1.788717543292253,
+        a0: 73.48475757044298,
+      },
+      { a2: 0.011180707483727126, a1: -1.73678726059258, a0: 69.4618048065656 },
+      {
+        a2: 0.008574546951215511,
+        a1: -1.3791178118187766,
+        a0: 56.88473520449478,
+      },
+      {
+        a2: 0.009263521641241335,
+        a1: -1.4458078757875032,
+        a0: 57.91462432683787,
+      },
+      {
+        a2: 0.009952496331266936,
+        a1: -1.5124979397562301,
+        a0: 58.94451344918161,
+      },
+      {
+        a2: 0.010708169700058612,
+        a1: -1.5840737680080543,
+        a0: 60.02338448370327,
+      },
+      {
+        a2: 0.010960779461952619,
+        a1: -1.6097497928352291,
+        a0: 60.437117708079676,
+      },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: 0.020057142857140775,
+        a1: -3.8978857142854983,
+        a0: 207.51062857142352,
+      },
+      {
+        a2: 0.03434285714285412,
+        a1: -5.709314285713965,
+        a0: 250.8277714285637,
+      },
+      { a2: 0.04177142857142613, a1: -6.554457142856775, a0: 268.689485714273 },
+      {
+        a2: 0.04194285714285417,
+        a1: -6.568114285713921,
+        a0: 266.56137142856096,
+      },
+      {
+        a2: 0.04365714285713995,
+        a1: -6.724685714285338,
+        a0: 267.5602285714171,
+      },
+      {
+        a2: 0.04485714285713893,
+        a1: -6.820285714285333,
+        a0: 267.46342857142065,
+      },
+      {
+        a2: 0.04137142857142617,
+        a1: -6.369257142856789,
+        a0: 252.17508571427368,
+      },
+      {
+        a2: 0.040171428571425416,
+        a1: -6.233657142856793,
+        a0: 247.91188571427674,
+      },
+      {
+        a2: 0.04005714285714035,
+        a1: -6.1778857142853685,
+        a0: 244.21062857141746,
+      },
+      {
+        a2: 0.03942857142856848,
+        a1: -6.021142857142522,
+        a0: 235.9537142857054,
+      },
+    ],
+  },
+  glioblastoma: {
+    approved_drugs_name: "brain",
+    survival_curves_id: "661",
+    search_name:
+      "%22Glioblastoma%22%20OR%20%22Glioma%22%20OR%20%22Glioblastoma%20Multiforme%22",
+    description:
+      "Glioblastoma is an aggressive cancer that affects the brain and spinal cord. It is difficult to treat.",
+    information_subtype: "child-glioma",
+    survival_curves_coefficients: [
+      {
+        a2: -0.035387700954818246,
+        a1: 2.755495605593772,
+        a0: 21.315710783157186,
+      },
+      {
+        a2: -0.02876177070106989,
+        a1: 2.180038650532081,
+        a0: 4.98957497313738,
+      },
+      {
+        a2: -0.02142862434732118,
+        a1: 1.557052412383845,
+        a0: 5.018776796320715,
+      },
+      {
+        a2: -0.015956220317955294,
+        a1: 1.0788249490739281,
+        a0: 8.66452783410595,
+      },
+      {
+        a2: -0.012575370356834092,
+        a1: 0.7883701388753073,
+        a0: 10.865243758647317,
+      },
+      {
+        a2: -0.010916532909012844,
+        a1: 0.6610306918828673,
+        a0: 10.733856655674208,
+      },
+      {
+        a2: -0.009634136298194318,
+        a1: 0.5590567993482853,
+        a0: 11.025062287023129,
+      },
+      {
+        a2: -0.008946427372487853,
+        a1: 0.5156873169961946,
+        a0: 10.285925034637039,
+      },
+      {
+        a2: -0.00784495335377533,
+        a1: 0.41699409922859604,
+        a0: 11.481578751534686,
+      },
+      {
+        a2: -0.00700417032825823,
+        a1: 0.3477473877154969,
+        a0: 12.001425333462809,
+      },
+    ],
+    internalized_survival_curves: true,
+    localized_curves_coefficients: [
+      {
+        a2: -0.03625836322966958,
+        a1: 2.9111749450883786,
+        a0: 20.78164139410788,
+      },
+      {
+        a2: -0.03227085933104634,
+        a1: 2.545067545823384,
+        a0: 0.04715427767321145,
+      },
+      {
+        a2: -0.024224262387038342,
+        a1: 1.8414575477516488,
+        a0: 0.7275881320458346,
+      },
+      {
+        a2: -0.018638106196685822,
+        a1: 1.3388967465882553,
+        a0: 4.844477647286276,
+      },
+      {
+        a2: -0.015384479525900607,
+        a1: 1.0685014302945515,
+        a0: 5.892316164397295,
+      },
+      {
+        a2: -0.013486118584965512,
+        a1: 0.9255375734702055,
+        a0: 5.533169009590049,
+      },
+      {
+        a2: -0.012210293821437901,
+        a1: 0.8185815724343262,
+        a0: 6.007110890910889,
+      },
+      {
+        a2: -0.011320494803543801,
+        a1: 0.7581093188926584,
+        a0: 5.367092739779578,
+      },
+      {
+        a2: -0.010592339415571694,
+        a1: 0.6901178963605856,
+        a0: 6.220365351051999,
+      },
+      {
+        a2: -0.009859173283439548,
+        a1: 0.6244404619409772,
+        a0: 7.023388632325295,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.027803164078222364,
+        a1: 1.8121671948067342,
+        a0: 36.21002740860694,
+      },
+      {
+        a2: -0.018120206925542615,
+        a1: 1.1178013383812937,
+        a0: 20.466661253520734,
+      },
+      {
+        a2: -0.014585016122027672,
+        a1: 0.8723843204388753,
+        a0: 15.393855736211286,
+      },
+      {
+        a2: -0.009419557380958288,
+        a1: 0.46329899126938395,
+        a0: 16.664286028491045,
+      },
+      {
+        a2: -0.005098113016590397,
+        a1: 0.08668759052000562,
+        a0: 21.164106435482257,
+      },
+      {
+        a2: -0.0036363549167969175,
+        a1: -0.021235097170394145,
+        a0: 21.0833509012558,
+      },
+      {
+        a2: -0.001522869334014354,
+        a1: -0.20277405049704023,
+        a0: 23.24211320445155,
+      },
+      {
+        a2: -0.000522440361395593,
+        a1: -0.2929158826698503,
+        a0: 24.338207370721644,
+      },
+      {
+        a2: 0.0011251419297415022,
+        a1: -0.433241799330089,
+        a0: 25.987017277640692,
+      },
+      {
+        a2: 0.0020345473445864126,
+        a1: -0.5102042696831826,
+        a0: 26.88305323328551,
+      },
+    ],
+    distant_curves_coefficients: [
+      {
+        a2: -0.02559999999999918,
+        a1: 1.9327999999998913,
+        a0: 17.658400000003383,
+      },
+      {
+        a2: -0.015371428571427925,
+        a1: 1.3312571428570679,
+        a0: -7.639085714283675,
+      },
+      {
+        a2: -0.005314285714285633,
+        a1: 0.18337142857141778,
+        a0: 18.131542857143188,
+      },
+      {
+        a2: -0.00908571428571403,
+        a1: 0.7038285714285314,
+        a0: -0.7299428571414408,
+      },
+      {
+        a2: -0.006114285714285517,
+        a1: 0.3537714285714081,
+        a0: 8.402742857143334,
+      },
+      {
+        a2: -0.0019428571428571628,
+        a1: -0.07188571428571056,
+        a0: 16.558628571428425,
+      },
+      {
+        a2: 5.714285714275569e-5,
+        a1: -0.2978857142856979,
+        a0: 22.33062857142798,
+      },
+      {
+        a2: 5.714285714275569e-5,
+        a1: -0.2978857142856979,
+        a0: 22.33062857142798,
+      },
+      {
+        a2: -0.0030285714285713944,
+        a1: 0.12794285714285006,
+        a0: 7.716685714286005,
+      },
+      {
+        a2: -0.0030285714285713944,
+        a1: 0.12794285714285006,
+        a0: 7.716685714286005,
+      },
+    ],
+  },
+  breast_cancer_and_luminal_a: {
+    approved_drugs_name: "breast",
+    clinical_trials_name: "Breast+Cancer+Luminal+A",
+    survival_curves_id: "622",
+    description: "",
+    information_subtype: "breast",
+    survival_curves_coefficients: [
+      {
+        a2: 0.099014715,
+        a1: -2.4166267103,
+        a0: 93.0449405119,
+      },
+    ],
+    internalized_survival_curves: false,
+  },
+  breast_cancer_and_triple_negative_or_luminal_a: {
+    approved_drugs_name: "breast",
+    clinical_trials_name: "Breast+Cancer+Triple+Negative",
+    survival_curves_id: "623",
+    description: "",
+    information_subtype: "breast",
+    survival_curves_coefficients: [
+      {
+        a2: 0.099014715,
+        a1: -2.4166267103,
+        a0: 93.0449405119,
+      },
+    ],
+    internalized_survival_curves: false,
+  },
+  breast_cancer_and_luminal_b: {
+    approved_drugs_name: "breast",
+    clinical_trials_name: "Breast+Cancer+Luminal+B",
+    survival_curves_id: "620",
+    description: "",
+    information_subtype: "breast",
+    survival_curves_coefficients: [
+      {
+        a2: 0.099014715,
+        a1: -2.4166267103,
+        a0: 93.0449405119,
+      },
+    ],
+    internalized_survival_curves: false,
+  },
+  breast_cancer_and_HER2_enriched: {
+    approved_drugs_name: "breast",
+    clinical_trials_name: "Breast+Cancer+HER2+Enriched",
+    survival_curves_id: "621",
+    description: "",
+    information_subtype: "breast",
+    survival_curves_coefficients: [
+      {
+        a2: 0.099014715,
+        a1: -2.4166267103,
+        a0: 93.0449405119,
+      },
+    ],
+    internalized_survival_curves: false,
+  },
+  colon_cancer: {
+    approved_drugs_name: "colorectal",
+    survival_curves_id: "21",
+    description: "",
+    information_subtype: "colon",
+    survival_curves_coefficients: [
+      {
+        a2: 0.00035346086972617985,
+        a1: -0.23964119102907094,
+        a0: 100.32765963850517,
+      },
+      {
+        a2: 0.005244320908561639,
+        a1: -0.7493000271538988,
+        a0: 104.67759529261198,
+      },
+      {
+        a2: 0.008294078094183588,
+        a1: -1.0681337772774968,
+        a0: 106.82732734182738,
+      },
+      {
+        a2: 0.010511185204710616,
+        a1: -1.3100705869978653,
+        a0: 109.24198963916885,
+      },
+      {
+        a2: 0.011615672284763123,
+        a1: -1.4348641063031145,
+        a0: 109.85693237281222,
+      },
+      {
+        a2: 0.012747898712188288,
+        a1: -1.5684976135296604,
+        a0: 111.59270604328694,
+      },
+      {
+        a2: 0.013658756085241919,
+        a1: -1.6742285058092394,
+        a0: 112.94051793565149,
+      },
+      {
+        a2: 0.014237177869509843,
+        a1: -1.7481333737719926,
+        a0: 113.90130715927756,
+      },
+      {
+        a2: 0.01455490866058251,
+        a1: -1.7925917354802474,
+        a0: 114.48628924793366,
+      },
+      {
+        a2: 0.014841777898020325,
+        a1: -1.8335463500448754,
+        a0: 115.01541423970552,
+      },
+    ],
+    internalized_survival_curves: true,
+    distant_curves_coefficients: [
+      {
+        a2: 0.0049714285714280715,
+        a1: -0.8360571428570949,
+        a0: 67.84468571428474,
+      },
+      {
+        a2: 0.0043999999999997375,
+        a1: -0.6571999999999633,
+        a0: 38.4383999999988,
+      },
+      {
+        a2: 0.003314285714285492,
+        a1: -0.5173714285713995,
+        a0: 27.83645714285625,
+      },
+      {
+        a2: 0.004914285714285427,
+        a1: -0.6781714285713909,
+        a0: 29.274057142855987,
+      },
+      {
+        a2: 0.003885714285714048,
+        a1: -0.5762285714285393,
+        a0: 25.96274285714184,
+      },
+      {
+        a2: 0.004571428571428338,
+        a1: -0.6508571428571064,
+        a0: 27.33028571428443,
+      },
+      {
+        a2: 0.004057142857142537,
+        a1: -0.5898857142856814,
+        a0: 25.234628571427816,
+      },
+      {
+        a2: 0.003714285714285448,
+        a1: -0.5625714285713971,
+        a0: 24.690857142856274,
+      },
+      {
+        a2: 0.003085714285714025,
+        a1: -0.5058285714285431,
+        a0: 23.43394285714215,
+      },
+      {
+        a2: 0.0026857142857141247,
+        a1: -0.4406285714285466,
+        a0: 20.69954285714199,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.0012965887581391188,
+        a1: -0.016032261254580557,
+        a0: 100.33824643137451,
+      },
+      {
+        a2: -0.0006639219474894043,
+        a1: -0.1159755985027936,
+        a0: 98.62039587855536,
+      },
+      {
+        a2: -0.0019443208754877633,
+        a1: 0.014412583681904186,
+        a0: 90.55965190046122,
+      },
+      {
+        a2: -0.00127487553344581,
+        a1: -0.07267164610056573,
+        a0: 89.02049933471207,
+      },
+      {
+        a2: -0.0014495537130275807,
+        a1: -0.05871848977824603,
+        a0: 85.59499974036734,
+      },
+      {
+        a2: -0.0004022155757742729,
+        a1: -0.1999366959450587,
+        a0: 87.48503037701613,
+      },
+      {
+        a2: 0.0007677716873439877,
+        a1: -0.3377822148679704,
+        a0: 89.24113632432275,
+      },
+      {
+        a2: 0.001469967120918847,
+        a1: -0.43139244445927144,
+        a0: 90.47256536540515,
+      },
+      {
+        a2: 0.0018154372593641166,
+        a1: -0.48469079408882165,
+        a0: 91.17837839089268,
+      },
+      {
+        a2: 0.002165918141969536,
+        a1: -0.5356751556059068,
+        a0: 91.83394208638073,
+      },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: -0.01868571428571353,
+        a1: 1.468628571428493,
+        a0: 63.944457142858965,
+      },
+      {
+        a2: -0.01937142857142793,
+        a1: 1.4232571428570586,
+        a0: 62.35691428571688,
+      },
+      {
+        a2: -0.016628571428570993,
+        a1: 1.1047428571427975,
+        a0: 65.10708571428763,
+      },
+      {
+        a2: -0.012171428571428389,
+        a1: 0.5496571428571119,
+        a0: 78.17611428571544,
+      },
+      {
+        a2: -0.013428571428571123,
+        a1: 0.7031428571428167,
+        a0: 70.50228571428698,
+      },
+      {
+        a2: -0.012228571428571144,
+        a1: 0.5475428571428284,
+        a0: 73.24548571428636,
+      },
+      {
+        a2: -0.011257142857142632,
+        a1: 0.46348571428568763,
+        a0: 72.54617142857217,
+      },
+      {
+        a2: -0.00874285714285708,
+        a1: 0.15651428571427659,
+        a0: 80.19382857142888,
+      },
+      {
+        a2: -0.008857142857142758,
+        a1: 0.15228571428570267,
+        a0: 79.43257142857175,
+      },
+      {
+        a2: -0.007657142857142843,
+        a1: 0.016685714285712208,
+        a0: 81.6957714285715,
+      },
+    ],
+  },
+  rectal_cancer: {
+    approved_drugs_name: "colorectal",
+    survival_curves_id: "31",
+    description: "",
+    information_subtype: "rectal",
+    survival_curves_coefficients: [
+      {
+        a2: -0.00722548195767081,
+        a1: 0.6432368025488855,
+        a0: 79.13120350934504,
+      },
+      {
+        a2: -0.008355072161968513,
+        a1: 0.824229689712751,
+        a0: 64.96289887102304,
+      },
+      {
+        a2: -0.008900261894904338,
+        a1: 0.8884206312123056,
+        a0: 57.56796140232783,
+      },
+      {
+        a2: -0.007832691049760365,
+        a1: 0.7757147654372186,
+        a0: 55.92632736094095,
+      },
+      {
+        a2: -0.006453222728264096,
+        a1: 0.6218788621388696,
+        a0: 56.66418824364549,
+      },
+      {
+        a2: -0.00645765705732082,
+        a1: 0.6080147714099112,
+        a0: 55.13473564800893,
+      },
+      {
+        a2: -0.005335232826774838,
+        a1: 0.46599080220978006,
+        a0: 57.429410710699145,
+      },
+      {
+        a2: -0.007373970733428603,
+        a1: 0.6911740547229933,
+        a0: 50.09693921471631,
+      },
+      {
+        a2: -0.006867232268196299,
+        a1: 0.6193662297077469,
+        a0: 51.30248830148848,
+      },
+      {
+        a2: -0.008011068673302923,
+        a1: 0.731841857582643,
+        a0: 47.94959157962246,
+      },
+    ],
+    internalized_survival_curves: true,
+    localized_curves_coefficients: [
+      {
+        a2: -0.005942857142856917,
+        a1: 0.5801142857142554,
+        a0: 85.71462857142951,
+      },
+      {
+        a2: -0.007599999999999607,
+        a1: 0.7387999999999622,
+        a0: 81.04640000000079,
+      },
+      {
+        a2: -0.010457142857142498,
+        a1: 1.0330857142856598,
+        a0: 72.61497142857331,
+      },
+      {
+        a2: -0.012057142857142322,
+        a1: 1.1938857142856476,
+        a0: 67.47737142857338,
+      },
+      {
+        a2: -0.014114285714284858,
+        a1: 1.3977714285713494,
+        a0: 61.65474285714436,
+      },
+      {
+        a2: -0.015542857142856414,
+        a1: 1.5249142857142006,
+        a0: 58.06902857143089,
+      },
+      {
+        a2: -0.01765714285714215,
+        a1: 1.7266857142856165,
+        a0: 52.615771428574575,
+      },
+      {
+        a2: -0.02011428571428464,
+        a1: 1.9757714285713186,
+        a0: 45.83874285714538,
+      },
+      {
+        a2: -0.021828571428569976,
+        a1: 2.1523428571427337,
+        a0: 40.759885714287634,
+      },
+      {
+        a2: -0.020571428571427575,
+        a1: 1.9988571428570325,
+        a0: 44.33371428571712,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.010285714285713787,
+        a1: 1.0194285714285143,
+        a0: 72.98685714285865,
+      },
+      {
+        a2: -0.014228571428570813,
+        a1: 1.4735428571427767,
+        a0: 54.87348571428819,
+      },
+      {
+        a2: -0.016171428571427837,
+        a1: 1.661657142857045,
+        a0: 45.492114285717335,
+      },
+      {
+        a2: -0.017542857142856194,
+        a1: 1.8109142857141818,
+        a0: 36.55702857143119,
+      },
+      {
+        a2: -0.019085714285713484,
+        a1: 1.9938285714284576,
+        a0: 26.870057142860887,
+      },
+      {
+        a2: -0.019428571428570462,
+        a1: 2.0011428571427445,
+        a0: 24.106285714288774,
+      },
+      {
+        a2: -0.019085714285713484,
+        a1: 1.9538285714284618,
+        a0: 22.930057142860647,
+      },
+      {
+        a2: -0.018342857142856328,
+        a1: 1.8613142857141818,
+        a0: 23.20822857143169,
+      },
+      {
+        a2: -0.017257142857142194,
+        a1: 1.7214857142856195,
+        a0: 25.710171428574576,
+      },
+      {
+        a2: -0.018057142857141883,
+        a1: 1.7918857142856146,
+        a0: 23.181371428573705,
+      },
+    ],
+    distant_curves_coefficients: [
+      {
+        a2: -0.02051428571428482,
+        a1: 1.7809714285713292,
+        a0: 38.7443428571454,
+      },
+      {
+        a2: -0.019085714285713484,
+        a1: 1.7538285714284718,
+        a0: 12.83005714286005,
+      },
+      {
+        a2: -0.01291428571428499,
+        a1: 1.1221714285713644,
+        a0: 13.377942857143953,
+      },
+      {
+        a2: -0.008514285714285363,
+        a1: 0.6849714285713893,
+        a0: 14.536342857143875,
+      },
+      {
+        a2: -0.004057142857142759,
+        a1: 0.22988571428570104,
+        a0: 19.605371428571843,
+      },
+      {
+        a2: -0.0023428571428571222,
+        a1: 0.033314285714283694,
+        a0: 22.36422857142861,
+      },
+      {
+        a2: -0.003199999999999925,
+        a1: 0.20159999999998876,
+        a0: 13.204800000000384,
+      },
+      {
+        a2: -0.0029142857142856193,
+        a1: 0.17217142857141907,
+        a0: 12.817942857143068,
+      },
+      {
+        a2: -0.002285714285714238,
+        a1: 0.09542857142856567,
+        a0: 14.354857142857306,
+      },
+      {
+        a2: -0.00239999999999993,
+        a1: 0.11119999999999339,
+        a0: 13.31360000000013,
+      },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: -0.027942857142855715,
+        a1: 2.746114285714131,
+        a0: 29.202628571432427,
+      },
+      {
+        a2: -0.03954285714285488,
+        a1: 4.036914285714062,
+        a0: -11.494971428566586,
+      },
+      {
+        a2: -0.04457142857142582,
+        a1: 4.53085714285689,
+        a0: -27.01028571428097,
+      },
+      {
+        a2: -0.04474285714285475,
+        a1: 4.484514285714037,
+        a0: -26.842171428565635,
+      },
+      {
+        a2: -0.0459999999999976,
+        a1: 4.617999999999742,
+        a0: -32.335999999993646,
+      },
+      {
+        a2: -0.04388571428571186,
+        a1: 4.376228571428325,
+        a0: -27.82274285713727,
+      },
+      {
+        a2: -0.04645714285714053,
+        a1: 4.601085714285453,
+        a0: -33.381028571421766,
+      },
+      {
+        a2: -0.04662857142856858,
+        a1: 4.594742857142598,
+        a0: -33.072914285709516,
+      },
+      {
+        a2: -0.050285714285712046,
+        a1: 5.019428571428292,
+        a0: -45.773142857134616,
+      },
+      {
+        a2: -0.04965714285714018,
+        a1: 4.942685714285438,
+        a0: -44.436228571422184,
+      },
+    ],
+  },
+  adenocarcinoma_in_esophagus: {
+    name: "Adenocarcinoma (Esophagus)",
+    approved_drugs_name: "esophageal",
+    clinical_trials_name: "Esophageal+Cancer+Adenocarcinoma",
+    survival_curves_id: "600",
+    search_name: "Esophageal%20Cancer%20Adenocarcinoma",
+    information_subtype: "esophageal",
+    survival_curves_coefficients: [
+      {
+        a2: 0.0003428571428570337,
+        a1: -0.1873142857142763,
+        a0: 66.88377142857128,
+      },
+      {
+        a2: 0.0001714285714285585,
+        a1: -0.05365714285714161,
+        a0: 40.031885714285686,
+      },
+      {
+        a2: -0.0003428571428571378,
+        a1: 0.027314285714285135,
+        a0: 29.256228571428593,
+      },
+      {
+        a2: 0.0009142857142856453,
+        a1: -0.12617142857142108,
+        a0: 29.930057142856953,
+      },
+      {
+        a2: 0.0014857142857141736,
+        a1: -0.22502857142855925,
+        a0: 31.616342857142552,
+      },
+      {
+        a2: 0.0020571428571427575,
+        a1: -0.3038857142856976,
+        a0: 32.92262857142795,
+      },
+      {
+        a2: 0.002285714285714169,
+        a1: -0.33542857142855287,
+        a0: 32.905142857142195,
+      },
+      {
+        a2: 0.00217142857142838,
+        a1: -0.3396571428571242,
+        a0: 32.84388571428532,
+      },
+      {
+        a2: 0.0021714285714284354,
+        a1: -0.35965714285712214,
+        a0: 33.42388571428499,
+      },
+      {
+        a2: 0.0010285714285713232,
+        a1: -0.22194285714284437,
+        a0: 28.791314285713923,
+      },
+    ],
+    internalized_survival_curves: true,
+    distant_curves_coefficients: [
+      {
+        a2: 0.0049714285714280715,
+        a1: -0.8360571428570949,
+        a0: 67.84468571428474,
+      },
+      {
+        a2: 0.0043999999999997375,
+        a1: -0.6571999999999633,
+        a0: 38.4383999999988,
+      },
+      {
+        a2: 0.003314285714285492,
+        a1: -0.5173714285713995,
+        a0: 27.83645714285625,
+      },
+      {
+        a2: 0.004914285714285427,
+        a1: -0.6781714285713909,
+        a0: 29.274057142855987,
+      },
+      {
+        a2: 0.003885714285714048,
+        a1: -0.5762285714285393,
+        a0: 25.96274285714184,
+      },
+      {
+        a2: 0.004571428571428338,
+        a1: -0.6508571428571064,
+        a0: 27.33028571428443,
+      },
+      {
+        a2: 0.004057142857142537,
+        a1: -0.5898857142856814,
+        a0: 25.234628571427816,
+      },
+      {
+        a2: 0.003714285714285448,
+        a1: -0.5625714285713971,
+        a0: 24.690857142856274,
+      },
+      {
+        a2: 0.003085714285714025,
+        a1: -0.5058285714285431,
+        a0: 23.43394285714215,
+      },
+      {
+        a2: 0.0026857142857141247,
+        a1: -0.4406285714285466,
+        a0: 20.69954285714199,
+      },
+    ],
+    localized_curves_coefficients: [
+      {
+        a2: -0.01577142857142788,
+        a1: 1.696457142857053,
+        a0: 40.42651428571704,
+      },
+      {
+        a2: -0.022799999999998377,
+        a1: 2.6163999999998526,
+        a0: 0.13920000000268828,
+      },
+      {
+        a2: -0.0225714285714278,
+        a1: 2.6248571428569947,
+        a0: -8.03828571427983,
+      },
+      {
+        a2: -0.021885714285712954,
+        a1: 2.4702285714284336,
+        a0: -4.550742857139632,
+      },
+      {
+        a2: -0.01748571428571344,
+        a1: 1.8730285714284658,
+        a0: 12.047657142860238,
+      },
+      {
+        a2: -0.015371428571427925,
+        a1: 1.6312571428570515,
+        a0: 16.660914285717283,
+      },
+      {
+        a2: -0.01262857142857099,
+        a1: 1.2727428571427872,
+        a0: 26.471085714288215,
+      },
+      {
+        a2: -0.014399999999999302,
+        a1: 1.4071999999999207,
+        a0: 23.9216000000021,
+      },
+      {
+        a2: -0.014399999999999302,
+        a1: 1.3471999999999247,
+        a0: 26.261600000001856,
+      },
+      {
+        a2: -0.017085714285713482,
+        a1: 1.6878285714284784,
+        a0: 14.46205714285965,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.006571428571428395,
+        a1: 0.3968571428571234,
+        a0: 74.9177142857148,
+      },
+      {
+        a2: -0.00017142857142876666,
+        a1: -0.3263428571428391,
+        a0: 72.08811428571394,
+      },
+      {
+        a2: 0.0020571428571425354,
+        a1: -0.5838857142856824,
+        a0: 68.34262857142788,
+      },
+      {
+        a2: 0.0029714285714284028,
+        a1: -0.650057142857107,
+        a0: 62.23268571428423,
+      },
+      {
+        a2: 0.004857142857142338,
+        a1: -0.9002857142856642,
+        a0: 66.92342857142754,
+      },
+      {
+        a2: 0.004914285714285316,
+        a1: -0.9181714285713767,
+        a0: 65.73405714285556,
+      },
+      {
+        a2: 0.004228571428571026,
+        a1: -0.8435428571428113,
+        a0: 62.06651428571307,
+      },
+      {
+        a2: 0.006399999999999295,
+        a1: -1.1231999999999382,
+        a0: 69.67039999999896,
+      },
+      {
+        a2: 0.008571428571427786,
+        a1: -1.402857142857064,
+        a0: 77.27428571428396,
+      },
+      { a2: 0.00617142857142805, a1: -1.13165714285708, a0: 69.34788571428393 },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: 0.01377142857142788,
+        a1: -2.5104571428570033,
+        a0: 155.66148571428005,
+      },
+      {
+        a2: 0.004285714285713782,
+        a1: -1.2614285714285014,
+        a0: 97.17714285714058,
+      },
+      {
+        a2: 0.013257142857141968,
+        a1: -2.1294857142855954,
+        a0: 106.78582857142486,
+      },
+      {
+        a2: 0.011771428571427656,
+        a1: -1.9444571428570336,
+        a0: 98.72948571428266,
+      },
+      {
+        a2: 0.013028571428570501,
+        a1: -2.037942857142744,
+        a0: 97.36331428571104,
+      },
+      {
+        a2: 0.014171428571427391,
+        a1: -2.115657142857025,
+        a0: 95.55588571428312,
+      },
+      {
+        a2: 0.012857142857142012,
+        a1: -1.8842857142856095,
+        a0: 84.83142857142552,
+      },
+      {
+        a2: 0.010971428571427966,
+        a1: -1.5340571428570575,
+        a0: 68.94068571428292,
+      },
+      {
+        a2: 0.014285714285713347,
+        a1: -1.9114285714284645,
+        a0: 78.61714285714002,
+      },
+      {
+        a2: 0.01022857142857081,
+        a1: -1.5015428571427731,
+        a0: 68.80251428571162,
+      },
+    ],
+  },
+  squamous_cell_carcinoma: {
+    approved_drugs_name: "esophageal",
+    clinical_trials_name: "Esophageal+Cancer+Squamous+Cell+Carcinoma",
+    survival_curves_id: "601",
+    search_name: "Esophageal%20Cancer%20Squamous%20Cell%20Carcinoma",
+    description:
+      "Squamous cell carcinoma is a type of cancer that begins in squamous cells, which make up layers of the skin and hollow organs such as the esophagus.",
+    information_subtype: "esophageal",
+    survival_curves_coefficients: [
+      {
+        a2: 0.021542857142855976,
+        a1: -2.8029142857141305,
+        a0: 135.6469714285666,
+      },
+      {
+        a2: 0.02497142857142709,
+        a1: -3.2160571428569638,
+        a0: 131.54468571428063,
+      },
+      {
+        a2: 0.021199999999998553,
+        a1: -2.8155999999998427,
+        a0: 115.86319999999608,
+      },
+      {
+        a2: 0.019485714285712774,
+        a1: -2.5790285714284273,
+        a0: 104.44434285713994,
+      },
+      {
+        a2: 0.019771428571427663,
+        a1: -2.688457142856992,
+        a0: 108.27748571428017,
+      },
+      {
+        a2: 0.02045714285714162,
+        a1: -2.7830857142855585,
+        a0: 110.12502857142397,
+      },
+      {
+        a2: 0.019942857142855708,
+        a1: -2.742114285714132,
+        a0: 108.40937142856765,
+      },
+      {
+        a2: 0.020057142857141663,
+        a1: -2.75788571428556,
+        a0: 107.95062857142388,
+      },
+      {
+        a2: 0.01611428571428508,
+        a1: -2.263771428571301,
+        a0: 91.67725714285196,
+      },
+      {
+        a2: 0.01645714285714206,
+        a1: -2.331085714285584,
+        a0: 93.7810285714238,
+      },
+    ],
+    internalized_survival_curves: true,
+  },
+  skin_melanoma: {
+    name: "Melanoma of the Skin",
+    approved_drugs_name: "melanoma",
+    survival_curves_id: "53",
+    description: "",
+    information_name: "skin",
+    information_subtype: "melanoma",
+    survival_curves_coefficients: [
+      {
+        a2: -0.001417752851576401,
+        a1: 0.11438315754936661,
+        a0: 96.07114013116583,
+      },
+      {
+        a2: -0.0015416356458055058,
+        a1: 0.10265197686259576,
+        a0: 95.48476317040209,
+      },
+      {
+        a2: -0.0012663489998190683,
+        a1: 0.054401265684206494,
+        a0: 95.94687374214615,
+      },
+      {
+        a2: -0.0012093092019422325,
+        a1: 0.039389410230449146,
+        a0: 95.65604869583399,
+      },
+      {
+        a2: -0.0012501922438972121,
+        a1: 0.03826518114914901,
+        a0: 95.20069025894801,
+      },
+      {
+        a2: -0.0011507083009343715,
+        a1: 0.027045675165527576,
+        a0: 94.93273672954848,
+      },
+      {
+        a2: -0.0010203628043365578,
+        a1: 0.012322422038278035,
+        a0: 94.92064029703295,
+      },
+      {
+        a2: -0.000984490506541591,
+        a1: 0.011132663007115155,
+        a0: 94.62624806391791,
+      },
+      {
+        a2: -0.0012093092019422533,
+        a1: 0.03938941023045073,
+        a0: 93.55604869583398,
+      },
+      {
+        a2: -0.0015301621992767772,
+        a1: 0.07851153116103783,
+        a0: 92.33604044712382,
+      },
+    ],
+    internalized_survival_curves: true,
+    localized_curves_coefficients: [
+      {
+        a2: -0.00017006802721089218,
+        a1: 0.0175170068027216,
+        a0: 99.57551020408164,
+      },
+      {
+        a2: 0.00016326530612245128,
+        a1: -0.008816326530612505,
+        a0: 99.89551020408165,
+      },
+      {
+        a2: 0.00042176870748298484,
+        a1: -0.0394421768707479,
+        a0: 100.29673469387755,
+      },
+      {
+        a2: 0.0005952380952381001,
+        a1: -0.06130952380952499,
+        a0: 100.58571428571432,
+      },
+      {
+        a2: 0.0005136054421768579,
+        a1: -0.05690136054421719,
+        a0: 100.33795918367349,
+      },
+      {
+        a2: 0.0008503401360544366,
+        a1: -0.08758503401360675,
+        a0: 100.72244897959185,
+      },
+      {
+        a2: 0.000846938775510217,
+        a1: -0.08323469387755125,
+        a0: 100.35795918367346,
+      },
+      {
+        a2: 0.0011802721088435553,
+        a1: -0.10956802721088538,
+        a0: 100.67795918367348,
+      },
+      {
+        a2: 0.0008333333333333387,
+        a1: -0.06583333333333433,
+        a0: 99.30000000000003,
+      },
+      {
+        a2: 0.0006598639455782235,
+        a1: -0.04396598639455724,
+        a0: 98.61102040816326,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.0006252218039803636,
+        a1: -0.04358221572791397,
+        a0: 100.26101144930232,
+      },
+      {
+        a2: -0.0002455496157934556,
+        a1: -0.23217498709277526,
+        a0: 101.38918201834079,
+      },
+      {
+        a2: 0.001544648707144991,
+        a1: -0.5287522784002258,
+        a0: 105.43452584634409,
+      },
+      {
+        a2: 0.002697933489729909,
+        a1: -0.7076444243646824,
+        a0: 107.25812956031399,
+      },
+      {
+        a2: 0.0029264201160041914,
+        a1: -0.7733822192337437,
+        a0: 106.84204080498583,
+      },
+      {
+        a2: 0.003346757056301497,
+        a1: -0.8237238461479535,
+        a0: 106.19409552429667,
+      },
+      {
+        a2: 0.003838838592188809,
+        a1: -0.8764449911244893,
+        a0: 106.05736577737724,
+      },
+      {
+        a2: 0.0039557129594376406,
+        a1: -0.8954420882002957,
+        a0: 105.5635304148854,
+      },
+      {
+        a2: 0.0041886646052604615,
+        a1: -0.9160486065335001,
+        a0: 104.81850661302353,
+      },
+      {
+        a2: 0.004707033530311877,
+        a1: -0.9488413175048463,
+        a0: 104.05083186621518,
+      },
+    ],
+    distant_curves_coefficients: [
+      {
+        a2: -0.018966394278423726,
+        a1: 1.7653113788872514,
+        a0: 20.255466424211853,
+      },
+      {
+        a2: -0.013686058852926175,
+        a1: 1.2088146629918426,
+        a0: 20.801599700746166,
+      },
+      {
+        a2: -0.012733991003150757,
+        a1: 1.0985176267395262,
+        a0: 18.45198145991781,
+      },
+      {
+        a2: -0.011208839548033755,
+        a1: 0.9176921074660301,
+        a0: 20.766190342792065,
+      },
+      {
+        a2: -0.010814789996900553,
+        a1: 0.8474220465466302,
+        a0: 21.74919006199187,
+      },
+      {
+        a2: -0.010303102064062486,
+        a1: 0.778210684758668,
+        a0: 22.648514421848745,
+      },
+      {
+        a2: -0.009442712641594575,
+        a1: 0.6924737564341418,
+        a0: 23.70441511055304,
+      },
+      {
+        a2: -0.009161509017850844,
+        a1: 0.6605858998651254,
+        a0: 24.18936657248294,
+      },
+      {
+        a2: -0.00846922592767363,
+        a1: 0.5937842363642166,
+        a0: 25.037031416870136,
+      },
+      {
+        a2: -0.008741172077553538,
+        a1: 0.6102442729509163,
+        a0: 24.84142129179375,
+      },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: -0.001267473523260898,
+        a1: 0.07747931455665424,
+        a0: 97.8423092353473,
+      },
+      {
+        a2: -0.001756541997808475,
+        a1: 0.10410015799553965,
+        a0: 96.2983279990132,
+      },
+      {
+        a2: -0.0022258949304828635,
+        a1: 0.14566732693831635,
+        a0: 94.50613801276207,
+      },
+      {
+        a2: -0.0021492487356552514,
+        a1: 0.11416525467313497,
+        a0: 94.95136707322605,
+      },
+      {
+        a2: -0.0017975341846857562,
+        a1: 0.07153938659892066,
+        a0: 95.52723241882016,
+      },
+      {
+        a2: -0.0009459325821737589,
+        a1: -0.010467024507662114,
+        a0: 96.60393341762844,
+      },
+      {
+        a2: -0.00022467647625958043,
+        a1: -0.07775018248699546,
+        a0: 97.49273084895226,
+      },
+      {
+        a2: -8.743169760380698e-5,
+        a1: -0.0931817001669853,
+        a0: 97.64510959638527,
+      },
+      {
+        a2: 0.00047951664013556883,
+        a1: -0.1429461224281808,
+        a0: 98.25462154328908,
+      },
+      {
+        a2: -0.0007228932797487203,
+        a1: -0.0042649767504748335,
+        a0: 94.47514541907181,
+      },
+    ],
+  },
+  multiple_myeloma: {
+    approved_drugs_name: "multiple-myeloma",
+    survival_curves_id: "89",
+    description:
+      "Multiple myeloma affects a type of white blood cells called plasma cells, and decreases the body's ability to fight infections.",
+    information_name: "myeloma",
+    information_subtype: "myeloma",
+    survival_curves_coefficients: [
+      {
+        a2: -0.006944869775270368,
+        a1: 0.45552096354619165,
+        a0: 85.89493962714565,
+      },
+      {
+        a2: -0.007530789188076925,
+        a1: 0.3927786845713882,
+        a0: 84.64348981950117,
+      },
+      {
+        a2: -0.008076799639374077,
+        a1: 0.35481322215720174,
+        a0: 82.85711337258938,
+      },
+      {
+        a2: -0.0072662728851803915,
+        a1: 0.15391929048032715,
+        a0: 86.47229351118844,
+      },
+      {
+        a2: -0.008366402975165388,
+        a1: 0.19003229651360068,
+        a0: 83.42967674509912,
+      },
+      {
+        a2: -0.006589082240879604,
+        a1: -0.07481882103617572,
+        a0: 87.89190748463898,
+      },
+      {
+        a2: -0.008305596319261942,
+        a1: 0.054122508456614676,
+        a0: 82.8735210828311,
+      },
+      {
+        a2: -0.006599469840437605,
+        a1: -0.18209122713320236,
+        a0: 86.85491965534757,
+      },
+      {
+        a2: -0.005351181711944875,
+        a1: -0.36922355650088007,
+        a0: 90.05954301151395,
+      },
+      {
+        a2: -0.004314075442391374,
+        a1: -0.5263588198416598,
+        a0: 92.79358914205275,
+      },
+    ],
+    internalized_survival_curves: true,
+  },
+  ovarian_cancer: {
+    approved_drugs_name: "ovarian",
+    survival_curves_id: "61",
+    description: "",
+    information_subtype: "",
+    survival_curves_coefficients: [
+      {
+        a2: -0.00574844476754266,
+        a1: 0.1501893366733752,
+        a0: 97.35613630943995,
+      },
+      {
+        a2: -0.008073605351143875,
+        a1: 0.169949254225963,
+        a0: 95.46170213821537,
+      },
+      {
+        a2: -0.009625371630191781,
+        a1: 0.13653671254831623,
+        a0: 95.53122682530847,
+      },
+      {
+        a2: -0.010416450719579202,
+        a1: 0.06573366389912282,
+        a0: 96.69313144389146,
+      },
+      {
+        a2: -0.010464887913125956,
+        a1: -0.023301554521359714,
+        a0: 97.67887496721517,
+      },
+      {
+        a2: -0.01045083798494667,
+        a1: -0.09928847102185037,
+        a0: 98.88649268745542,
+      },
+      {
+        a2: -0.010373067266677194,
+        a1: -0.1538685921594807,
+        a0: 99.53628625471819,
+      },
+      {
+        a2: -0.010054211952162911,
+        a1: -0.22140500274018318,
+        a0: 100.52583285017377,
+      },
+      {
+        a2: -0.009458399743608903,
+        a1: -0.3030874617951228,
+        a0: 101.6607402407073,
+      },
+      {
+        a2: -0.009085517692557554,
+        a1: -0.35953542629192975,
+        a0: 102.44017277310422,
+      },
+    ],
+    internalized_survival_curves: true,
+    localized_curves_coefficients: [
+      {
+        a2: -0.0007697263736797799,
+        a1: 0.015691411584507903,
+        a0: 99.84975301827056,
+      },
+      {
+        a2: -0.0010227209961425412,
+        a1: 0.02704197746785641,
+        a0: 98.7957741401282,
+      },
+      {
+        a2: -0.0009464022360817887,
+        a1: 0.0012302782567105838,
+        a0: 98.59379177067132,
+      },
+      {
+        a2: -0.0011659918974778576,
+        a1: -0.005325901776846324,
+        a0: 98.40481735920221,
+      },
+      {
+        a2: -0.0016805837467334765,
+        a1: 0.02142230386409154,
+        a0: 97.50194112590597,
+      },
+      {
+        a2: -0.0021655477107182936,
+        a1: 0.03630826891853241,
+        a0: 97.33462033938785,
+      },
+      {
+        a2: -0.0028139346976007173,
+        a1: 0.07813385996309131,
+        a0: 96.46160294863284,
+      },
+      {
+        a2: -0.0025648262958561374,
+        a1: 0.04139125709483059,
+        a0: 96.97039566357307,
+      },
+      {
+        a2: -0.0030906733017959376,
+        a1: 0.055152993067971584,
+        a0: 96.84771644016897,
+      },
+      {
+        a2: -0.003168662309910024,
+        a1: 0.04686002957496292,
+        a0: 96.96644858629219,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.0029706006575815347,
+        a1: 0.1103721511108052,
+        a0: 97.85745130730831,
+      },
+      {
+        a2: -0.0044173595991138515,
+        a1: 0.16268027516425698,
+        a0: 94.5402657778083,
+      },
+      {
+        a2: -0.005399634132990633,
+        a1: 0.16510031245213183,
+        a0: 93.82844978159466,
+      },
+      {
+        a2: -0.005723936771354188,
+        a1: 0.10457656565909418,
+        a0: 94.82620394291015,
+      },
+      {
+        a2: -0.006039200225698399,
+        a1: 0.0657519142530961,
+        a0: 95.58182515446501,
+      },
+      {
+        a2: -0.006129208404952739,
+        a1: 0.024416684885043647,
+        a0: 96.27059430733168,
+      },
+      {
+        a2: -0.005909837033401331,
+        a1: -0.03190021971203586,
+        a0: 97.12809443218678,
+      },
+      {
+        a2: -0.006015674533810633,
+        a1: -0.06278973759906815,
+        a0: 97.61025849817247,
+      },
+      {
+        a2: -0.005743837528853171,
+        a1: -0.11068631650108766,
+        a0: 98.29013147994225,
+      },
+      {
+        a2: -0.0056297579330995,
+        a1: -0.14071002740860034,
+        a0: 98.70848138731785,
+      },
+    ],
+    distant_curves_coefficients: [
+      {
+        a2: 0.0022767002381011148,
+        a1: -0.5275847055550944,
+        a0: 100.70714254293743,
+      },
+      {
+        a2: 0.0029028282756785595,
+        a1: -0.7699536233302571,
+        a0: 99.51922131381986,
+      },
+      {
+        a2: 0.0034699188325588715,
+        a1: -1.0257249753017799,
+        a0: 101.8916634777601,
+      },
+      {
+        a2: 0.005151408812889446,
+        a1: -1.3330984126689485,
+        a0: 105.46281257203884,
+      },
+      {
+        a2: 0.007269719924206219,
+        a1: -1.6126399345394238,
+        a0: 107.58704433235084,
+      },
+      {
+        a2: 0.008901287678562575,
+        a1: -1.8428366963749367,
+        a0: 110.74496793950416,
+      },
+      {
+        a2: 0.010261455007650744,
+        a1: -1.9993907100471495,
+        a0: 111.78596713811538,
+      },
+      {
+        a2: 0.012414623038242922,
+        a1: -2.2256073997610226,
+        a0: 114.72697930182073,
+      },
+      {
+        a2: 0.01310646954873107,
+        a1: -2.318155232523214,
+        a0: 116.0116955729797,
+      },
+      {
+        a2: 0.014313562778008215,
+        a1: -2.4488320170344187,
+        a0: 117.69371093727784,
+      },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: -0.007142857142857284,
+        a1: -0.2242857142856984,
+        a0: 115.01142857142816,
+      },
+      {
+        a2: -0.002914285714286091,
+        a1: -0.9278285714285194,
+        a0: 132.91794285714116,
+      },
+      {
+        a2: -0.003371428571429247,
+        a1: -1.0247428571428001,
+        a0: 134.6929142857134,
+      },
+      {
+        a2: 0.0019999999999991136,
+        a1: -1.785999999999902,
+        a0: 155.6119999999975,
+      },
+      {
+        a2: 0.0029714285714279587,
+        a1: -1.9300571428570341,
+        a0: 157.45268571428156,
+      },
+      {
+        a2: 0.0035428571428561817,
+        a1: -2.048914285714172,
+        a0: 159.81897142856826,
+      },
+      {
+        a2: 0.0069142857142847625,
+        a1: -2.424171428571293,
+        a0: 167.62605714285266,
+      },
+      {
+        a2: 0.005199999999998539,
+        a1: -2.2875999999998733,
+        a0: 163.70719999999793,
+      },
+      {
+        a2: 0.009999999999998899,
+        a1: -2.8299999999998433,
+        a0: 176.45999999999484,
+      },
+      {
+        a2: 0.01171428571428379,
+        a1: -3.0265714285712613,
+        a0: 181.0188571428544,
+      },
+    ],
+  },
+  prostate_cancer: {
+    approved_drugs_name: "prostate",
+    survival_curves_id: "66",
+    description: "",
+    information_subtype: "prostate",
+    survival_curves_coefficients: [
+      {
+        a2: -0.0006349158575333913,
+        a1: 0.1460994349931107,
+        a0: 92.80872153922142,
+      },
+      {
+        a2: -0.007705667895814283,
+        a1: 1.0363003575653278,
+        a0: 65.18577014807079,
+      },
+      {
+        a2: -0.010344782194692037,
+        a1: 1.3944741314957463,
+        a0: 52.93580290808529,
+      },
+      {
+        a2: -0.009575743764764777,
+        a1: 1.3276069380449738,
+        a0: 53.74443395624319,
+      },
+      {
+        a2: -0.00890430073990256,
+        a1: 1.2689369979126202,
+        a0: 54.43574304374853,
+      },
+      {
+        a2: -0.009469578829588654,
+        a1: 1.3528060828779698,
+        a0: 51.30948132017855,
+      },
+      {
+        a2: -0.00825703827646218,
+        a1: 1.2501894557405115,
+        a0: 52.5041959277052,
+      },
+      {
+        a2: -0.009120440760269632,
+        a1: 1.3620266856026875,
+        a0: 48.82900622225394,
+      },
+      {
+        a2: -0.008514170483706396,
+        a1: 1.3107183720339588,
+        a0: 49.42636352601723,
+      },
+      {
+        a2: -0.008209146807526935,
+        a1: 1.2820419625843906,
+        a0: 49.7397666878467,
+      },
+    ],
+    internalized_survival_curves: true,
+    distant_curves_coefficients: [
+      {
+        a2: -0.008857142857142342,
+        a1: 0.8922857142856635,
+        a0: 64.47257142857251,
+      },
+      {
+        a2: -0.014628571428570769,
+        a1: 1.7587428571427568,
+        a0: 14.8590857142892,
+      },
+      {
+        a2: -0.027485714285712337,
+        a1: 3.643028571428368,
+        a0: -66.77234285713806,
+      },
+      {
+        a2: -0.020114285714285085,
+        a1: 2.6757714285712786,
+        a0: -44.76125714285063,
+      },
+      {
+        a2: -0.014171428571427613,
+        a1: 1.895657142857036,
+        a0: -25.975885714282946,
+      },
+      {
+        a2: -0.008171428571428052,
+        a1: 1.0776571428570811,
+        a0: -3.1998857142839974,
+      },
+      {
+        a2: -0.013085714285713701,
+        a1: 1.7558285714284734,
+        a0: -30.273942857139243,
+      },
+      {
+        a2: -0.009828571428570854,
+        a1: 1.2963428571427842,
+        a0: -17.30811428571211,
+      },
+      {
+        a2: -0.00685714285714234,
+        a1: 0.8862857142856654,
+        a0: -5.835428571427602,
+      },
+      {
+        a2: -0.0053714285714282495,
+        a1: 0.6612571428571061,
+        a0: 0.6809142857152573,
+      },
+    ],
+  },
+  small_intestine_cancer: {
+    approved_drugs_name: "gist",
+    survival_curves_id: "19",
+    description: "",
+    information_name: "small-intestine",
+    information_subtype: "small-intestine",
+    survival_curves_coefficients: [
+      {
+        a2: -0.012342857142856545,
+        a1: 1.1233142857142209,
+        a0: 66.4642285714302,
+      },
+      {
+        a2: -0.013314285714285168,
+        a1: 1.1873714285713608,
+        a0: 60.64354285714484,
+      },
+      {
+        a2: -0.015714285714285126,
+        a1: 1.458571428571345,
+        a0: 49.6171428571456,
+      },
+      {
+        a2: -0.01662857142857055,
+        a1: 1.564742857142775,
+        a0: 43.867085714287306,
+      },
+      {
+        a2: -0.015657142857142148,
+        a1: 1.4206857142856368,
+        a0: 46.607771428573386,
+      },
+      {
+        a2: -0.016228571428570815,
+        a1: 1.4395428571427789,
+        a0: 45.741485714288075,
+      },
+      {
+        a2: -0.016685714285713527,
+        a1: 1.48262857142849,
+        a0: 43.356457142859135,
+      },
+      {
+        a2: -0.016914285714284993,
+        a1: 1.4741714285713439,
+        a0: 43.233942857145195,
+      },
+      {
+        a2: -0.016571428571428015,
+        a1: 1.4068571428570655,
+        a0: 44.23771428571679,
+      },
+      {
+        a2: -0.017885714285713394,
+        a1: 1.538228571428483,
+        a0: 39.91325714285908,
+      },
+    ],
+    internalized_survival_curves: true,
+    localized_curves_coefficients: [
+      {
+        a2: -0.004857142857142671,
+        a1: 0.3802857142856945,
+        a0: 91.2565714285719,
+      },
+      {
+        a2: -0.004171428571428437,
+        a1: 0.26565714285713116,
+        a0: 93.7841142857145,
+      },
+      {
+        a2: -0.007828571428571074,
+        a1: 0.6503428571428189,
+        a0: 83.04388571428665,
+      },
+      {
+        a2: -0.010057142857142432,
+        a1: 0.867885714285666,
+        a0: 76.94937142857269,
+      },
+      {
+        a2: -0.010514285714285365,
+        a1: 0.8909714285713813,
+        a0: 75.74434285714435,
+      },
+      {
+        a2: -0.009599999999999498,
+        a1: 0.7447999999999562,
+        a0: 79.95440000000073,
+      },
+      {
+        a2: -0.007428571428571229,
+        a1: 0.5051428571428295,
+        a0: 84.59828571428662,
+      },
+      {
+        a2: -0.006514285714285528,
+        a1: 0.3789714285714087,
+        a0: 87.82834285714335,
+      },
+      {
+        a2: -0.0037714285714285575,
+        a1: 0.060457142857141155,
+        a0: 95.27851428571434,
+      },
+      {
+        a2: -0.003542857142857121,
+        a1: 0.008914285714282884,
+        a0: 96.24102857142866,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.010742857142856721,
+        a1: 1.0425142857142236,
+        a0: 70.58182857143069,
+      },
+      {
+        a2: -0.012342857142856767,
+        a1: 1.183314285714216,
+        a0: 62.924228571431264,
+      },
+      {
+        a2: -0.013771428571428102,
+        a1: 1.370457142857071,
+        a0: 53.59851428571678,
+      },
+      {
+        a2: -0.01525714285714197,
+        a1: 1.5754857142856247,
+        a0: 44.26217142857343,
+      },
+      {
+        a2: -0.015485714285713437,
+        a1: 1.5870285714284824,
+        a0: 42.45965714285924,
+      },
+      {
+        a2: -0.01902857142857073,
+        a1: 1.9159428571427461,
+        a0: 34.12068571428968,
+      },
+      {
+        a2: -0.019542857142856196,
+        a1: 1.9369142857141817,
+        a0: 33.7850285714312,
+      },
+      {
+        a2: -0.019942857142856152,
+        a1: 1.962114285714174,
+        a0: 32.41062857143149,
+      },
+      {
+        a2: -0.01931428571428495,
+        a1: 1.845371428571324,
+        a0: 35.80754285714619,
+      },
+      {
+        a2: -0.021485714285713442,
+        a1: 2.0850285714284538,
+        a0: 28.663657142860956,
+      },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: -0.018914285714284995,
+        a1: 1.7001714285713307,
+        a0: 55.66194285714599,
+      },
+      {
+        a2: -0.02279999999999882,
+        a1: 2.0963999999998832,
+        a0: 42.619200000002536,
+      },
+      {
+        a2: -0.026571428571427358,
+        a1: 2.476857142857005,
+        a0: 30.817714285717926,
+      },
+      {
+        a2: -0.022228571428570376,
+        a1: 1.997542857142746,
+        a0: 41.00548571428837,
+      },
+      {
+        a2: -0.02239999999999931,
+        a1: 1.9511999999998861,
+        a0: 41.973600000004154,
+      },
+      {
+        a2: -0.022057142857141887,
+        a1: 1.82388571428561,
+        a0: 46.417371428573986,
+      },
+      {
+        a2: -0.023771428571427666,
+        a1: 2.0004571428570297,
+        a0: 41.13851428571762,
+      },
+      {
+        a2: -0.02788571428571318,
+        a1: 2.3682285714284403,
+        a0: 33.05325714286079,
+      },
+      {
+        a2: -0.03828571428571248,
+        a1: 3.5834285714283705,
+        a0: -3.52114285713769,
+      },
+      {
+        a2: -0.04394285714285573,
+        a1: 4.1741142857140545,
+        a0: -19.953371428563038,
+      },
+    ],
+    distant_curves_coefficients: [
+      {
+        a2: -0.023885714285713178,
+        a1: 2.3762285714284337,
+        a0: 19.857257142861187,
+      },
+      {
+        a2: -0.025371428571427046,
+        a1: 2.5212571428570016,
+        a0: 6.060914285716976,
+      },
+      {
+        a2: -0.031599999999998296,
+        a1: 3.2507999999998156,
+        a0: -20.817599999995437,
+      },
+      {
+        a2: -0.03177142857142723,
+        a1: 3.3044571428569567,
+        a0: -28.3494857142797,
+      },
+      {
+        a2: -0.032799999999998164,
+        a1: 3.3663999999998127,
+        a0: -31.40079999999574,
+      },
+      {
+        a2: -0.031999999999998696,
+        a1: 3.2759999999998164,
+        a0: -31.591999999993995,
+      },
+      {
+        a2: -0.030914285714284784,
+        a1: 3.1161714285712536,
+        a0: -27.910057142850256,
+      },
+      {
+        a2: -0.03199999999999825,
+        a1: 3.195999999999821,
+        a0: -31.471999999995916,
+      },
+      {
+        a2: -0.032342857142855674,
+        a1: 3.18331428571411,
+        a0: -31.55577142856648,
+      },
+      {
+        a2: -0.027428571428570248,
+        a1: 2.645142857142709,
+        a0: -19.341714285709934,
+      },
+    ],
+  },
+  stomach_cancer: {
+    approved_drugs_name: "stomach",
+    survival_curves_id: "18",
+    description: "",
+    information_subtype: "stomach",
+    survival_curves_coefficients: [
+      {
+        a2: 0.0169553395515063,
+        a1: -1.9462052890305466,
+        a0: 112.54272061247917,
+      },
+      {
+        a2: 0.02305753954932266,
+        a1: -2.604282717761359,
+        a0: 114.41426229773674,
+      },
+      {
+        a2: 0.024623137466705636,
+        a1: -2.8097301772148366,
+        a0: 114.72088104426857,
+      },
+      {
+        a2: 0.02663848191981133,
+        a1: -3.040254588799666,
+        a0: 117.68363567027781,
+      },
+      {
+        a2: 0.026175700834428106,
+        a1: -2.9937053113555896,
+        a0: 114.50870943405394,
+      },
+      {
+        a2: 0.027052247012818054,
+        a1: -3.0955783242151718,
+        a0: 115.81842663955956,
+      },
+      {
+        a2: 0.0274675732089551,
+        a1: -3.1482339392418455,
+        a0: 116.52073068887015,
+      },
+      {
+        a2: 0.027858937133515393,
+        a1: -3.198094071677631,
+        a0: 117.1316528212445,
+      },
+      {
+        a2: 0.02794371627876524,
+        a1: -3.2219459150526815,
+        a0: 117.46165871176245,
+      },
+      {
+        a2: 0.02592023887523709,
+        a1: -2.9990717323579847,
+        a0: 111.11412725569993,
+      },
+    ],
+    internalized_survival_curves: true,
+    distant_curves_coefficients: [
+      {
+        a2: 0.008349645621161583,
+        a1: -1.047339993922592,
+        a0: 64.19087541968514,
+      },
+      {
+        a2: 0.01303496750200317,
+        a1: -1.515180932706154,
+        a0: 57.34494056064747,
+      },
+      {
+        a2: 0.012186687703189758,
+        a1: -1.4445160638196053,
+        a0: 50.62701569992558,
+      },
+      {
+        a2: 0.012240022147146812,
+        a1: -1.4533783918837553,
+        a0: 48.685242165985365,
+      },
+      {
+        a2: 0.013695756028605954,
+        a1: -1.606984057281914,
+        a0: 51.1176338119422,
+      },
+      {
+        a2: 0.014374343119073263,
+        a1: -1.6809465273476625,
+        a0: 52.310535104995125,
+      },
+      {
+        a2: 0.014715124981932837,
+        a1: -1.7195756835385203,
+        a0: 52.933869559933605,
+      },
+      {
+        a2: 0.014904012700311053,
+        a1: -1.7436617863985668,
+        a0: 53.352388488960685,
+      },
+      {
+        a2: 0.015273678949677016,
+        a1: -1.7797900612570208,
+        a0: 53.919562474748794,
+      },
+      {
+        a2: 0.015292175736626001,
+        a1: -1.7845615860216386,
+        a0: 54.02641417630505,
+      },
+    ],
+    localized_curves_coefficients: [
+      {
+        a2: -0.0012041530798987954,
+        a1: -0.05254025131468983,
+        a0: 99.0224402140677,
+      },
+      {
+        a2: 0.0009398572685023754,
+        a1: -0.3502238014069526,
+        a0: 103.99807732256795,
+      },
+      {
+        a2: -0.0014922987218842915,
+        a1: -0.1001612439133582,
+        a0: 95.37068856538693,
+      },
+      {
+        a2: -0.00038703607975904,
+        a1: -0.2450223384923079,
+        a0: 97.82940158691382,
+      },
+      {
+        a2: 0.00016562586512297583,
+        a1: -0.33626073998469386,
+        a0: 99.40995692728157,
+      },
+      {
+        a2: 0.0021962545843859926,
+        a1: -0.5494000616362679,
+        a0: 102.77256455099914,
+      },
+      {
+        a2: 0.0036511677474835302,
+        a1: -0.705162130948159,
+        a0: 105.31351721873979,
+      },
+      {
+        a2: 0.004529213898804452,
+        a1: -0.8087854229943945,
+        a0: 106.86911824773404,
+      },
+      {
+        a2: 0.004361860850264465,
+        a1: -0.8303823956207544,
+        a0: 107.31361629629977,
+      },
+      {
+        a2: 0.001980822139306726,
+        a1: -0.5461142115557863,
+        a0: 98.17972770735942,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.009657142857142476,
+        a1: 0.8026857142856687,
+        a0: 64.1837714285727,
+      },
+      {
+        a2: -0.0037142857142856422,
+        a1: 0.18257142857141728,
+        a0: 58.42914285714326,
+      },
+      {
+        a2: -0.0035999999999999366,
+        a1: 0.16679999999998957,
+        a0: 48.57040000000038,
+      },
+      {
+        a2: -0.004342857142857037,
+        a1: 0.2993142857142685,
+        a0: 37.5322285714292,
+      },
+      {
+        a2: -0.005714285714285561,
+        a1: 0.44857142857140414,
+        a0: 29.89714285714373,
+      },
+      {
+        a2: -0.004285714285714115,
+        a1: 0.28142857142855493,
+        a0: 32.44285714285748,
+      },
+      {
+        a2: -0.003257142857142764,
+        a1: 0.159485714285705,
+        a0: 34.534171428571625,
+      },
+      {
+        a2: -0.004914285714285482,
+        a1: 0.3581714285714078,
+        a0: 27.705942857143224,
+      },
+      {
+        a2: -0.004571428571428393,
+        a1: 0.31085714285712623,
+        a0: 28.429714285714603,
+      },
+      {
+        a2: -0.005828571428571183,
+        a1: 0.4443428571428324,
+        a0: 24.235885714286265,
+      },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: -0.008971428571428408,
+        a1: 0.3480571428571214,
+        a0: 78.47131428571494,
+      },
+      {
+        a2: -0.006571428571428572,
+        a1: 0.03685714285714227,
+        a0: 77.05771428571433,
+      },
+      {
+        a2: -0.005257142857142932,
+        a1: -0.17451428571427502,
+        a0: 79.40217142857108,
+      },
+      {
+        a2: -0.002971428571428847,
+        a1: -0.46994285714282985,
+        a0: 85.84731428571368,
+      },
+      {
+        a2: -0.0054857142857143715,
+        a1: -0.20297142857141984,
+        a0: 77.75965714285695,
+      },
+      {
+        a2: -0.0032571428571430694,
+        a1: -0.4605142857142614,
+        a0: 83.11417142857078,
+      },
+      {
+        a2: -0.0030857142857145248,
+        a1: -0.49417142857139934,
+        a0: 83.4660571428563,
+      },
+      {
+        a2: -0.0024571428571431575,
+        a1: -0.5709142857142533,
+        a0: 84.80297142857063,
+      },
+      {
+        a2: -0.0019428571428573571,
+        a1: -0.6118857142856825,
+        a0: 84.01862857142748,
+      },
+      {
+        a2: -0.0016000000000002679,
+        a1: -0.6391999999999642,
+        a0: 83.4623999999989,
+      },
+    ],
+  },
+  testicular_cancer: {
+    approved_drugs_name: "testicular",
+    clinical_trials_name: "Testicular+Cancer",
+    survival_curves_id: "67",
+    search_name: "Testicular%20Cancer",
+    description: "",
+    information_subtype: "testicular",
+    survival_curves_coefficients: [
+      {
+        a2: -0.003387487956849927,
+        a1: 0.16035964574864423,
+        a0: 97.78763417797194,
+      },
+      {
+        a2: -0.0026939711983086367,
+        a1: 0.1019164756906065,
+        a0: 97.65560067246517,
+      },
+      {
+        a2: -0.0032833207044939416,
+        a1: 0.15714450093152352,
+        a0: 95.8222198886525,
+      },
+      {
+        a2: -0.0036934178666267192,
+        a1: 0.1749871887013046,
+        a0: 95.60114079595768,
+      },
+      {
+        a2: -0.0038917308830186403,
+        a1: 0.1860454545604734,
+        a0: 95.43147071459853,
+      },
+      {
+        a2: -0.00403522007419857,
+        a1: 0.19080449068512856,
+        a0: 95.30903964705868,
+      },
+      {
+        a2: -0.004062959421571449,
+        a1: 0.19964447860642204,
+        a0: 94.78820871022816,
+      },
+      {
+        a2: -0.0041624433645342795,
+        a1: 0.21086398459004455,
+        a0: 94.4561622396276,
+      },
+      {
+        a2: -0.004030536764805442,
+        a1: 0.19880885185162905,
+        a0: 94.61157888713879,
+      },
+      {
+        a2: -0.004227616112833232,
+        a1: 0.2182256111536689,
+        a0: 94.06221045588552,
+      },
+    ],
+    internalized_survival_curves: true,
+    localized_curves_coefficients: [
+      {
+        a2: -0.0023428571428570355,
+        a1: 0.2333142857142697,
+        a0: 94.26422857142911,
+      },
+      {
+        a2: -0.0012571428571428456,
+        a1: 0.11348571428571175,
+        a0: 97.08617142857153,
+      },
+      {
+        a2: -0.001485714285714257,
+        a1: 0.14502857142856537,
+        a0: 96.0036571428574,
+      },
+      {
+        a2: -0.0015999999999999348,
+        a1: 0.1607999999999944,
+        a0: 95.4624000000001,
+      },
+      {
+        a2: -0.0029714285714284583,
+        a1: 0.3100571428571268,
+        a0: 91.52731428571481,
+      },
+      {
+        a2: -0.004514285714285526,
+        a1: 0.47297142857140245,
+        a0: 87.4203428571437,
+      },
+      {
+        a2: -0.005428571428571227,
+        a1: 0.5591428571428273,
+        a0: 85.45028571428674,
+      },
+      {
+        a2: -0.005028571428571271,
+        a1: 0.5139428571428326,
+        a0: 86.60468571428657,
+      },
+      {
+        a2: -0.013028571428570945,
+        a1: 1.3379428571427854,
+        a0: 66.63668571428815,
+      },
+      {
+        a2: -0.015028571428570725,
+        a1: 1.5439428571427753,
+        a0: 61.64468571428794,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.026057142857141447,
+        a1: 2.595885714285569,
+        a0: 37.39337142857478,
+      },
+      {
+        a2: -0.023314285714284733,
+        a1: 2.257371428571299,
+        a0: 45.62354285714687,
+      },
+      {
+        a2: -0.02171428571428491,
+        a1: 2.096571428571311,
+        a0: 48.76114285714684,
+      },
+      {
+        a2: -0.021485714285713442,
+        a1: 2.0850285714284538,
+        a0: 48.36365714286096,
+      },
+      {
+        a2: -0.022057142857141887,
+        a1: 2.143885714285594,
+        a0: 46.737371428574946,
+      },
+      {
+        a2: -0.03188571428571274,
+        a1: 3.120228571428394,
+        a0: 23.509257142861912,
+      },
+      {
+        a2: -0.031714285714284696,
+        a1: 3.1065714285712542,
+        a0: 23.581142857149388,
+      },
+      {
+        a2: -0.029314285714284072,
+        a1: 2.8353714285712734,
+        a0: 30.50754285714592,
+      },
+      {
+        a2: -0.02891428571428456,
+        a1: 2.7901714285712718,
+        a0: 31.66194285714785,
+      },
+      {
+        a2: -0.028171428571427626,
+        a1: 2.7176571428569933,
+        a0: 32.96011428571961,
+      },
+    ],
+    distant_curves_coefficients: [
+      { a2: -0.04068571428571266, a1: 3.63462857142837, a0: 7.432457142862987 },
+      {
+        a2: -0.037257142857141545,
+        a1: 3.381485714285529,
+        a0: 5.090171428577506,
+      },
+      {
+        a2: -0.03422857142856994,
+        a1: 3.073542857142686,
+        a0: 9.493485714290301,
+      },
+      { a2: -0.03439999999999843, a1: 3.067199999999829, a0: 9.00160000000428 },
+      {
+        a2: -0.034685714285712876,
+        a1: 3.116628571428394,
+        a0: 6.908457142862403,
+      },
+      {
+        a2: -0.030685714285713317,
+        a1: 2.6846285714284206,
+        a0: 16.972457142862446,
+      },
+      {
+        a2: -0.03022857142856994,
+        a1: 2.6415428571427078,
+        a0: 17.657485714289002,
+      },
+      {
+        a2: -0.031085714285713273,
+        a1: 2.7298285714284165,
+        a0: 15.218057142862556,
+      },
+      {
+        a2: -0.030628571428569895,
+        a1: 2.6867428571427077,
+        a0: 15.903085714288856,
+      },
+      {
+        a2: -0.046857142857141376,
+        a1: 4.326285714285474,
+        a0: -23.755428571419877,
+      },
+    ],
+    unstaged_curves_coefficients: [
+      {
+        a2: -0.010342857142856765,
+        a1: 0.7773142857142439,
+        a0: 83.01622857142962,
+      },
+      {
+        a2: -0.027828571428570203,
+        a1: 2.5103428571427213,
+        a0: 40.223885714289196,
+      },
+      {
+        a2: -0.02171428571428491,
+        a1: 1.8565714285713257,
+        a0: 55.12114285714594,
+      },
+      {
+        a2: -0.013142857142856679,
+        a1: 0.9137142857142349,
+        a0: 77.95542857142985,
+      },
+      {
+        a2: -0.01531428571428517,
+        a1: 1.133371428571362,
+        a0: 72.29154285714478,
+      },
+      {
+        a2: -0.014685714285713747,
+        a1: 1.036628571428515,
+        a0: 75.00845714285848,
+      },
+      {
+        a2: -0.014685714285713747,
+        a1: 1.036628571428515,
+        a0: 75.00845714285848,
+      },
+      {
+        a2: -0.011885714285714055,
+        a1: 0.7202285714285321,
+        a0: 83.0892571428586,
+      },
+      {
+        a2: -0.009885714285714109,
+        a1: 0.49422857142854587,
+        a0: 88.86125714285798,
+      },
+      {
+        a2: -0.007542857142857073,
+        a1: 0.22091428571427507,
+        a0: 95.65702857142894,
+      },
+    ],
+  },
+  lung_adenocarcinoma: {
+    name: "Adenocarcinoma (Lungs)",
+    approved_drugs_name: "lung",
+    survival_curves_id: "612",
+    search_name: "Lung%20Cancer%20and%20Adenocarcinoma",
+    description:
+      "Lung adenocarcinoma is a non-small-cell lung cancer that is strongly associated with smoking. It usually starts from the mucosal glands.",
+    information_subtype: "",
+    survival_curves_coefficients: [
+      {
+        a2: 0.01141011664000402,
+        a1: -1.4122536309501865,
+        a0: 100.36937368840515,
+      },
+      {
+        a2: 0.015748433897873726,
+        a1: -1.7755715084770598,
+        a0: 90.72270909542951,
+      },
+      {
+        a2: 0.019323728070283597,
+        a1: -2.11549751457092,
+        a0: 89.71635091467547,
+      },
+      {
+        a2: 0.021604810634550997,
+        a1: -2.348860614819968,
+        a0: 90.23036312415978,
+      },
+      {
+        a2: 0.024151107724798226,
+        a1: -2.6436952884346945,
+        a0: 94.95982268513221,
+      },
+      {
+        a2: 0.026297335237727815,
+        a1: -2.884446793162475,
+        a0: 98.80018609145043,
+      },
+      {
+        a2: 0.02451418372821834,
+        a1: -2.6882354077924053,
+        a0: 91.9352154366726,
+      },
+      {
+        a2: 0.025226150781888723,
+        a1: -2.783448614202612,
+        a0: 93.50380651541687,
+      },
+      {
+        a2: 0.02570102822536313,
+        a1: -2.8544614782342945,
+        a0: 94.7117484545144,
+      },
+      {
+        a2: 0.026075190051424446,
+        a1: -2.9143413707696113,
+        a0: 95.71077269514805,
+      },
+    ],
+    internalized_survival_curves: true,
+    distant_curves_coefficients: [
+      {
+        a2: 0.008228571428570808,
+        a1: -1.55554285714277,
+        a0: 106.35051428571144,
+      },
+      {
+        a2: 0.008114285714284852,
+        a1: -1.3797714285713518,
+        a0: 78.7692571428558,
+      },
+      {
+        a2: 0.0063428571428565395,
+        a1: -1.0453142857142277,
+        a0: 56.91977142857023,
+      },
+      {
+        a2: 0.005085714285713694,
+        a1: -0.8518285714285242,
+        a0: 45.58594285714226,
+      },
+      {
+        a2: 0.0045714285714282266,
+        a1: -0.7708571428570992,
+        a0: 40.010285714284414,
+      },
+      {
+        a2: 0.003314285714285381,
+        a1: -0.5973714285713949,
+        a0: 32.55645714285639,
+      },
+      {
+        a2: 0.0019999999999997242,
+        a1: -0.4259999999999764,
+        a0: 25.97199999999963,
+      },
+      {
+        a2: 0.0017142857142855017,
+        a1: -0.3765714285714076,
+        a0: 23.07885714285669,
+      },
+      {
+        a2: 0.0010285714285713232,
+        a1: -0.2819428571428415,
+        a0: 19.231314285713754,
+      },
+      {
+        a2: 0.0014285714285712237,
+        a1: -0.3271428571428393,
+        a0: 19.88571428571399,
+      },
+    ],
+    localized_curves_coefficients: [
+      {
+        a2: -0.003542857142856959,
+        a1: 0.3289142857142646,
+        a0: 87.56102857142915,
+      },
+      {
+        a2: -0.001942857142857135,
+        a1: 0.04811428571428434,
+        a0: 93.17862857142862,
+      },
+      {
+        a2: -0.0007428571428572117,
+        a1: -0.14748571428570512,
+        a0: 95.48182857142828,
+      },
+      {
+        a2: -0.0010857142857143842,
+        a1: -0.14017142857141893,
+        a0: 91.81805714285696,
+      },
+      {
+        a2: -0.0017714285714286737,
+        a1: -0.14554285714284546,
+        a0: 91.47051428571396,
+      },
+      {
+        a2: -0.0012000000000000899,
+        a1: -0.26439999999998687,
+        a0: 93.53679999999957,
+      },
+      {
+        a2: 0.000285714285714056,
+        a1: -0.4294285714285461,
+        a0: 94.51314285714221,
+      },
+      {
+        a2: -0.0007428571428573227,
+        a1: -0.3474857142856944,
+        a0: 90.78182857142806,
+      },
+      {
+        a2: -0.0010285714285716008,
+        a1: -0.3580571428571234,
+        a0: 90.2286857142852,
+      },
+      {
+        a2: -0.0013714285714287455,
+        a1: -0.35074285714283837,
+        a0: 88.66491428571382,
+      },
+    ],
+    regional_curves_coefficients: [
+      {
+        a2: -0.008971428571428186,
+        a1: 0.90805714285709,
+        a0: 60.63131428571599,
+      },
+      {
+        a2: -0.006799999999999806,
+        a1: 0.6083999999999695,
+        a0: 56.315200000001084,
+      },
+      {
+        a2: -0.00622857142857125,
+        a1: 0.48954285714283097,
+        a0: 52.2814857142866,
+      },
+      {
+        a2: -0.00805714285714254,
+        a1: 0.741885714285673,
+        a0: 37.02137142857269,
+      },
+      {
+        a2: -0.008285714285714008,
+        a1: 0.7534285714285289,
+        a0: 32.11885714285862,
+      },
+      {
+        a2: -0.010857142857142454,
+        a1: 1.0382857142856565,
+        a0: 20.72057142857335,
+      },
+      {
+        a2: -0.010514285714285143,
+        a1: 0.990971428571374,
+        a0: 19.144342857143954,
+      },
+      {
+        a2: -0.010342857142856765,
+        a1: 0.9373142857142355,
+        a0: 19.576228571430136,
+      },
+      {
+        a2: -0.010799999999999477,
+        a1: 0.9403999999999477,
+        a0: 19.051200000001145,
+      },
+      {
+        a2: -0.009371428571428253,
+        a1: 0.7132571428571038,
+        a0: 25.736914285715407,
+      },
+    ],
+  },
 });
